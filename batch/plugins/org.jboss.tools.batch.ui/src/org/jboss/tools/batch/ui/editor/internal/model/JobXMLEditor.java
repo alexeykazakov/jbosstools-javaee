@@ -16,15 +16,20 @@ import org.eclipse.sapphire.modeling.xml.RootXmlResource;
 import org.eclipse.sapphire.ui.SapphireEditor;
 import org.eclipse.sapphire.ui.def.DefinitionLoader;
 import org.eclipse.sapphire.ui.forms.swt.MasterDetailsEditorPage;
+import org.eclipse.sapphire.ui.swt.gef.SapphireDiagramEditor;
 import org.eclipse.sapphire.ui.swt.xml.editor.XmlEditorResourceStore;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.common.text.ext.IMultiPageEditor;
 
 public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
+	
+	private static final int DESIGN_PAGE_INDEX = 0;
+	private static final int DIAGRAM_PAGE_INDEX = 1;
+	
 	private Job jobModel;
 	private StructuredTextEditor schemaSourceEditor;
-//	private SapphireDiagramEditor schemaDiagram;
+	private SapphireDiagramEditor schemaDiagram;
 	private MasterDetailsEditorPage design;
 
 		@Override
@@ -43,11 +48,12 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 
 		@Override
 		protected void createDiagramPages() throws PartInitException {	
-//			this.schemaDiagram = new SapphireDiagramEditor(
-//					this, this.jobModel,
-//					DefinitionLoader.sdef( getClass() ).page( "DiagramPage" )
-//			);
-//			addEditorPage( 0, this.schemaDiagram );
+			this.schemaDiagram = new SapphireDiagramEditor(
+					this, this.jobModel,
+					DefinitionLoader.sdef( getClass() ).page( "DiagramPage" )
+			);
+			addEditorPage( DIAGRAM_PAGE_INDEX, this.schemaDiagram );
+			
 		}
 
 		@Override
@@ -56,7 +62,7 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 					this, this.jobModel,
 					DefinitionLoader.sdef( getClass() ).page( "design" )
 			);
-			addPage( 0, this.design );
+			addPage( DESIGN_PAGE_INDEX, this.design );
 		}
 
 		public Job getSchema() {
@@ -65,7 +71,7 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 
 		@Override
 		public void doSave( final IProgressMonitor monitor ) {
-//			this.schemaDiagram.doSave(monitor);
+			this.schemaDiagram.doSave(monitor);
 			super.doSave(monitor);
 		}
 

@@ -928,6 +928,21 @@
 			</with>
 		</content>
 	</form>
+    <diagram-page>
+        <id>DiagramPage</id>
+        <element-type>org.jboss.tools.batch.ui.editor.internal.model.Job</element-type>
+        <node>
+            <id>FlowNode</id>
+            <property>flowElements</property>
+            <model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow</model-element-type>
+            <tool-palette-label>Flow</tool-palette-label>
+            <image>
+                <path>flow.png</path>
+            </image>
+        </node>
+        <page-header-text>Job Diagram</page-header-text>
+        <page-name>Diagram</page-name>
+    </diagram-page>
 
 
 </definition>
