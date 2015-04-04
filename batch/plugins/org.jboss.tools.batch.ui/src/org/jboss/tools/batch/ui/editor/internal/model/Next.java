@@ -10,16 +10,15 @@
  ************************************************************************************/
 package org.jboss.tools.batch.ui.editor.internal.model;
 
+import org.eclipse.sapphire.ElementReference;
 import org.eclipse.sapphire.ElementType;
-import org.eclipse.sapphire.Value;
+import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
+import org.eclipse.sapphire.modeling.annotations.Reference;
 import org.eclipse.sapphire.modeling.annotations.Required;
-import org.eclipse.sapphire.modeling.annotations.Service;
-import org.eclipse.sapphire.modeling.annotations.Services;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
-import org.jboss.tools.batch.ui.editor.internal.services.NextPossibleValuesService;
 
 /**
  * 
@@ -34,16 +33,27 @@ public interface Next extends OutcomeElement {
 
 	ElementType TYPE = new ElementType( Next.class );
 
+//	@Label( standard = "to" )
+//	@XmlBinding( path = "@to" )
+//	@Required
+//	@Services ( {
+//		@Service( impl = NextPossibleValuesService.class )
+//	})
+//
+//	ValueProperty PROP_TO = new ValueProperty( TYPE, "To" );
+//
+//	Value<String> getTo();
+//	void setTo( String value);
+	
 	@Label( standard = "to" )
 	@XmlBinding( path = "@to" )
 	@Required
-	@Services ( {
-		@Service( impl = NextPossibleValuesService.class )
-	})
+	@Reference(target = FlowElement.class)
+	@ElementReference(list = "../../FlowElements" , key = "id")
 
 	ValueProperty PROP_TO = new ValueProperty( TYPE, "To" );
 
-	Value<String> getTo();
+	ReferenceValue<String, FlowElement> getTo();
 	void setTo( String value);
 
 }

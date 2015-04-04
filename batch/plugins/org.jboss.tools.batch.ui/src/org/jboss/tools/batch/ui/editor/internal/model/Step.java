@@ -120,4 +120,10 @@ public interface Step extends FlowElement {
 
 	ElementList<OutcomeElement> getOutcomeElements();
 	
+	@Type( base = Next.class )
+	@XmlListBinding( path = "" )
+	ListProperty PROP_NEXT_ELEMENTS = new ListProperty(TYPE, "NextElements");
+
+	ElementList<Next> getNextElements();
+	
 }

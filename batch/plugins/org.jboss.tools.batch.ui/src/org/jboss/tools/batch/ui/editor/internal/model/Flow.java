@@ -72,5 +72,11 @@ public interface Flow extends FlowElement {
 	ListProperty PROP_OUTCOME_ELEMENTS = new ListProperty(TYPE, "OutcomeElements");
 
 	ElementList<OutcomeElement> getOutcomeElements();
+		
+	@Type( base = Next.class )
+	@XmlListBinding( path = "" )
+	ListProperty PROP_NEXT_ELEMENTS = new ListProperty(TYPE, "NextElements");
+
+	ElementList<Next> getNextElements();
 	
 }
