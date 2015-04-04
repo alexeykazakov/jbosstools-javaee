@@ -963,8 +963,17 @@
                 </endpoint2>
                 <label>${on}</label>
             </connection-binding>
+            <action>
+                <id>OpenFlowDiagramAction</id>
+                <label>Open Flow</label>
+            </action>
+            <action-handler>
+                <id>OpenFlowDiagramActionHandler</id>
+                <action>OpenFlowDiagramAction</action>
+                <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowDiagramActionHandler</impl>
+            </action-handler>
         </node>
-        <page-header-text>Job Diagram</page-header-text>
+        <page-header-text>${parent() == null ? '' : concat(parent().id, '/')}${id == null ? &quot;_&quot; : id}</page-header-text>
         <page-name>Diagram</page-name>
         <node>
             <id>StepNode</id>
@@ -1077,6 +1086,19 @@
                 </content>
             </rectangle>
         </node>
+        <action>
+            <id>OpenParentAction</id>
+            <label>Go Up</label>
+            <context>Sapphire.Diagram.Header</context>
+            <key-binding>ARROW_UP</key-binding>
+            <group>OpenParentButtonGroup</group>
+            <location>before:Sapphire.Diagram.Zoom.In</location>
+        </action>
+        <action-handler>
+            <action>OpenParentAction</action>
+            <id>OpenParentActionHandler</id>
+            <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionHandler</impl>
+        </action-handler>
     </diagram-page>
 
 

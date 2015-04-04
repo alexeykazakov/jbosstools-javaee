@@ -24,8 +24,8 @@ import org.jboss.tools.common.text.ext.IMultiPageEditor;
 
 public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 	
-	private static final int DESIGN_PAGE_INDEX = 0;
-	private static final int DIAGRAM_PAGE_INDEX = 1;
+	public static final int DESIGN_PAGE_INDEX = 0;
+	public static final int DIAGRAM_PAGE_INDEX = 1;
 	
 	private Job jobModel;
 	private StructuredTextEditor schemaSourceEditor;
@@ -82,5 +82,26 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 
 		public MasterDetailsEditorPage getFormEditor() {
 			return design;
+		}
+
+		public void changeDiagramContent(Element element) {
+			SapphireDiagramEditor diagram = new SapphireDiagramEditor(
+					this, element,
+					DefinitionLoader.sdef( getClass()).page( "DiagramPage" ) // TODO
+			);
+
+			try {
+				addEditorPage(JobXMLEditor.DIAGRAM_PAGE_INDEX, diagram);
+			} catch (PartInitException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			removePage(JobXMLEditor.DIAGRAM_PAGE_INDEX + 1);		
+			setActiveEditor(diagram);
+		}
+		
+		public void goUp(Flow child) {
+			changeDiagramContent(child.parent().element());
 		}
 }
