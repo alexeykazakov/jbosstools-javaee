@@ -20,6 +20,7 @@ import org.eclipse.sapphire.modeling.annotations.Label;
 import org.eclipse.sapphire.modeling.annotations.Service;
 import org.eclipse.sapphire.modeling.annotations.Services;
 import org.eclipse.sapphire.modeling.annotations.Type;
+import org.eclipse.sapphire.modeling.xml.annotations.CustomXmlListBinding;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlListBinding;
 import org.jboss.tools.batch.ui.editor.internal.services.NextPossibleValuesService;
@@ -54,6 +55,12 @@ public interface Split extends FlowElement {
 	ListProperty PROP_FLOWS = new ListProperty( TYPE, "Flows" );
 
 	ElementList<Flow> getFlows();
+	
+//	@Type( base = NextAttributeWrapper.class)
+//	@CustomXmlListBinding(impl = NextAttributeWrapperBinding.class)
+//	ListProperty PROP_NEXT_ATTRIBUTE_WRAPPERS = new ListProperty( TYPE, "NextAttributeWrappers" );
+//
+//	ElementList<NextAttributeWrapper> getNextAttributeWrappers();
 
 }
 

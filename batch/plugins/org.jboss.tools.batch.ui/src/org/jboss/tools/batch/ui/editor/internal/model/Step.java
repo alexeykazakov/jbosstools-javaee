@@ -14,13 +14,17 @@ import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ElementHandle;
 import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.ElementProperty;
+import org.eclipse.sapphire.ElementReference;
 import org.eclipse.sapphire.ElementType;
 import org.eclipse.sapphire.ListProperty;
+import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.Value;
 import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.CountConstraint;
 import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
+import org.eclipse.sapphire.modeling.annotations.Reference;
+import org.eclipse.sapphire.modeling.annotations.Required;
 import org.eclipse.sapphire.modeling.annotations.Service;
 import org.eclipse.sapphire.modeling.annotations.Services;
 import org.eclipse.sapphire.modeling.annotations.Type;
@@ -42,16 +46,31 @@ public interface Step extends FlowElement {
 
 	ElementType TYPE = new ElementType( Step.class );
 
+//	@Label( standard = "next" )
+//	@XmlBinding( path = "@next" )
+//	@Services ( {
+//		@Service( impl = NextPossibleValuesService.class )
+//	})
+//
+//	ValueProperty PROP_NEXT = new ValueProperty( TYPE, "Next" );
+
+//	Value<String> getNext();
+//	void setNext( String next);
+	
 	@Label( standard = "next" )
 	@XmlBinding( path = "@next" )
-	@Services ( {
-		@Service( impl = NextPossibleValuesService.class )
-	})
+	@Required
+	@Reference(target = FlowElement.class)
+	@ElementReference(list = "/FlowElements" , key = "id")
 
 	ValueProperty PROP_NEXT = new ValueProperty( TYPE, "Next" );
 
-	Value<String> getNext();
-	void setNext( String next);
+	ReferenceValue<String, FlowElement> getNext();
+	void setNext( String value);
+	
+	
+	
+
 
 	@Label( standard = "allow-start-if-complete" )
 	@XmlBinding( path = "@allow-start-if-complete" )
