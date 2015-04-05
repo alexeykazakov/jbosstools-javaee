@@ -100,8 +100,4 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 			removePage(JobXMLEditor.DIAGRAM_PAGE_INDEX + 1);		
 			setActiveEditor(diagram);
 		}
-		
-		public void goUp(Flow child) {
-			changeDiagramContent(child.parent().element());
-		}
 }

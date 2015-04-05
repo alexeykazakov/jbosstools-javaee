@@ -29,7 +29,7 @@
 				</section>
 
 				<section>
-			   	 <label>Flow Elements</label>
+					<label>Flow Elements</label>
 					<content>
 						<include>FlowElementsForm</include>
 					</content>
@@ -46,7 +46,7 @@
 				<node-include>FlowElementsNode</node-include>
 
 			</node>
-            
+
 		</root-node>
 	</editor-page>
 
@@ -73,10 +73,8 @@
 		<section>
 			<description>Define a flow element</description>
 			<content>
-				<!--actuator>
-					<action-id>Sapphire.Add</action-id>
-					<label>add a flow</label>
-				</actuator-->
+				<!--actuator> <action-id>Sapphire.Add</action-id> <label>add a flow</label> 
+					</actuator -->
 				<include>FlowElementsForm</include>
 			</content>
 		</section>
@@ -152,18 +150,13 @@
 			</section>
 			<section>
 				<label>No Rollback Exception Classes</label>
-				<content>type filter text
+				<content>
+					type filter text
 					<include>NoRollbackExceptionClassesForm</include>
 				</content>
 			</section>
-			<!--
-			<section>
-				<label>Reader</label>
-				<content>type filter text
-					<include>ReaderForm</include>
-				</content>
-			</section>
-			-->
+			<!-- <section> <label>Reader</label> <content>type filter text <include>ReaderForm</include> 
+				</content> </section> -->
 			<node-include>ReaderNode</node-include>
 			<node-include>WriterNode</node-include>
 			<node-include>ProcessNodeFactory</node-include>
@@ -175,7 +168,7 @@
 		<id>ProcessNodeFactory</id>
 		<property>Processor</property>
 		<case>
-		    <element-type>Processor</element-type>
+			<element-type>Processor</element-type>
 			<image>${ Image() }</image>
 			<label>${ Ref == null ? "" : Ref }</label>
 			<section>
@@ -199,7 +192,7 @@
 		<id>CheckpointAlgorithmNodeFactory</id>
 		<property>CheckpointAlgorithm</property>
 		<case>
-		    <element-type>CheckpointAlgorithm</element-type>
+			<element-type>CheckpointAlgorithm</element-type>
 			<image>${ Image() }</image>
 			<label>${ Ref == null ? "" : Ref }</label>
 			<section>
@@ -289,38 +282,38 @@
 					<path>Partition</path>
 					<case>
 						<content>
-				<section>
-					<visible-when>${Mapper != null || Plan == null}</visible-when>
-					<label>Mapper</label>
-					<content>
-						<include>MapperForm</include>
-					</content>
-				</section>
-				<section>
-					<visible-when>${Mapper == null || Plan != null}</visible-when>
-					<label>Plan</label>
-					<content>
-						<include>PlanForm</include>
-					</content>
-				</section>
-				<section>
-					<label>Collector</label>
-					<content>
-						<include>CollectorForm</include>
-					</content>
-				</section>
-				<section>
-					<label>Analyzer</label>
-					<content>
-						<include>AnalyzerForm</include>
-					</content>
-				</section>
-				<section>
-					<label>Reducer</label>
-					<content>
-						<include>ReducerForm</include>
-					</content>
-				</section>
+							<section>
+								<visible-when>${Mapper != null || Plan == null}</visible-when>
+								<label>Mapper</label>
+								<content>
+									<include>MapperForm</include>
+								</content>
+							</section>
+							<section>
+								<visible-when>${Mapper == null || Plan != null}</visible-when>
+								<label>Plan</label>
+								<content>
+									<include>PlanForm</include>
+								</content>
+							</section>
+							<section>
+								<label>Collector</label>
+								<content>
+									<include>CollectorForm</include>
+								</content>
+							</section>
+							<section>
+								<label>Analyzer</label>
+								<content>
+									<include>AnalyzerForm</include>
+								</content>
+							</section>
+							<section>
+								<label>Reducer</label>
+								<content>
+									<include>ReducerForm</include>
+								</content>
+							</section>
 						</content>
 					</case>
 				</with>
@@ -332,7 +325,8 @@
 	<node>
 		<id>PlanNode</id>
 		<label>Plan</label>
-		<visible-when>${Partition != null and Partition.Plan != null}</visible-when>
+		<visible-when>${Partition != null and Partition.Plan != null}
+		</visible-when>
 		<section>
 			<content>
 				<with>
@@ -340,24 +334,24 @@
 					<case>
 						<content>
 
-				<with>
-					<path>Plan</path>
-					<case>
-						<content>
-				<section>
-					<label>Plan</label>
-					<content>
-						<property-editor>
-							<property>Partitions</property>
-						</property-editor>
-						<property-editor>
-							<property>Threads</property>
-						</property-editor>
-					</content>
-				</section>
-						</content>
-					</case>
-				</with>
+							<with>
+								<path>Plan</path>
+								<case>
+									<content>
+										<section>
+											<label>Plan</label>
+											<content>
+												<property-editor>
+													<property>Partitions</property>
+												</property-editor>
+												<property-editor>
+													<property>Threads</property>
+												</property-editor>
+											</content>
+										</section>
+									</content>
+								</case>
+							</with>
 
 						</content>
 					</case>
@@ -574,14 +568,14 @@
 			</section>
 
 			<section>
-			    <label>Flow Elements</label>
+				<label>Flow Elements</label>
 				<content>
 					<include>FlowElementsForm</include>
 				</content>
 			</section>
 
 			<section>
-			    <label>Transitions</label>
+				<label>Transitions</label>
 				<content>
 					<include>OutcomesForm</include>
 				</content>
@@ -607,7 +601,7 @@
 			</section>
 
 			<section>
-			    <label>Flow Elements</label>
+				<label>Flow Elements</label>
 				<content>
 					<include>FlowsForm</include>
 				</content>
@@ -632,7 +626,7 @@
 			</section>
 
 			<section>
-			    <label>Transitions</label>
+				<label>Transitions</label>
 				<content>
 					<include>OutcomesForm</include>
 				</content>
@@ -659,14 +653,14 @@
 			</section>
 
 			<section>
-			    <label>Partition</label>
+				<label>Partition</label>
 				<content>
 					<include>PartitionForm</include>
 				</content>
 			</section>
 
 			<section>
-			    <label>Transitions</label>
+				<label>Transitions</label>
 				<content>
 					<include>OutcomesForm</include>
 				</content>
@@ -705,14 +699,14 @@
 			</section>
 
 			<section>
-			    <label>Flow Elements</label>
+				<label>Flow Elements</label>
 				<content>
 					<include>FlowElementsForm</include>
 				</content>
 			</section>
 
 			<section>
-			    <label>Transitions</label>
+				<label>Transitions</label>
 				<content>
 					<include>OutcomesForm</include>
 				</content>
@@ -928,178 +922,264 @@
 			</with>
 		</content>
 	</form>
-    <diagram-page>
-        <id>DiagramPage</id>
-        <element-type>org.jboss.tools.batch.ui.editor.internal.model.Job</element-type>
-        <node>
-            <id>FlowNode</id>
-            <property>FlowElements</property>
-            <model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow</model-element-type>
-            <tool-palette-label>Flow</tool-palette-label>
-            <rectangle>
-                <content>
-                    <image>
-                        <path>flow.png</path>
-                    </image>
-                    <text>
-                        <content>Flow</content>
-                    </text>
-                </content>
+	<diagram-page>
+		<id>DiagramPage</id>
+		<element-type>org.jboss.tools.batch.ui.editor.internal.model.Job
+		</element-type>
+		<node>
+			<id>FlowNode</id>
+			<property>FlowElements</property>
+			<model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow
+			</model-element-type>
+			<tool-palette-label>Flow</tool-palette-label>
+			<rectangle>
+				<content>
+					<image>
+						<path>flow.png</path>
+					</image>
+					<text>
+						<content>Flow</content>
+					</text>
+				</content>
+				<background>
+					<gradient></gradient>
+				</background>
+				<sequence-layout>
+					<orientation>horizontal</orientation>
+				</sequence-layout>
+			</rectangle>
+			<tool-palette-image>flow.png</tool-palette-image>
+			<connection-binding>
+				<connection-id>NextOnConnection</connection-id>
+				<property>NextElements</property>
+				<instance-id>NextOnConnection.Flow${Parent().id}To${To}</instance-id>
+				<endpoint2>
+					<property>To</property>
+					<value>${id}</value>
+				</endpoint2>
+				<label>${on}</label>
+			</connection-binding>
+			<action>
+				<id>OpenFlowAction</id>
+				<label>Open Flow</label>
+			</action>
+			<action-handler>
+				<action>OpenFlowAction</action>
+				<id>OpenFlowActionHandler</id>
+				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
+				</impl>
+			</action-handler>
+		</node>
+		<page-header-text>${parent() == null ? '' : concat(parent().id,
+			'/')}${id == null ? &quot;_&quot; : id}</page-header-text>
+		<page-name>Diagram</page-name>
+		<node>
+			<id>StepNode</id>
+			<property>FlowElements</property>
+			<model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Step
+			</model-element-type>
+			<tool-palette-label>Step</tool-palette-label>
+			<rectangle>
+				<content>
+					<rectangle>
+						<content>
+							<image>
+								<path>step.png</path>
+							</image>
+							<text>
+								<content>Step</content>
+							</text>
+						</content>
+						<sequence-layout>
+							<orientation>horizontal</orientation>
+						</sequence-layout>
+					</rectangle>
+					<rectangle>
+						<content>
+							<text>
+								<content>${id}</content>
+							</text>
+						</content>
+					</rectangle>
+				</content>
+				<background>
+					<gradient></gradient>
+				</background>
+				<sequence-layout>
+					<orientation>vertical</orientation>
+				</sequence-layout>
+			</rectangle>
+			<tool-palette-image>step.png</tool-palette-image>
+			<connection-binding>
+				<connection-id>NextOnConnection</connection-id>
+				<property>NextElements</property>
+				<instance-id>NextOnConnection.Step${Parent().id}To${To}</instance-id>
+				<endpoint2>
+					<property>To</property>
+					<value>${id}</value>
+				</endpoint2>
+				<label>${on}</label>
+			</connection-binding>
+		</node>
+		<connection>
+			<id>NextOnConnection</id>
+			<tool-palette-label>Next On</tool-palette-label>
+			<endpoint2>
+				<type>arrow</type>
+			</endpoint2>
+			<tool-palette-image>next.png</tool-palette-image>
+			<endpoint1>
+				<type>none</type>
+			</endpoint1>
+			<line-style>dash</line-style>
+			<tool-palette-desc>Conditional transition to another Step, Flow,
+				Split or Decision.</tool-palette-desc>
+            <line-width>2</line-width>
+		</connection>
+		<grid>
+			<visible>true</visible>
+		</grid>
+		<guides>
+			<visible>true</visible>
+		</guides>
+		<node>
+			<id>DecisionNode</id>
+			<property>FlowElements</property>
+			<model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Decision
+			</model-element-type>
+			<tool-palette-label>Decision</tool-palette-label>
+			<tool-palette-image>decision.png</tool-palette-image>
+			<connection-binding>
+				<connection-id>NextOnConnection</connection-id>
+				<property>NextElements</property>
+				<instance-id>NextOnConnection.Decision${Parent().id}To${To}
+				</instance-id>
+				<endpoint2>
+					<property>To</property>
+					<value>${id}</value>
+				</endpoint2>
+				<label>${on}</label>
+			</connection-binding>
+			<rectangle>
+				<content>
+					<text>
+						<truncatable>false</truncatable>
+						<content>Decision</content>
+					</text>
+				</content>
                 <background>
                     <gradient></gradient>
                 </background>
+			</rectangle>
+            <selection-presentation>
+                <background>
+                    <gradient></gradient>
+                </background>
+            </selection-presentation>
+		</node>
+		<node>
+			<id>SplitNode</id>
+			<property>FlowElements</property>
+			<model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Split
+			</model-element-type>
+			<tool-palette-label>Split</tool-palette-label>
+			<tool-palette-image>split.png</tool-palette-image>
+			<rectangle>
+				<content>
+					<text>
+						<truncatable>false</truncatable>
+						<content>{</content>
+                        <font>
+                            <size>32</size>
+                        </font>
+					</text>
+                    <rectangle>
+                        <content>
+                            <shape-factory>
+                                <case>
+                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow</element-type>
+                                    <rectangle>
+                                        <action-handler>
+                                            <action>OpenSplitFlowAction</action>
+                                            <id>OpenSplitFlowActionHandler</id>
+                                            <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
+                                        </action-handler>
+                                        <action>
+                                            <id>OpenSplitFlowAction</id>
+                                            <label>Open Flow</label>
+                                        </action>
+                                        <content>
+                                            <text>
+                                                <content>Flow ${id}</content>
+                                                <truncatable>false</truncatable>
+                                            </text>
+                                        </content>
+                                    </rectangle>
+                                </case>
+                                <property>Flows</property>
+                            </shape-factory>
+                        </content>
+                    </rectangle>
+                    <text>
+                        <content>}</content>
+                        <font>
+                            <size>32</size>
+                        </font>
+                        <truncatable>false</truncatable>
+                    </text>
+				</content>
                 <sequence-layout>
                     <orientation>horizontal</orientation>
                 </sequence-layout>
-            </rectangle>
-            <tool-palette-image>flow.png</tool-palette-image>
-            <connection-binding>
-                <connection-id>NextConnection</connection-id>
-                <property>NextElements</property>
-                <instance-id>NextConnection.Flow${Parent().id}To${To}</instance-id>
-                <endpoint2>
-                    <property>To</property>
-                    <value>${id}</value>
-                </endpoint2>
-                <label>${on}</label>
-            </connection-binding>
-            <action>
-                <id>OpenFlowDiagramAction</id>
-                <label>Open Flow</label>
-            </action>
-            <action-handler>
-                <id>OpenFlowDiagramActionHandler</id>
-                <action>OpenFlowDiagramAction</action>
-                <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowDiagramActionHandler</impl>
-            </action-handler>
-        </node>
-        <page-header-text>${parent() == null ? '' : concat(parent().id, '/')}${id == null ? &quot;_&quot; : id}</page-header-text>
-        <page-name>Diagram</page-name>
-        <node>
-            <id>StepNode</id>
-            <property>FlowElements</property>
-            <model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Step</model-element-type>
-            <tool-palette-label>Step</tool-palette-label>
-            <rectangle>
-                <content>
-                    <rectangle>
-                        <content>
-                            <image>
-                                <path>step.png</path>
-                            </image>
-                            <text>
-                                <content>Step</content>
-                            </text>
-                        </content>
-                        <sequence-layout>
-                            <orientation>horizontal</orientation>
-                        </sequence-layout>
-                    </rectangle>
-                    <rectangle>
-                        <content>
-                            <text>
-                                <content>${id}</content>
-                            </text>
-                        </content>
-                    </rectangle>
-                </content>
                 <background>
                     <gradient></gradient>
                 </background>
-                <sequence-layout>
-                    <orientation>vertical</orientation>
-                </sequence-layout>
-            </rectangle>
-            <tool-palette-image>step.png</tool-palette-image>
-             <connection-binding>
-                <connection-id>NextConnection</connection-id>
-                <property>NextElements</property>
-                <instance-id>NextConnection.Step${Parent().id}To${To}</instance-id>
-                <endpoint2>
-                    <property>To</property>
-                    <value>${id}</value>
-                </endpoint2>
-                <label>${on}</label>
-            </connection-binding>
-        </node>
+			</rectangle>
+            <selection-presentation>
+                <background>
+                    <gradient></gradient>
+                </background>
+            </selection-presentation>
+		</node>
+		<action>
+			<id>OpenParentAction</id>
+			<label>Go Up</label>
+			<context>Sapphire.Diagram.Header</context>
+			<key-binding>ARROW_UP</key-binding>
+			<group>OpenParentButtonGroup</group>
+			<location>before:Sapphire.Diagram.Zoom.In</location>
+		</action>
+		<action-handler>
+			<action>OpenParentAction</action>
+			<id>OpenParentActionHandler</id>
+			<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionHandler
+			</impl>
+		</action-handler>
         <connection>
-            <id>NextConnection</id>
-            <tool-palette-label>Next On</tool-palette-label>
+            <id>NextAttributeConnection</id>
             <endpoint2>
                 <type>arrow</type>
             </endpoint2>
-            <tool-palette-image>next.png</tool-palette-image>
-            <endpoint1>
-                <type>none</type>
-            </endpoint1>
-            <line-style>dash</line-style>
-            <tool-palette-desc>Conditional transition to another Step, Flow, Split or Decision.</tool-palette-desc>
+            <line-style>solid</line-style>
+            <tool-palette-label>Next</tool-palette-label>
+            <line-width>2</line-width>
+            <properties-view>
+                <page>
+                    <content>
+                        <actuator>
+                            <action-id>asddsasad</action-id>
+                            <label>dsadsa</label>
+                        </actuator>
+                    </content>
+                </page>
+            </properties-view>
         </connection>
-
-<!--         <connection-service-type>standard</connection-service-type> -->
-<!--         <service> -->
-<!--             <implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramConnectionService</implementation> -->
-<!--         </service> -->
-        <grid>
-            <visible>true</visible>
-        </grid>
-        <guides>
-            <visible>true</visible>
-        </guides>
-        <node>
-            <id>DecisionNode</id>
-            <property>FlowElements</property>
-            <model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Decision</model-element-type>
-            <tool-palette-label>Decision</tool-palette-label>
-            <tool-palette-image>decision.png</tool-palette-image>
-            <connection-binding>
-                <connection-id>NextConnection</connection-id>
-                <property>NextElements</property>
-                <instance-id>NextConnection.Decision${Parent().id}To${To}</instance-id>
-                <endpoint2>
-                    <property>To</property>
-                    <value>${id}</value>
-                </endpoint2>
-                <label>${on}</label>
-            </connection-binding>
-            <rectangle>
-                <content>
-                    <text>
-                        <truncatable>false</truncatable>
-                        <content>Decision</content>
-                    </text>
-                </content>
-            </rectangle>
-        </node>
-        <node>
-            <id>SplitNode</id>
-            <property>FlowElements</property>
-            <model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Split</model-element-type>
-            <tool-palette-label>Split</tool-palette-label>
-            <tool-palette-image>split.png</tool-palette-image>
-            <rectangle>
-                <content>
-                    <text>
-                        <truncatable>false</truncatable>
-                        <content>Split</content>
-                    </text>
-                </content>
-            </rectangle>
-        </node>
-        <action>
-            <id>OpenParentAction</id>
-            <label>Go Up</label>
-            <context>Sapphire.Diagram.Header</context>
-            <key-binding>ARROW_UP</key-binding>
-            <group>OpenParentButtonGroup</group>
-            <location>before:Sapphire.Diagram.Zoom.In</location>
-        </action>
-        <action-handler>
-            <action>OpenParentAction</action>
-            <id>OpenParentActionHandler</id>
-            <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionHandler</impl>
-        </action-handler>
-    </diagram-page>
+        
+		<connection-service-type>custom</connection-service-type>
+		<service>
+			<implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramConnectionService</implementation>
+		</service>
+	</diagram-page>
 
 
 </definition>
