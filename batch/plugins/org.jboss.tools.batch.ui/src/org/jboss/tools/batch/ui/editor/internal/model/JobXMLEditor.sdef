@@ -1412,6 +1412,16 @@
                 <image>properties.png</image>
             </page>
         </properties-view>
+        <palette>
+            <compartment>
+                <id>Sapphire.Diagram.Palette.Connections</id>
+                <label>Transitions</label>
+            </compartment>
+            <compartment>
+                <id>Sapphire.Diagram.Palette.Nodes</id>
+                <label>Flow Elements</label>
+            </compartment>
+        </palette> 
 	</diagram-page>
 
 
