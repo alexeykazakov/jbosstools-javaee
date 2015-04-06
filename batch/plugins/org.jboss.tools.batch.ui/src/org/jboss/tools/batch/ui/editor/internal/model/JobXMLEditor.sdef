@@ -938,7 +938,10 @@
 						<path>flow.png</path>
 					</image>
 					<text>
-						<content>Flow</content>
+						<content>${id == null ? '' : id}</content>
+                        <font>
+                            <bold></bold>
+                        </font>
 					</text>
 				</content>
 				<background>
@@ -952,7 +955,8 @@
 			<connection-binding>
 				<connection-id>NextOnConnection</connection-id>
 				<property>NextElements</property>
-				<instance-id>NextOnConnection.Flow${Parent().id}To${To}</instance-id>
+				<instance-id>NextOnConnection.Flow${Parent().id}To${To}
+				</instance-id>
 				<endpoint2>
 					<property>To</property>
 					<value>${id}</value>
@@ -981,39 +985,29 @@
 			<tool-palette-label>Step</tool-palette-label>
 			<rectangle>
 				<content>
-					<rectangle>
-						<content>
-							<image>
-								<path>step.png</path>
-							</image>
-							<text>
-								<content>Step</content>
-							</text>
-						</content>
-						<sequence-layout>
-							<orientation>horizontal</orientation>
-						</sequence-layout>
-					</rectangle>
-					<rectangle>
-						<content>
-							<text>
-								<content>${id}</content>
-							</text>
-						</content>
-					</rectangle>
+					<image>
+						<path>step.png</path>
+					</image>
+					<text>
+						<content>${id == null ? '' : id}</content>
+                        <font>
+                            <bold></bold>
+                        </font>
+					</text>
 				</content>
 				<background>
 					<gradient></gradient>
 				</background>
 				<sequence-layout>
-					<orientation>vertical</orientation>
+					<orientation>horizontal</orientation>
 				</sequence-layout>
 			</rectangle>
 			<tool-palette-image>step.png</tool-palette-image>
 			<connection-binding>
 				<connection-id>NextOnConnection</connection-id>
 				<property>NextElements</property>
-				<instance-id>NextOnConnection.Step${Parent().id}To${To}</instance-id>
+				<instance-id>NextOnConnection.Step${Parent().id}To${To}
+				</instance-id>
 				<endpoint2>
 					<property>To</property>
 					<value>${id}</value>
@@ -1033,8 +1027,9 @@
 			</endpoint1>
 			<line-style>dash</line-style>
 			<tool-palette-desc>Conditional transition to another Step, Flow,
-				Split or Decision.</tool-palette-desc>
-            <line-width>2</line-width>
+				Split or Decision.
+			</tool-palette-desc>
+			<line-width>2</line-width>
 		</connection>
 		<grid>
 			<visible>true</visible>
@@ -1062,20 +1057,28 @@
 			</connection-binding>
 			<rectangle>
 				<content>
+					<image>
+						<path>decision.png</path>
+					</image>
 					<text>
-						<truncatable>false</truncatable>
-						<content>Decision</content>
+						<content>${id == null ? '' : id}</content>
+                        <font>
+                            <bold></bold>
+                        </font>
 					</text>
 				</content>
-                <background>
-                    <gradient></gradient>
-                </background>
+				<background>
+					<gradient></gradient>
+				</background>
+				<sequence-layout>
+					<orientation>horizontal</orientation>
+				</sequence-layout>
 			</rectangle>
-            <selection-presentation>
-                <background>
-                    <gradient></gradient>
-                </background>
-            </selection-presentation>
+			<selection-presentation>
+				<background>
+					<gradient></gradient>
+				</background>
+			</selection-presentation>
 		</node>
 		<node>
 			<id>SplitNode</id>
@@ -1086,15 +1089,31 @@
 			<tool-palette-image>split.png</tool-palette-image>
 			<rectangle>
 				<content>
-					<text>
-						<truncatable>false</truncatable>
-						<content>{</content>
-                        <font>
-                            <size>32</size>
-                        </font>
-					</text>
                     <rectangle>
                         <content>
+                            <image>
+								<path>split.png</path>
+							</image>
+							<text>
+								<content>${id == null ? '' : id}</content>
+                                <font>
+                                    <bold></bold>
+                                </font>
+							</text>
+                        </content>
+                        <sequence-layout>
+                            <orientation>horizontal</orientation>
+                        </sequence-layout>                    
+                    </rectangle>
+                    <rectangle>
+                        <content>
+                            <text>
+                                <content>{</content>
+                                <font>
+                                    <size>32</size>
+                                </font>
+                                <truncatable>false</truncatable>
+                            </text>
                             <shape-factory>
                                 <case>
                                     <element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow</element-type>
@@ -1118,28 +1137,35 @@
                                 </case>
                                 <property>Flows</property>
                             </shape-factory>
+                            <text>
+                                <content>}</content>
+                                <font>
+                                    <size>32</size>
+                                </font>
+                                <truncatable>false</truncatable>
+                            </text>
                         </content>
+                        <sequence-layout>
+                            <orientation>horizontal</orientation>
+                        </sequence-layout>
+                        <sequence-layout-constraint>
+                            <expand-vertically>false</expand-vertically>
+                            <expand-horizontally>false</expand-horizontally>
+                        </sequence-layout-constraint>
                     </rectangle>
-                    <text>
-                        <content>}</content>
-                        <font>
-                            <size>32</size>
-                        </font>
-                        <truncatable>false</truncatable>
-                    </text>
 				</content>
-                <sequence-layout>
-                    <orientation>horizontal</orientation>
-                </sequence-layout>
-                <background>
-                    <gradient></gradient>
-                </background>
+				<sequence-layout>
+					<orientation>vertical</orientation>
+				</sequence-layout>
+				<background>
+					<gradient></gradient>
+				</background>
 			</rectangle>
-            <selection-presentation>
-                <background>
-                    <gradient></gradient>
-                </background>
-            </selection-presentation>
+			<selection-presentation>
+				<background>
+					<gradient></gradient>
+				</background>
+			</selection-presentation>
 		</node>
 		<action>
 			<id>OpenParentAction</id>
@@ -1155,29 +1181,29 @@
 			<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionHandler
 			</impl>
 		</action-handler>
-        <connection>
-            <id>NextAttributeConnection</id>
-            <endpoint2>
-                <type>arrow</type>
-            </endpoint2>
-            <line-style>solid</line-style>
-            <tool-palette-label>Next</tool-palette-label>
-            <line-width>2</line-width>
-            <properties-view>
-                <page>
-                    <content>
-                        <actuator>
-                            <action-id>asddsasad</action-id>
-                            <label>dsadsa</label>
-                        </actuator>
-                    </content>
-                </page>
-            </properties-view>
-        </connection>
-        
+		<connection>
+			<id>NextAttributeConnection</id>
+			<endpoint2>
+				<type>arrow</type>
+			</endpoint2>
+			<line-style>solid</line-style>
+			<tool-palette-label>Next</tool-palette-label>
+			<line-width>2</line-width>
+			<properties-view>
+				<page>
+					<content>
+						<actuator>
+							<action-id>asddsasad</action-id>
+							<label>dsadsa</label>
+						</actuator>
+					</content>
+				</page>
+			</properties-view>
+		</connection>
 		<connection-service-type>custom</connection-service-type>
 		<service>
-			<implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramConnectionService</implementation>
+			<implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramConnectionService
+			</implementation>
 		</service>
 	</diagram-page>
 

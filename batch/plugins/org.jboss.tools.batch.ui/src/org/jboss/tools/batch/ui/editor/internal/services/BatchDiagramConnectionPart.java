@@ -7,11 +7,19 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.eclipse.sapphire.Element;
+import org.eclipse.sapphire.Event;
+import org.eclipse.sapphire.Listener;
+import org.eclipse.sapphire.ReferenceValue;
+import org.eclipse.sapphire.services.ReferenceService;
 import org.eclipse.sapphire.ui.Point;
 import org.eclipse.sapphire.ui.SapphireActionSystem;
+import org.eclipse.sapphire.ui.diagram.ConnectionAddEvent;
+import org.eclipse.sapphire.ui.diagram.ConnectionDeleteEvent;
+import org.eclipse.sapphire.ui.diagram.ConnectionEndpointsEvent;
 import org.eclipse.sapphire.ui.diagram.DiagramConnectionPart;
 import org.eclipse.sapphire.ui.diagram.def.IDiagramConnectionDef;
 import org.eclipse.sapphire.ui.diagram.editor.DiagramNodePart;
+import org.eclipse.sapphire.ui.diagram.editor.SapphireDiagramEditorPagePart;
 import org.jboss.tools.batch.ui.editor.internal.model.Flow;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
 import org.jboss.tools.batch.ui.editor.internal.model.Split;
@@ -19,17 +27,23 @@ import org.jboss.tools.batch.ui.editor.internal.model.Step;
 
 public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
-	private DiagramNodePart node1;
-	private DiagramNodePart node2;
+	private Element srcElement;
+	private FlowElement targetElement;
 	private String connectionType;
 	private List<Point> bendpoints = new ArrayList<>();
 	private String label;
 	private Point labelPosition;
+	private BatchDiagramConnectionEventHandler eventHandler;
+	private SapphireDiagramEditorPagePart diagramPart;
+	private Listener listener;
 
-	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, String connectionType) {
-		this.node1 = node1;
-		this.node2 = node2;
+	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, String connectionType,
+			SapphireDiagramEditorPagePart diagramPart, BatchDiagramConnectionEventHandler eventHandler) {
+		this.srcElement = node1.getLocalModelElement();
+		this.targetElement = (FlowElement) node2.getLocalModelElement();
 		this.connectionType = connectionType;
+		this.eventHandler = eventHandler;
+		this.diagramPart = diagramPart;
 
 		String nextId = ((FlowElement) node2.getLocalModelElement()).getId().content();
 		Element element = node1.getLocalModelElement();
@@ -45,6 +59,57 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	}
 
 	@Override
+	protected void init() {
+		initializeListeners();
+
+		eventHandler.onConnectionAddEvent(new ConnectionAddEvent(this));
+	}
+
+	private void initializeListeners() {
+		ReferenceValue<?, ?> referenceValue = (ReferenceValue<?, ?>) srcElement.property(Step.PROP_NEXT); // FIXME
+		final ReferenceService<?> refService = referenceValue.service(ReferenceService.class);
+		listener = new Listener() {
+			@Override
+			public void handle(Event event) {
+				FlowElement newTarget = ((Step) srcElement).getNext().target();
+
+				if (newTarget == null) {
+					refService.detach(this);
+					eventHandler.onConnectionDeleteEvent(new ConnectionDeleteEvent(BatchDiagramConnectionPart.this));
+				} else if (newTarget != targetElement) {
+					changeTargetElement(newTarget);
+				}
+			}
+		};
+		refService.attach(listener);
+	}
+
+	private void changeTargetElement(Element newTarget) {
+		targetElement = (FlowElement) newTarget;		
+		String id = targetElement.getId().content();
+		
+		if (srcElement instanceof Step) {	
+			((Step) srcElement).setNext(id);
+		} else if (srcElement instanceof Flow) {
+			((Flow) srcElement).setNext(id);
+		} else if (srcElement instanceof Split) {
+			((Split) srcElement).setNext(id);
+		} else {
+			throw new IllegalArgumentException(); // TODO
+		}
+		
+		eventHandler.onConnectionEndpointsEvent(new ConnectionEndpointsEvent(this));
+	}
+
+	@Override
+	public Set<String> getActionContexts() {
+		Set<String> contextSet = new HashSet<String>();
+		contextSet.add(SapphireActionSystem.CONTEXT_DIAGRAM_CONNECTION);
+		contextSet.add(SapphireActionSystem.CONTEXT_DIAGRAM_CONNECTION_HIDDEN);
+		return contextSet;
+	}
+
+	@Override
 	public boolean removable() {
 		// TODO Auto-generated method stub
 		return true;
@@ -52,16 +117,16 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public void remove() {
-		Element element = node1.getLocalModelElement();
-		if (element instanceof Step) {
-			((Step) element).setNext(null);
-		} else if (element instanceof Flow) {
-			((Flow) element).setNext(null);
-		} else if (element instanceof Split) {
-			((Split) element).setNext(null);
+		if (srcElement instanceof Step) {
+			((Step) srcElement).setNext(null);
+		} else if (srcElement instanceof Flow) {
+			((Flow) srcElement).setNext(null);
+		} else if (srcElement instanceof Split) {
+			((Split) srcElement).setNext(null);
 		} else {
 			throw new IllegalArgumentException(); // TODO
 		}
+		eventHandler.onConnectionDeleteEvent(new ConnectionDeleteEvent(this));
 	}
 
 	@Override
@@ -81,9 +146,9 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	}
 
 	@Override
-	public DiagramConnectionPart reconnect(DiagramNodePart newSrc, DiagramNodePart newTarget) {
-		remove();
-		return new BatchDiagramConnectionPart(newSrc, newTarget, connectionType);
+	public DiagramConnectionPart reconnect(DiagramNodePart newSrc, DiagramNodePart newTargetNode) {
+		changeTargetElement(newTargetNode.getLocalModelElement());
+		return this;
 	}
 
 	@Override
@@ -145,25 +210,12 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public Element getEndpoint1() {
-		return node1.getLocalModelElement();
+		return srcElement;
 	}
 
 	@Override
 	public Element getEndpoint2() {
-		return node2.getLocalModelElement();
-	}
-	
-	@Override
-    public Set<String> getActionContexts()
-    {
-        Set<String> contextSet = new HashSet<String>();
-        contextSet.add(SapphireActionSystem.CONTEXT_DIAGRAM_CONNECTION);
-        contextSet.add(SapphireActionSystem.CONTEXT_DIAGRAM_CONNECTION_HIDDEN);
-        return contextSet;    	
-    }
-
-	public void setNode2(DiagramNodePart nodePart) {
-		node2 = nodePart;		
+		return targetElement;
 	}
 
 }

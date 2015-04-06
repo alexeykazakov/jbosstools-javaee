@@ -4,15 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.sapphire.Element;
-import org.eclipse.sapphire.Event;
-import org.eclipse.sapphire.Listener;
-import org.eclipse.sapphire.Property;
-import org.eclipse.sapphire.ReferenceValue;
+import org.eclipse.sapphire.FilteredListener;
+import org.eclipse.sapphire.PropertyContentEvent;
 import org.eclipse.sapphire.Value;
-import org.eclipse.sapphire.internal.DeclarativeElementReferenceService;
-import org.eclipse.sapphire.services.ReferenceService;
-import org.eclipse.sapphire.services.ServiceEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionAddEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionDeleteEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionEndpointsEvent;
@@ -30,30 +24,30 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 
 	private static final String NEXT_ATTRIBUTE_CONNECTION_ID = "NextAttributeConnection";
 
-	private List<DiagramConnectionPart> connections = new ArrayList<>();
+	private List<DiagramConnectionPart> connections;
 
 	private SapphireDiagramEditorPagePart diagramPart;
+	private EventHandler eventHandler = new EventHandler();
 
 	@Override
 	protected void init() {
 		super.init();
 
 		diagramPart = context(SapphireDiagramEditorPagePart.class);
-		initConnections();
 	}
 
 	private void initConnections() {
+		connections = new ArrayList<>();
+		
 		Job job = (Job) (diagramPart.getLocalModelElement());
 
 		for (FlowElement src : job.getFlowElements()) {
 			Value<String> next = null;
 			if (src instanceof Step) {
 				next = ((Step) src).getNext();
-			}
-			if (src instanceof Flow) {
+			} else if (src instanceof Flow) {
 				next = ((Flow) src).getNext();
-			}
-			if (src instanceof Split) {
+			} else if (src instanceof Split) {
 				next = ((Split) src).getNext();
 			}
 			if (next != null && next.content() != null && !next.content().trim().isEmpty()) {
@@ -65,6 +59,14 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 					}
 				}
 			}
+
+			src.attach(new FilteredListener<PropertyContentEvent>() {
+				@Override
+				protected void handleTypedEvent(final PropertyContentEvent event) {
+					System.out.println(event.toString());
+				}
+			}, "Next");
+
 		}
 	}
 
@@ -81,34 +83,14 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	public DiagramConnectionPart connect(DiagramNodePart node1, DiagramNodePart node2, String connectionType) {
 
 		if (connectionType.equals(NEXT_ATTRIBUTE_CONNECTION_ID)) {
-			final BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2,
-					connectionType);
-			connections.add(connectionPart);
+			BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2, connectionType,
+					diagramPart, eventHandler);
 
-			final Element srcElement = node1.getLocalModelElement();
-			connectionPart.init(diagramPart, srcElement,
+			connectionPart.init(diagramPart, node1.getLocalModelElement(),
 					diagramPart.getDiagramConnectionDef(connectionType), Collections.<String, String> emptyMap());
 			connectionPart.initialize();
 
-			ReferenceValue<?, ?> referenceValue = (ReferenceValue<?, ?>) srcElement
-					.property(Step.PROP_NEXT);
-			ReferenceService<?> refService = referenceValue.service(ReferenceService.class);
-			refService.attach(new Listener() {
-				@Override
-				public void handle(Event event) {
-					FlowElement newTarget = ((Step)srcElement).getNext().target();
-					
-					if (newTarget == null) {
-						BatchDiagramConnectionService.this.broadcast(new ConnectionDeleteEvent(connectionPart));
-					} else {
-						connectionPart.setNode2(diagramPart.getDiagramNodePart(newTarget));
-						BatchDiagramConnectionService.this.broadcast(new ConnectionEndpointsEvent(connectionPart));
-					}
-				}
-			});
-
-			broadcast(new ConnectionAddEvent(connectionPart));
-
+			connections.add(connectionPart);
 			return connectionPart;
 		} else {
 			return super.connect(node1, node2, connectionType);
@@ -118,11 +100,34 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	@Override
 	public List<DiagramConnectionPart> list() {
 		List<DiagramConnectionPart> allConnections = new ArrayList<>();
-
-		allConnections.addAll(super.list());
+		
+		if (connections == null) {
+			initConnections();
+		}
 		allConnections.addAll(connections);
+		allConnections.addAll(super.list());
 
 		return allConnections;
+	}
+
+	private final class EventHandler implements BatchDiagramConnectionEventHandler {
+
+		@Override
+		public void onConnectionEndpointsEvent(ConnectionEndpointsEvent event) {
+			BatchDiagramConnectionService.this.broadcast(event);
+		}
+
+		@Override
+		public void onConnectionAddEvent(ConnectionAddEvent event) {
+			BatchDiagramConnectionService.this.broadcast(event);
+		}
+
+		@Override
+		public void onConnectionDeleteEvent(ConnectionDeleteEvent event) {
+			connections.remove(event.part());
+			BatchDiagramConnectionService.this.broadcast(event);
+		}
+
 	}
 
 	// @Override
