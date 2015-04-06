@@ -943,7 +943,7 @@
                                 <path>flow.png</path>
                             </image>
                             <text>
-                                <content>${id}</content>
+                                <content>${id == null ? '&lt;id&gt;' : id}</content>
                                 <font>
                                     <bold></bold>
                                 </font>
@@ -1031,7 +1031,9 @@
                     </rectangle>
 				</content>
 				<background>
-                    <color></color>
+                    <color>
+                        <Color>#B5B5DB</Color>
+                    </color>
 				</background>
 				<sequence-layout>
 					<orientation>vertical</orientation>
@@ -1081,14 +1083,15 @@
 						<path>step.png</path>
 					</image>
 					<text>
-						<content>${id == null ? '' : id}</content>
+						<content>${id == null ? '&lt;id&gt;' : id}</content>
                         <font>
                             <bold></bold>
                         </font>
 					</text>
+                    <validation-marker></validation-marker>
 				</content>
 				<background>
-					<gradient></gradient>
+                    <color></color>
 				</background>
 				<sequence-layout>
 					<orientation>horizontal</orientation>
@@ -1152,24 +1155,22 @@
 						<path>decision.png</path>
 					</image>
 					<text>
-						<content>${id == null ? '' : id}</content>
+						<content>${id == null ? '&lt;id&gt;' : id}</content>
                         <font>
                             <bold></bold>
                         </font>
 					</text>
+                    <validation-marker></validation-marker>
 				</content>
 				<background>
-					<gradient></gradient>
+                    <color>
+                        <Color>#FFFF00</Color>
+                    </color>
 				</background>
 				<sequence-layout>
 					<orientation>horizontal</orientation>
 				</sequence-layout>
 			</rectangle>
-			<selection-presentation>
-				<background>
-					<gradient></gradient>
-				</background>
-			</selection-presentation>
 		</node>
 		<node>
 			<id>SplitNode</id>
@@ -1186,11 +1187,12 @@
 								<path>split.png</path>
 							</image>
 							<text>
-								<content>${id == null ? '' : id}</content>
+								<content>${id == null ? '&lt;id&gt;' : id}</content>
                                 <font>
                                     <bold></bold>
                                 </font>
 							</text>
+                            <validation-marker></validation-marker>
                         </content>
                         <sequence-layout>
                             <orientation>horizontal</orientation>
@@ -1198,43 +1200,42 @@
                     </rectangle>
                     <rectangle>
                         <content>
-                            <text>
-                                <content>{</content>
-                                <font>
-                                    <size>32</size>
-                                </font>
-                                <truncatable>false</truncatable>
-                            </text>
-                            <shape-factory>
-                                <case>
-                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow</element-type>
-                                    <rectangle>
-                                        <action-handler>
-                                            <action>OpenSplitFlowAction</action>
-                                            <id>OpenSplitFlowActionHandler</id>
-                                            <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
-                                        </action-handler>
-                                        <action>
-                                            <id>OpenSplitFlowAction</id>
-                                            <label>Open Flow</label>
-                                        </action>
-                                        <content>
-                                            <text>
-                                                <content>Flow ${id}</content>
-                                                <truncatable>false</truncatable>
-                                            </text>
-                                        </content>
-                                    </rectangle>
-                                </case>
-                                <property>Flows</property>
-                            </shape-factory>
-                            <text>
-                                <content>}</content>
-                                <font>
-                                    <size>32</size>
-                                </font>
-                                <truncatable>false</truncatable>
-                            </text>
+                            <rectangle>
+                                <content>
+                                    <shape-factory>
+                                        <case>
+                                            <element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow</element-type>
+                                            <rectangle>
+                                                <action-handler>
+                                                    <action>OpenSplitFlowAction</action>
+                                                    <id>OpenSplitFlowActionHandler</id>
+                                                    <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
+                                                </action-handler>
+                                                <action>
+                                                    <id>OpenSplitFlowAction</id>
+                                                    <label>Open Flow</label>
+                                                </action>
+                                                <content>
+                                                    <image>
+                                                        <path>flow.png</path>
+                                                    </image>
+                                                    <text>
+                                                        <content>${id == null ? '&lt;id&gt;' : id}</content>
+                                                        <truncatable>false</truncatable>
+                                                    </text>
+                                                    <validation-marker>
+                                                        <size>small</size>
+                                                    </validation-marker>
+                                                </content>
+                                                <sequence-layout>
+                                                    <orientation>horizontal</orientation>
+                                                </sequence-layout>
+                                            </rectangle>
+                                        </case>
+                                        <property>Flows</property>
+                                    </shape-factory>
+                                </content>
+                            </rectangle>
                         </content>
                         <sequence-layout>
                             <orientation>horizontal</orientation>
@@ -1243,20 +1244,23 @@
                             <expand-vertically>false</expand-vertically>
                             <expand-horizontally>false</expand-horizontally>
                         </sequence-layout-constraint>
+                        <visible-when>${!empty Flows}</visible-when>
+                        <background>
+                            <color>
+                                <Color>#FFFFFF</Color>
+                            </color>
+                        </background>
                     </rectangle>
 				</content>
 				<sequence-layout>
 					<orientation>vertical</orientation>
 				</sequence-layout>
 				<background>
-					<gradient></gradient>
+                    <color>
+                        <Color>#75FF75</Color>
+                    </color>
 				</background>
 			</rectangle>
-			<selection-presentation>
-				<background>
-					<gradient></gradient>
-				</background>
-			</selection-presentation>
 		</node>
 		<action>
 			<id>OpenParentAction</id>
