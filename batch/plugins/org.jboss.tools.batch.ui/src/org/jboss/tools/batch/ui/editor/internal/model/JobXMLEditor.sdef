@@ -1049,7 +1049,7 @@
 					<property>To</property>
 					<value>${id}</value>
 				</endpoint2>
-				<label>${on}</label>
+				<label>${empty on ? '&lt;on&gt;' : on}</label>
 			</connection-binding>
 			<action>
 				<id>OpenFlowAction</id>
@@ -1107,7 +1107,7 @@
 					<property>To</property>
 					<value>${id}</value>
 				</endpoint2>
-				<label>${on}</label>
+				<label>${empty on ? '&lt;on&gt;' : on}</label>
 			</connection-binding>
 		</node>
 		<connection>
@@ -1147,7 +1147,7 @@
 					<property>To</property>
 					<value>${id}</value>
 				</endpoint2>
-				<label>${on}</label>
+				<label>${empty on ? '&lt;on&gt;' : on}</label>
 			</connection-binding>
 			<rectangle>
 				<content>
