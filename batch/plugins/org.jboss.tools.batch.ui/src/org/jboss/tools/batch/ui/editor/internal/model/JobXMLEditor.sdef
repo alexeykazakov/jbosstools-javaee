@@ -1052,6 +1052,7 @@
 			<action>
 				<id>OpenFlowAction</id>
 				<label>Open Flow</label>
+                <tooltip>Display internal structure of the flow in a diagram.</tooltip>
 			</action>
 			<action-handler>
 				<action>OpenFlowAction</action>
@@ -1059,6 +1060,11 @@
 				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
 				</impl>
 			</action-handler>
+            <action-handler>
+                <action>Sapphire.Diagram.Node.Default</action>
+                <id>OpenFlowActionHandler-DoubleClick</id>
+                <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler</impl>
+            </action-handler>
 		</node>
 		<page-header-text>${parent() == null ? '' : concat(parent().id,
 			'/')}${id == null ? &quot;_&quot; : id}</page-header-text>
@@ -1113,8 +1119,7 @@
 			</endpoint1>
 			<line-style>dash</line-style>
 			<tool-palette-desc>Conditional transition to another Step, Flow,
-				Split or Decision.
-			</tool-palette-desc>
+				Split or Decision.</tool-palette-desc>
 			<line-width>2</line-width>
 		</connection>
 		<grid>
