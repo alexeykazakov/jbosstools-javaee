@@ -934,106 +934,112 @@
 			<tool-palette-label>Flow</tool-palette-label>
 			<rectangle>
 				<content>
-                    <rectangle>
-                        <sequence-layout>
-                            <orientation>horizontal</orientation>
-                        </sequence-layout>
-                        <content>
-                            <image>
-                                <path>flow.png</path>
-                            </image>
-                            <text>
-                                <content>${id == null ? '&lt;id&gt;' : id}</content>
-                                <font>
-                                    <bold></bold>
-                                </font>
-                                <truncatable>false</truncatable>
-                            </text>
-                            <validation-marker></validation-marker>
-                        </content>
-                    </rectangle>
-                    <rectangle>
-                        <content>
-                            <text>
-                                <content>Termination</content>
-                                <truncatable>false</truncatable>
-                            </text>
-                            <shape-factory>
-                                <case>
-                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.End</element-type>
-                                    <rectangle>
-                                        <content>
-                                            <image>
-                                                <path>end.png</path>
-                                            </image>
-                                            <text>
-                                                <content>${on == null ? '&lt;status code&gt;' : on}</content>
-                                                <truncatable>false</truncatable>
-                                            </text>
-                                            <validation-marker>
-                                                <size>small</size>
-                                            </validation-marker>
-                                        </content>
-                                        <sequence-layout>
-                                            <orientation>horizontal</orientation>
-                                        </sequence-layout>
-                                    </rectangle>
-                                </case>
-                                <case>
-                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Stop</element-type>
-                                    <rectangle>
-                                        <content>
-                                            <image>
-                                                <path>stop.png</path>
-                                            </image>
-                                            <text>
-                                                <content>${on == null ? '&lt;status code&gt;' : on}</content>
-                                                <truncatable>false</truncatable>
-                                            </text>
-                                            <validation-marker>
-                                                <size>small</size>
-                                            </validation-marker>
-                                        </content>
-                                        <sequence-layout>
-                                            <orientation>horizontal</orientation>
-                                        </sequence-layout>
-                                    </rectangle>
-                                </case>
-                                <case>
-                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Fail</element-type>
-                                    <rectangle>
-                                        <content>
-                                            <image>
-                                                <path>fail.png</path>
-                                            </image>
-                                            <text>
-                                                <content>${on == null ? '&lt;status code&gt;' : on}</content>
-                                                <truncatable>false</truncatable>
-                                            </text>
-                                            <validation-marker>
-                                                <size>small</size>
-                                            </validation-marker>
-                                        </content>
-                                        <sequence-layout>
-                                            <orientation>horizontal</orientation>
-                                        </sequence-layout>
-                                    </rectangle>
-                                </case>
-                                <property>TerminatingElements</property>
-                            </shape-factory>
-                        </content>
-                        <background>
-                            <color>
-                                <Color>#FFFFFF</Color>
-                            </color>
-                        </background>
-                        <visible-when>${! empty TerminatingElements}</visible-when>
-                    </rectangle>
+					<rectangle>
+						<sequence-layout>
+							<orientation>horizontal</orientation>
+						</sequence-layout>
+						<content>
+							<image>
+								<path>flow.png</path>
+							</image>
+							<text>
+								<content>${id == null ? '&lt;id&gt;' : id}</content>
+								<font>
+									<bold></bold>
+								</font>
+								<truncatable>false</truncatable>
+							</text>
+							<validation-marker></validation-marker>
+						</content>
+					</rectangle>
+					<rectangle>
+						<content>
+							<text>
+								<content>Termination</content>
+								<truncatable>false</truncatable>
+							</text>
+							<shape-factory>
+								<case>
+									<element-type>org.jboss.tools.batch.ui.editor.internal.model.End
+									</element-type>
+									<rectangle>
+										<content>
+											<image>
+												<path>end.png</path>
+											</image>
+											<text>
+												<content>${on == null ? '&lt;status code&gt;' : on}
+												</content>
+												<truncatable>false</truncatable>
+											</text>
+											<validation-marker>
+												<size>small</size>
+											</validation-marker>
+										</content>
+										<sequence-layout>
+											<orientation>horizontal</orientation>
+										</sequence-layout>
+									</rectangle>
+								</case>
+								<case>
+									<element-type>org.jboss.tools.batch.ui.editor.internal.model.Stop
+									</element-type>
+									<rectangle>
+										<content>
+											<image>
+												<path>stop.png</path>
+											</image>
+											<text>
+												<content>${on == null ? '&lt;status code&gt;' : on}
+												</content>
+												<truncatable>false</truncatable>
+											</text>
+											<validation-marker>
+												<size>small</size>
+											</validation-marker>
+										</content>
+										<sequence-layout>
+											<orientation>horizontal</orientation>
+										</sequence-layout>
+									</rectangle>
+								</case>
+								<case>
+									<element-type>org.jboss.tools.batch.ui.editor.internal.model.Fail
+									</element-type>
+									<rectangle>
+										<content>
+											<image>
+												<path>fail.png</path>
+											</image>
+											<text>
+												<content>${on == null ? '&lt;status code&gt;' : on}
+												</content>
+												<truncatable>false</truncatable>
+											</text>
+											<validation-marker>
+												<size>small</size>
+											</validation-marker>
+										</content>
+										<sequence-layout>
+											<orientation>horizontal</orientation>
+										</sequence-layout>
+									</rectangle>
+								</case>
+								<property>TerminatingElements</property>
+							</shape-factory>
+						</content>
+						<background>
+							<color>
+								<Color>#FFFFFF</Color>
+							</color>
+						</background>
+						<visible-when>${! empty TerminatingElements}</visible-when>
+					</rectangle>
 				</content>
 				<background>
-                    <color>
-                        <Color>#B5B5DB</Color>
-                    </color>
+					<color>
+						<Color>#B5B5DB</Color>
+					</color>
 				</background>
 				<sequence-layout>
 					<orientation>vertical</orientation>
@@ -1054,7 +1060,8 @@
 			<action>
 				<id>OpenFlowAction</id>
 				<label>Open Flow</label>
-                <tooltip>Display internal structure of the flow in a diagram.</tooltip>
+				<tooltip>Display internal structure of the flow in a diagram.
+				</tooltip>
 			</action>
 			<action-handler>
 				<action>OpenFlowAction</action>
@@ -1062,11 +1069,12 @@
 				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
 				</impl>
 			</action-handler>
-            <action-handler>
-                <action>Sapphire.Diagram.Node.Default</action>
-                <id>OpenFlowActionHandler-DoubleClick</id>
-                <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler</impl>
-            </action-handler>
+			<action-handler>
+				<action>Sapphire.Diagram.Node.Default</action>
+				<id>OpenFlowActionHandler-DoubleClick</id>
+				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
+				</impl>
+			</action-handler>
 		</node>
 		<page-header-text>${parent() == null ? '' : concat(parent().id,
 			'/')}${id == null ? &quot;_&quot; : id}</page-header-text>
@@ -1084,14 +1092,14 @@
 					</image>
 					<text>
 						<content>${id == null ? '&lt;id&gt;' : id}</content>
-                        <font>
-                            <bold></bold>
-                        </font>
+						<font>
+							<bold></bold>
+						</font>
 					</text>
-                    <validation-marker></validation-marker>
+					<validation-marker></validation-marker>
 				</content>
 				<background>
-                    <color></color>
+					<color></color>
 				</background>
 				<sequence-layout>
 					<orientation>horizontal</orientation>
@@ -1122,7 +1130,8 @@
 			</endpoint1>
 			<line-style>dash</line-style>
 			<tool-palette-desc>Conditional transition to another Step, Flow,
-				Split or Decision.</tool-palette-desc>
+				Split or Decision.
+			</tool-palette-desc>
 			<line-width>2</line-width>
 		</connection>
 		<grid>
@@ -1156,16 +1165,16 @@
 					</image>
 					<text>
 						<content>${id == null ? '&lt;id&gt;' : id}</content>
-                        <font>
-                            <bold></bold>
-                        </font>
+						<font>
+							<bold></bold>
+						</font>
 					</text>
-                    <validation-marker></validation-marker>
+					<validation-marker></validation-marker>
 				</content>
 				<background>
-                    <color>
-                        <Color>#FFFF00</Color>
-                    </color>
+					<color>
+						<Color>#FFFF00</Color>
+					</color>
 				</background>
 				<sequence-layout>
 					<orientation>horizontal</orientation>
@@ -1181,84 +1190,91 @@
 			<tool-palette-image>split.png</tool-palette-image>
 			<rectangle>
 				<content>
-                    <rectangle>
-                        <content>
-                            <image>
+					<rectangle>
+						<content>
+							<image>
 								<path>split.png</path>
 							</image>
 							<text>
 								<content>${id == null ? '&lt;id&gt;' : id}</content>
-                                <font>
-                                    <bold></bold>
-                                </font>
+								<font>
+									<bold></bold>
+								</font>
 							</text>
-                            <validation-marker></validation-marker>
-                        </content>
-                        <sequence-layout>
-                            <orientation>horizontal</orientation>
-                        </sequence-layout>                    
-                    </rectangle>
-                    <rectangle>
-                        <content>
-                            <rectangle>
-                                <content>
-                                    <shape-factory>
-                                        <case>
-                                            <element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow</element-type>
-                                            <rectangle>
-                                                <action-handler>
-                                                    <action>OpenSplitFlowAction</action>
-                                                    <id>OpenSplitFlowActionHandler</id>
-                                                    <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
-                                                </action-handler>
-                                                <action>
-                                                    <id>OpenSplitFlowAction</id>
-                                                    <label>Open Flow</label>
-                                                </action>
-                                                <content>
-                                                    <image>
-                                                        <path>flow.png</path>
-                                                    </image>
-                                                    <text>
-                                                        <content>${id == null ? '&lt;id&gt;' : id}</content>
-                                                        <truncatable>false</truncatable>
-                                                    </text>
-                                                    <validation-marker>
-                                                        <size>small</size>
-                                                    </validation-marker>
-                                                </content>
-                                                <sequence-layout>
-                                                    <orientation>horizontal</orientation>
-                                                </sequence-layout>
-                                            </rectangle>
-                                        </case>
-                                        <property>Flows</property>
-                                    </shape-factory>
-                                </content>
-                            </rectangle>
-                        </content>
-                        <sequence-layout>
-                            <orientation>horizontal</orientation>
-                        </sequence-layout>
-                        <sequence-layout-constraint>
-                            <expand-vertically>false</expand-vertically>
-                            <expand-horizontally>false</expand-horizontally>
-                        </sequence-layout-constraint>
-                        <visible-when>${!empty Flows}</visible-when>
-                        <background>
-                            <color>
-                                <Color>#FFFFFF</Color>
-                            </color>
-                        </background>
-                    </rectangle>
+							<validation-marker></validation-marker>
+						</content>
+						<sequence-layout>
+							<orientation>horizontal</orientation>
+						</sequence-layout>
+					</rectangle>
+					<rectangle>
+						<content>
+							<rectangle>
+								<content>
+									<shape-factory>
+										<case>
+											<element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow
+											</element-type>
+											<rectangle>
+												<action-handler>
+													<action>OpenSplitFlowAction</action>
+													<id>OpenSplitFlowActionHandler</id>
+													<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler
+													</impl>
+												</action-handler>
+												<action>
+													<id>OpenSplitFlowAction</id>
+													<label>Open Flow</label>
+												</action>
+												<content>
+													<image>
+														<path>flow.png</path>
+                                                        <action-handler>
+                                                            <action>Sapphire.DoubleTap</action>
+                                                            <id>OpenSplitFlowActionHandler-DoubleClick</id>
+                                                            <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
+                                                        </action-handler>
+													</image>
+													<text>
+														<content>${id == null ? '&lt;id&gt;' : id}</content>
+														<truncatable>false</truncatable>
+													</text>
+													<validation-marker>
+														<size>small</size>
+													</validation-marker>
+												</content>
+												<sequence-layout>
+													<orientation>horizontal</orientation>
+												</sequence-layout>
+											</rectangle>
+										</case>
+										<property>Flows</property>
+									</shape-factory>
+								</content>
+							</rectangle>
+						</content>
+						<sequence-layout>
+							<orientation>horizontal</orientation>
+						</sequence-layout>
+						<sequence-layout-constraint>
+							<expand-vertically>false</expand-vertically>
+							<expand-horizontally>false</expand-horizontally>
+						</sequence-layout-constraint>
+						<visible-when>${!empty Flows}</visible-when>
+						<background>
+							<color>
+								<Color>#FFFFFF</Color>
+							</color>
+						</background>
+					</rectangle>
 				</content>
 				<sequence-layout>
 					<orientation>vertical</orientation>
 				</sequence-layout>
 				<background>
-                    <color>
-                        <Color>#75FF75</Color>
-                    </color>
+					<color>
+						<Color>#75FF75</Color>
+					</color>
 				</background>
 			</rectangle>
 		</node>
