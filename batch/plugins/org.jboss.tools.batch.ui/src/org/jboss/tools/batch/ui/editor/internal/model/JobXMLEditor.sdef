@@ -943,17 +943,95 @@
                                 <path>flow.png</path>
                             </image>
                             <text>
-                                <content>${id == null ? '' : id}</content>
+                                <content>${id}</content>
                                 <font>
                                     <bold></bold>
                                 </font>
+                                <truncatable>false</truncatable>
                             </text>
                             <validation-marker></validation-marker>
                         </content>
                     </rectangle>
+                    <rectangle>
+                        <content>
+                            <text>
+                                <content>Termination</content>
+                                <truncatable>false</truncatable>
+                            </text>
+                            <shape-factory>
+                                <case>
+                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.End</element-type>
+                                    <rectangle>
+                                        <content>
+                                            <image>
+                                                <path>end.png</path>
+                                            </image>
+                                            <text>
+                                                <content>${on == null ? '&lt;status code&gt;' : on}</content>
+                                                <truncatable>false</truncatable>
+                                            </text>
+                                            <validation-marker>
+                                                <size>small</size>
+                                            </validation-marker>
+                                        </content>
+                                        <sequence-layout>
+                                            <orientation>horizontal</orientation>
+                                        </sequence-layout>
+                                    </rectangle>
+                                </case>
+                                <case>
+                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Stop</element-type>
+                                    <rectangle>
+                                        <content>
+                                            <image>
+                                                <path>stop.png</path>
+                                            </image>
+                                            <text>
+                                                <content>${on == null ? '&lt;status code&gt;' : on}</content>
+                                                <truncatable>false</truncatable>
+                                            </text>
+                                            <validation-marker>
+                                                <size>small</size>
+                                            </validation-marker>
+                                        </content>
+                                        <sequence-layout>
+                                            <orientation>horizontal</orientation>
+                                        </sequence-layout>
+                                    </rectangle>
+                                </case>
+                                <case>
+                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Fail</element-type>
+                                    <rectangle>
+                                        <content>
+                                            <image>
+                                                <path>fail.png</path>
+                                            </image>
+                                            <text>
+                                                <content>${on == null ? '&lt;status code&gt;' : on}</content>
+                                                <truncatable>false</truncatable>
+                                            </text>
+                                            <validation-marker>
+                                                <size>small</size>
+                                            </validation-marker>
+                                        </content>
+                                        <sequence-layout>
+                                            <orientation>horizontal</orientation>
+                                        </sequence-layout>
+                                    </rectangle>
+                                </case>
+                                <property>TerminatingElements</property>
+                            </shape-factory>
+                        </content>
+                        <background>
+                            <color>
+                                <Color>#FFFFFF</Color>
+                            </color>
+                        </background>
+                        <visible-when>${! empty TerminatingElements}</visible-when>
+                    </rectangle>
 				</content>
 				<background>
-					<gradient></gradient>
+                    <color></color>
 				</background>
 				<sequence-layout>
 					<orientation>vertical</orientation>

@@ -79,4 +79,17 @@ public interface Flow extends FlowElement {
 
 	ElementList<Next> getNextElements();
 	
+	@Type( base = OutcomeElement.class,
+			possible = {
+				End.class,
+				Fail.class,
+				Stop.class
+			}
+	)
+	@XmlListBinding( path = "" )
+	ListProperty PROP_TERMINATING_ELEMENTS = new ListProperty(TYPE, "TerminatingElements");
+
+	ElementList<OutcomeElement> getTerminatingElements();
+	
+	
 }
