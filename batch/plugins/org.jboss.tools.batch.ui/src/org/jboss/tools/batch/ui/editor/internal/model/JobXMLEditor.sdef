@@ -934,21 +934,29 @@
 			<tool-palette-label>Flow</tool-palette-label>
 			<rectangle>
 				<content>
-					<image>
-						<path>flow.png</path>
-					</image>
-					<text>
-						<content>${id == null ? '' : id}</content>
-                        <font>
-                            <bold></bold>
-                        </font>
-					</text>
+                    <rectangle>
+                        <sequence-layout>
+                            <orientation>horizontal</orientation>
+                        </sequence-layout>
+                        <content>
+                            <image>
+                                <path>flow.png</path>
+                            </image>
+                            <text>
+                                <content>${id == null ? '' : id}</content>
+                                <font>
+                                    <bold></bold>
+                                </font>
+                            </text>
+                            <validation-marker></validation-marker>
+                        </content>
+                    </rectangle>
 				</content>
 				<background>
 					<gradient></gradient>
 				</background>
 				<sequence-layout>
-					<orientation>horizontal</orientation>
+					<orientation>vertical</orientation>
 				</sequence-layout>
 			</rectangle>
 			<tool-palette-image>flow.png</tool-palette-image>
@@ -1189,16 +1197,6 @@
 			<line-style>solid</line-style>
 			<tool-palette-label>Next</tool-palette-label>
 			<line-width>2</line-width>
-			<properties-view>
-				<page>
-					<content>
-						<actuator>
-							<action-id>asddsasad</action-id>
-							<label>dsadsa</label>
-						</actuator>
-					</content>
-				</page>
-			</properties-view>
 		</connection>
 		<connection-service-type>custom</connection-service-type>
 		<service>
