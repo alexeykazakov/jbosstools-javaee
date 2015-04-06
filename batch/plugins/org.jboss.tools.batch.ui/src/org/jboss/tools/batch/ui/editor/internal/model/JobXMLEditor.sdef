@@ -15,17 +15,9 @@
 				<image>${ Image() }</image>
 				<section>
 					<label>Job</label>
-					<content>
-						<property-editor>
-							<property>Id</property>
-						</property-editor>
-						<property-editor>
-							<property>Version</property>
-						</property-editor>
-						<property-editor>
-							<property>Restartable</property>
-						</property-editor>
-					</content>
+                    <content>
+                        <include>JobForm</include>
+                    </content>
 				</section>
 
 				<section>
@@ -49,6 +41,14 @@
 
 		</root-node>
 	</editor-page>
+    <form>
+        <id>JobForm</id>
+        <content>
+            <property-editor>Id</property-editor>
+            <property-editor>Version</property-editor>
+            <property-editor>Restartable</property-editor>
+        </content>
+    </form>
 
 	<node>
 		<id>ListenersNode</id>
@@ -590,14 +590,9 @@
 			<label>${Id == null ? "" : Id}</label>
 			<section>
 				<label>Split</label>
-				<content>
-					<property-editor>
-						<property>Id</property>
-					</property-editor>
-					<property-editor>
-						<property>Next</property>
-					</property-editor>
-				</content>
+                <content>
+                    <include>SplitForm</include>
+                </content>
 			</section>
 
 			<section>
@@ -615,14 +610,6 @@
 			<label>${Id == null ? "" : Id}</label>
 			<section>
 				<label>Decision</label>
-				<content>
-					<property-editor>
-						<property>Id</property>
-					</property-editor>
-					<property-editor>
-						<property>Ref</property>
-					</property-editor>
-				</content>
 			</section>
 
 			<section>
@@ -688,14 +675,9 @@
 			<label>${ Id == null ? "" : Id }</label>
 			<section>
 				<label>Flow</label>
-				<content>
-					<property-editor>
-						<property>Id</property>
-					</property-editor>
-					<property-editor>
-						<property>Next</property>
-					</property-editor>
-				</content>
+                <content>
+                    <include>FlowForm</include>
+                </content>
 			</section>
 
 			<section>
@@ -716,6 +698,20 @@
 			<node-include>OutcomesNode</node-include>
 		</case>
 	</node-factory>
+    <form>
+        <id>DecisionForm</id>
+        <content>
+            <property-editor>Id</property-editor>
+            <property-editor>Ref</property-editor>
+        </content>
+    </form>
+    <form>
+        <content>
+            <property-editor>Id</property-editor>
+            <property-editor>Next</property-editor>
+        </content>
+        <id>FlowForm</id>
+    </form>
 
 	<form>
 		<id>StepForm</id>
@@ -731,6 +727,13 @@
 			</property-editor>
 		</content>
 	</form>
+    <form>
+        <id>SplitForm</id>
+        <content>
+            <property-editor>Id</property-editor>
+            <property-editor>Next</property-editor>
+        </content>
+    </form>
 
 	<form>
 		<id>PartitionForm</id>
@@ -926,6 +929,59 @@
 		<id>DiagramPage</id>
 		<element-type>org.jboss.tools.batch.ui.editor.internal.model.Job
 		</element-type>
+        <node>
+            <model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Step</model-element-type>
+            <connection-binding>
+                <connection-id>NextOnConnection</connection-id>
+                <endpoint2>
+                    <property>To</property>
+                    <value>${id}</value>
+                </endpoint2>
+                <instance-id>NextOnConnection.Step${Parent().id}To${To}</instance-id>
+                <label>${empty on ? '&lt;on&gt;' : on}</label>
+                <property>NextElements</property>
+            </connection-binding>
+            <id>StepNode</id>
+            <properties-view>
+                <page>
+                    <content>
+                        <include>StepForm</include>
+                    </content>
+                    <image>step.png</image>
+                    <label>Step ${id}</label>
+                </page>
+            </properties-view>
+            <property>FlowElements</property>
+            <rectangle>
+                <background>
+                    <color></color>
+                </background>
+                <content>
+                    <rectangle>
+                        <content>
+                            <image>
+                                <path>step.png</path>
+                            </image>
+                            <text>
+                                <content>${id == null ? '&lt;id&gt;' : id}</content>
+                                <font>
+                                    <bold></bold>
+                                </font>
+                            </text>
+                            <validation-marker></validation-marker>
+                        </content>
+                        <sequence-layout>
+                            <orientation>horizontal</orientation>
+                        </sequence-layout>
+                    </rectangle>
+                </content>
+                <sequence-layout>
+                    <orientation>vertical</orientation>
+                </sequence-layout>
+            </rectangle>
+            <tool-palette-image>step.png</tool-palette-image>
+            <tool-palette-label>Step</tool-palette-label>
+        </node>
 		<node>
 			<id>FlowNode</id>
 			<property>FlowElements</property>
@@ -1075,65 +1131,33 @@
 				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
 				</impl>
 			</action-handler>
+            <properties-view>
+                <page>
+                    <content>
+                        <include>FlowForm</include>
+                    </content>
+                    <label>Flow ${id}</label>
+                    <image>${Image()}</image>
+                </page>
+                <page>
+                    <content>
+                        <include>FlowElementsForm</include>
+                    </content>
+                    <label>Flow Elements</label>
+                    <image>flow-elements.png</image>
+                </page>
+                <page>
+                    <content>
+                        <include>OutcomesForm</include>
+                    </content>
+                    <label>Transitions</label>
+                    <image>transitions.png</image>
+                </page>
+            </properties-view>
 		</node>
 		<page-header-text>${parent() == null ? '' : concat(parent().id,
 			'/')}${id == null ? &quot;_&quot; : id}</page-header-text>
 		<page-name>Diagram</page-name>
-		<node>
-			<id>StepNode</id>
-			<property>FlowElements</property>
-			<model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Step
-			</model-element-type>
-			<tool-palette-label>Step</tool-palette-label>
-			<rectangle>
-				<content>
-                    <rectangle>
-                        <content>
-                            <image>
-                                <path>step.png</path>
-                            </image>
-                            <text>
-                                <content>${id == null ? '&lt;id&gt;' : id}</content>
-                                <font>
-                                    <bold></bold>
-                                </font>
-                            </text>
-                            <validation-marker></validation-marker>
-                        </content>
-                        <sequence-layout>
-                            <orientation>horizontal</orientation>
-                        </sequence-layout>
-                    </rectangle>
-				</content>
-				<background>
-					<color></color>
-				</background>
-				<sequence-layout>
-					<orientation>vertical</orientation>
-				</sequence-layout>
-			</rectangle>
-			<tool-palette-image>step.png</tool-palette-image>
-			<connection-binding>
-				<connection-id>NextOnConnection</connection-id>
-				<property>NextElements</property>
-				<instance-id>NextOnConnection.Step${Parent().id}To${To}
-				</instance-id>
-				<endpoint2>
-					<property>To</property>
-					<value>${id}</value>
-				</endpoint2>
-				<label>${empty on ? '&lt;on&gt;' : on}</label>
-			</connection-binding>
-            <properties-view>
-                <page>
-                    <content>
-                        <include>StepForm</include>
-                    </content>
-                    <label>Step ${id}</label>
-                    <image>step.png</image>
-                </page>
-            </properties-view>
-		</node>
 		<connection>
 			<id>NextOnConnection</id>
 			<tool-palette-label>Next On</tool-palette-label>
@@ -1196,6 +1220,29 @@
 					<orientation>horizontal</orientation>
 				</sequence-layout>
 			</rectangle>
+            <properties-view>
+                <page>
+                    <label>Decision ${id}</label>
+                    <image>${Image()}</image>
+                    <content>
+                        <include>DecisionForm</include>
+                    </content>
+                </page>
+                <page>
+                    <label>Transitions</label>
+                    <image>transitions.png</image>
+                    <content>
+                        <include>OutcomesForm</include>
+                    </content>
+                </page>
+                <page>
+                    <label>Properties</label>
+                    <content>
+                        <include>PropertiesSection</include>
+                    </content>
+                    <image>properties.png</image>
+                </page>
+            </properties-view>
 		</node>
 		<node>
 			<id>SplitNode</id>
@@ -1293,6 +1340,22 @@
 					</color>
 				</background>
 			</rectangle>
+            <properties-view>
+                <page>
+                    <label>Split ${id}</label>
+                    <image>${Image()}</image>
+                    <content>
+                        <include>SplitForm</include>
+                    </content>
+                </page>
+                <page>
+                    <label>Flows</label>
+                    <image>flow.png</image>
+                    <content>
+                        <include>FlowsForm</include>
+                    </content>
+                </page>
+            </properties-view>
 		</node>
 		<action>
 			<id>OpenParentAction</id>
@@ -1327,6 +1390,27 @@
 <!--                 <label>Job ${id}</label> -->
 <!--                 <image>${Image()}</image> -->
 <!--             </page> -->
+            <page>
+                <label>Job ${id}</label>
+                <image>${Image()}</image>
+                <content>
+                    <include>JobForm</include>
+                </content>
+            </page>
+            <page>
+                <label>Flow Elements</label>
+                <content>
+                    <include>FlowElementsForm</include>
+                </content>
+                <image>flow-elements.png</image>
+            </page>
+            <page>
+                <content>
+                    <include>PropertiesSection</include>
+                </content>
+                <label>Properties</label>
+                <image>properties.png</image>
+            </page>
         </properties-view>
 	</diagram-page>
 
