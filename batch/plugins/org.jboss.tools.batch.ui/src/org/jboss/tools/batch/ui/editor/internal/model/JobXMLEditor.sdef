@@ -1087,22 +1087,29 @@
 			<tool-palette-label>Step</tool-palette-label>
 			<rectangle>
 				<content>
-					<image>
-						<path>step.png</path>
-					</image>
-					<text>
-						<content>${id == null ? '&lt;id&gt;' : id}</content>
-						<font>
-							<bold></bold>
-						</font>
-					</text>
-					<validation-marker></validation-marker>
+                    <rectangle>
+                        <content>
+                            <image>
+                                <path>step.png</path>
+                            </image>
+                            <text>
+                                <content>${id == null ? '&lt;id&gt;' : id}</content>
+                                <font>
+                                    <bold></bold>
+                                </font>
+                            </text>
+                            <validation-marker></validation-marker>
+                        </content>
+                        <sequence-layout>
+                            <orientation>horizontal</orientation>
+                        </sequence-layout>
+                    </rectangle>
 				</content>
 				<background>
 					<color></color>
 				</background>
 				<sequence-layout>
-					<orientation>horizontal</orientation>
+					<orientation>vertical</orientation>
 				</sequence-layout>
 			</rectangle>
 			<tool-palette-image>step.png</tool-palette-image>
@@ -1117,6 +1124,15 @@
 				</endpoint2>
 				<label>${empty on ? '&lt;on&gt;' : on}</label>
 			</connection-binding>
+            <properties-view>
+                <page>
+                    <content>
+                        <include>StepForm</include>
+                    </content>
+                    <label>Step ${id}</label>
+                    <image>step.png</image>
+                </page>
+            </properties-view>
 		</node>
 		<connection>
 			<id>NextOnConnection</id>
@@ -1306,6 +1322,12 @@
 			<implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramConnectionService
 			</implementation>
 		</service>
+        <properties-view>
+<!--             <page> -->
+<!--                 <label>Job ${id}</label> -->
+<!--                 <image>${Image()}</image> -->
+<!--             </page> -->
+        </properties-view>
 	</diagram-page>
 
 
