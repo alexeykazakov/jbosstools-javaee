@@ -16,6 +16,7 @@ import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.ElementProperty;
 import org.eclipse.sapphire.ElementReference;
 import org.eclipse.sapphire.ElementType;
+import org.eclipse.sapphire.Length;
 import org.eclipse.sapphire.ListProperty;
 import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.Value;
@@ -105,17 +106,18 @@ public interface Step extends FlowElement {
 				Chunk.class
 			}
 		)
-//	@XmlListBinding( path = "" )
+	@XmlListBinding( path = "" )
 	@XmlElementBinding(path = "", mappings = {
 			@Mapping(type=Batchlet.class, element = "batchlet"),
 			@Mapping(type=Chunk.class, element = "chunk"),
 	})
-	@CountConstraint(max = 1)
-//	ListProperty PROP_BATCHLET_OR_CHUNK = new ListProperty( TYPE, "BatchletOrChunk" );
-	ElementProperty PROP_BATCHLET_OR_CHUNK = new ElementProperty( TYPE, "BatchletOrChunk" );
+//	@CountConstraint(max = 1)
+	@Length(max = 1)
+	ListProperty PROP_BATCHLET_OR_CHUNK = new ListProperty( TYPE, "BatchletOrChunk" );
+//	ElementProperty PROP_BATCHLET_OR_CHUNK = new ElementProperty( TYPE, "BatchletOrChunk" );
 
-//	ElementList<Element> getBatchletOrChunk();
-	ElementHandle<BatchletOrChunk> getBatchletOrChunk();
+	ElementList<BatchletOrChunk> getBatchletOrChunk();
+//	ElementHandle<BatchletOrChunk> getBatchletOrChunk();
 
 	@Type( base = Partition.class )
 	@Label( standard = "partition" )

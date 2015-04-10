@@ -950,6 +950,13 @@
                     <image>step.png</image>
                     <label>Step ${id}</label>
                 </page>
+                <page>
+                    <label>Partition</label>
+                    <image>partition.png</image>
+                    <content>
+                        <include>PartitionForm</include>
+                    </content>
+                </page>
             </properties-view>
             <property>FlowElements</property>
             <rectangle>
@@ -973,6 +980,116 @@
                         <sequence-layout>
                             <orientation>horizontal</orientation>
                         </sequence-layout>
+                    </rectangle>
+                    <rectangle>
+                        <content>
+                            <shape-factory>
+                                <case>
+                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Chunk</element-type>
+                                    <rectangle>
+                                        <sequence-layout>
+                                            <orientation>horizontal</orientation>
+                                        </sequence-layout>
+                                        <content>
+                                            <image>
+                                                <path>${Image()}</path>
+                                            </image>
+                                            <text>
+                                                <truncatable>false</truncatable>
+                                                <content>Chunk</content>
+                                            </text>
+                                            <validation-marker>
+                                                <size>small</size>
+                                            </validation-marker>
+                                        </content>
+                                        <properties-view>
+                                            <page>
+                                                <label>Chunk</label>
+                                                <image>${Image()}</image>
+                                                <content>
+                                                    <include>ChunkForm</include>
+                                                </content>
+                                            </page>
+                                            <page>
+                                                <label>Processor</label>
+                                                <image>processor.png</image>
+                                                <content>
+                                                    <include>ProcessorForm</include>
+                                                </content>
+                                            </page>
+                                            <page>
+                                                <label>Checkpoint Algorithm</label>
+                                                <image>checkpoint-algorithm.png</image>
+                                                <content>
+                                                    <include>CheckpointAlgorithmForm</include>
+                                                </content>
+                                            </page>
+                                            <page>
+                                                <content>
+                                                    <include>SkippableExceptionClassesForm</include>
+                                                </content>
+                                                <label>Skippable Exceptions</label>
+                                                <image>exception.png</image>
+                                            </page>
+                                            <page>
+                                                <label>Retryable Exceptions</label>
+                                                <image>exception.png</image>
+                                                <content>
+                                                    <include>RetryableExceptionClassesForm</include>
+                                                </content>
+                                            </page>
+                                            <page>
+                                                <label>No Rollback Exceptions</label>
+                                                <image>exception.png</image>
+                                                <content>
+                                                    <include>NoRollbackExceptionClassesForm</include>
+                                                </content>
+                                            </page>
+                                        </properties-view>
+                                    </rectangle>
+                                </case>
+                                <property>BatchletOrChunk</property>
+                                <case>
+                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Batchlet</element-type>
+                                    <rectangle>
+                                        <content>
+                                            <image>
+                                                <path>${Image()}</path>
+                                            </image>
+                                            <text>
+                                                <content>Batchlet</content>
+                                                <truncatable>false</truncatable>
+                                            </text>
+                                            <validation-marker>
+                                                <size>small</size>
+                                            </validation-marker>
+                                        </content>
+                                        <properties-view>
+                                            <page>
+                                                <label>Batchlet</label>
+                                                <image>${Image()}</image>
+                                                <content>
+                                                    <property-editor>Ref</property-editor>
+                                                    <separator></separator>
+                                                </content>
+                                            </page>
+                                            <page>
+                                                <content>
+                                                    <include>PropertiesSection</include>
+                                                </content>
+                                                <label>Properties</label>
+                                                <image>properties.png</image>
+                                            </page>
+                                        </properties-view>
+                                    </rectangle>
+                                </case>
+                            </shape-factory>
+                        </content>
+                        <background>
+                            <color>
+                                <Color>#FFFFFF</Color>
+                            </color>
+                        </background>
                     </rectangle>
                 </content>
                 <sequence-layout>
