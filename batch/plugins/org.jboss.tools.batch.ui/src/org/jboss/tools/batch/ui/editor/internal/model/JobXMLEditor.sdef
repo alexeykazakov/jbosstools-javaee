@@ -276,7 +276,12 @@
 		<label>Partition</label>
 		<image>partition.png</image>
 		<visible-when>${Partition != null}</visible-when>
-		<section>
+		
+		<node-include>PlanNode</node-include>
+        <section-ref>PartitionSection</section-ref>
+	</node>
+
+<section>
 			<content>
 				<with>
 					<path>Partition</path>
@@ -318,9 +323,9 @@
 					</case>
 				</with>
 			</content>
+        <id>PartitionSection</id>
+        <label>Partition</label>
 		</section>
-		<node-include>PlanNode</node-include>
-	</node>
 
 	<node>
 		<id>PlanNode</id>
@@ -954,7 +959,7 @@
                     <label>Partition</label>
                     <image>partition.png</image>
                     <content>
-                        <include>PartitionForm</include>
+                        <include>PartitionSection</include>
                     </content>
                 </page>
             </properties-view>
