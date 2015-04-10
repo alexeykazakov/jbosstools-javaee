@@ -615,6 +615,9 @@
 			<label>${Id == null ? "" : Id}</label>
 			<section>
 				<label>Decision</label>
+                <content>
+                    <include>DecisionForm</include>
+                </content>
 			</section>
 
 			<section>

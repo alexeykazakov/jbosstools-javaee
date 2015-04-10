@@ -61,8 +61,8 @@ public class BatchEditorTest extends TestCase {
 		 ElementList<FlowElement> es = job.getFlowElements();
 		 assertEquals(1, es.size());
 		 Step step = (Step)es.get(0);
-		 ElementHandle<BatchletOrChunk> ch = step.getBatchletOrChunk();
-		 Chunk chunk = (Chunk)ch.content();
+		 ElementList<BatchletOrChunk> ch = step.getBatchletOrChunk();
+		 Chunk chunk = (Chunk) (ch.iterator().next());
 		 
 		 assertEquals("myReader", chunk.getReader().getRef().content());
 		 assertEquals("myItemWriter", chunk.getWriter().getRef().content());

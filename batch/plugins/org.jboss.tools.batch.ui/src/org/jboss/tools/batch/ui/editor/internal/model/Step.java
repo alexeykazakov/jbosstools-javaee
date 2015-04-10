@@ -10,13 +10,11 @@
  ************************************************************************************/
 package org.jboss.tools.batch.ui.editor.internal.model;
 
-import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ElementHandle;
 import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.ElementProperty;
 import org.eclipse.sapphire.ElementReference;
 import org.eclipse.sapphire.ElementType;
-import org.eclipse.sapphire.Length;
 import org.eclipse.sapphire.ListProperty;
 import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.Value;
@@ -26,14 +24,11 @@ import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
 import org.eclipse.sapphire.modeling.annotations.Reference;
 import org.eclipse.sapphire.modeling.annotations.Required;
-import org.eclipse.sapphire.modeling.annotations.Service;
-import org.eclipse.sapphire.modeling.annotations.Services;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlElementBinding;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlElementBinding.Mapping;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlListBinding;
-import org.jboss.tools.batch.ui.editor.internal.services.NextPossibleValuesService;
 
 /**
  * 
@@ -111,8 +106,8 @@ public interface Step extends FlowElement {
 			@Mapping(type=Batchlet.class, element = "batchlet"),
 			@Mapping(type=Chunk.class, element = "chunk"),
 	})
-//	@CountConstraint(max = 1)
-	@Length(max = 1)
+	@CountConstraint(max = 1)
+//	@Length(max = 1)
 	ListProperty PROP_BATCHLET_OR_CHUNK = new ListProperty( TYPE, "BatchletOrChunk" );
 //	ElementProperty PROP_BATCHLET_OR_CHUNK = new ElementProperty( TYPE, "BatchletOrChunk" );
 
