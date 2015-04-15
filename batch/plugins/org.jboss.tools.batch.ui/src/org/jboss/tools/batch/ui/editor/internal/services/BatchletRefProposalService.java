@@ -1,18 +1,20 @@
 package org.jboss.tools.batch.ui.editor.internal.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.sapphire.services.ContentProposal;
+import org.eclipse.sapphire.services.ContentProposalService;
 import org.jboss.tools.batch.core.BatchArtifactType;
 import org.jboss.tools.batch.core.BatchCorePlugin;
 import org.jboss.tools.batch.core.IBatchArtifact;
 import org.jboss.tools.batch.core.IBatchProject;
+import org.jboss.tools.batch.ui.editor.internal.model.Batchlet;
 import org.jboss.tools.batch.ui.editor.internal.model.Job;
 
-public class BatchletRefProposalService extends org.eclipse.sapphire.services.ContentProposalService {
+public class BatchletRefProposalService extends ContentProposalService {
 
 	private IBatchProject batchProject;
 
@@ -31,7 +33,11 @@ public class BatchletRefProposalService extends org.eclipse.sapphire.services.Co
 			@Override
 			protected List<ContentProposal> compute() {
 				Collection<IBatchArtifact> artifacts = batchProject.getArtifacts(BatchArtifactType.BATCHLET);
-				return artifacts.stream().map((a) -> new ContentProposal(a.getName())).collect(Collectors.toList());
+				List<ContentProposal> proposals = new ArrayList<>(artifacts.size());
+				for (IBatchArtifact artifact : artifacts) {
+					proposals.add(new ContentProposal(artifact.getName(), null, null, Batchlet.TYPE.image()));
+				}
+				return proposals;
 			}
 		};
 	}
