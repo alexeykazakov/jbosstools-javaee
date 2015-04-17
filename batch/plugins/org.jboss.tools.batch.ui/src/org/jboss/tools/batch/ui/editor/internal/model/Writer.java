@@ -17,7 +17,7 @@ import org.eclipse.sapphire.modeling.annotations.Label;
 import org.eclipse.sapphire.modeling.annotations.Required;
 import org.eclipse.sapphire.modeling.annotations.Service;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
-import org.jboss.tools.batch.ui.editor.internal.services.ItemWriterRefProposalService;
+import org.jboss.tools.batch.ui.editor.internal.services.contentproposal.ItemWriterRefProposalService;
 
 /**
  * 

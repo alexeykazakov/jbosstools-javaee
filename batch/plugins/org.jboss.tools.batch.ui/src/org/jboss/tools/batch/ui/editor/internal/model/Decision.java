@@ -24,7 +24,7 @@ import org.eclipse.sapphire.modeling.annotations.Service;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlListBinding;
-import org.jboss.tools.batch.ui.editor.internal.services.DeciderRefProposalService;
+import org.jboss.tools.batch.ui.editor.internal.services.contentproposal.DeciderRefProposalService;
 
 /**
  * 

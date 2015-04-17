@@ -21,7 +21,7 @@ import org.eclipse.sapphire.modeling.annotations.Required;
 import org.eclipse.sapphire.modeling.annotations.Service;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
-import org.jboss.tools.batch.ui.editor.internal.services.BatchletRefProposalService;
+import org.jboss.tools.batch.ui.editor.internal.services.contentproposal.BatchletRefProposalService;
 
 /**
  * 
