@@ -246,6 +246,7 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
+                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Reader</element-type>
 				</case>
 			</with>
 		</content>
@@ -768,6 +769,7 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
+                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Mapper</element-type>
 				</case>
 			</with>
 		</content>
@@ -804,6 +806,7 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
+                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Collector</element-type>
 				</case>
 			</with>
 		</content>
@@ -821,6 +824,7 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
+                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Analyzer</element-type>
 				</case>
 			</with>
 		</content>
@@ -838,6 +842,7 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
+                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Reducer</element-type>
 				</case>
 			</with>
 		</content>
@@ -855,6 +860,7 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
+                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Processor</element-type>
 				</case>
 			</with>
 		</content>
@@ -872,6 +878,7 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
+                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.CheckpointAlgorithm</element-type>
 				</case>
 			</with>
 		</content>
