@@ -11,7 +11,13 @@
 package org.jboss.tools.batch.ui.editor.internal.model;
 
 import org.eclipse.sapphire.ElementType;
+import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.Image;
+import org.eclipse.sapphire.modeling.annotations.Label;
+import org.eclipse.sapphire.modeling.annotations.Required;
+import org.eclipse.sapphire.modeling.annotations.Service;
+import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
+import org.jboss.tools.batch.ui.editor.internal.services.ItemWriterRefProposalService;
 
 /**
  * 
@@ -21,5 +27,11 @@ import org.eclipse.sapphire.modeling.annotations.Image;
 @Image(path = "writer.png")
 public interface Writer extends ItemHandlingElement {
 	ElementType TYPE = new ElementType( Writer.class );
+	
+	@Label( standard = "ref" )
+	@XmlBinding( path = "@ref" )
+	@Required
+	@Service(impl = ItemWriterRefProposalService.class)
+	ValueProperty PROP_REF = new ValueProperty( TYPE, "Ref" );
 
 }

@@ -11,6 +11,10 @@
 package org.jboss.tools.batch.ui.editor.internal.model;
 
 import org.eclipse.sapphire.ElementType;
+import org.eclipse.sapphire.ValueProperty;
+import org.eclipse.sapphire.modeling.annotations.Label;
+import org.eclipse.sapphire.modeling.annotations.Required;
+import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
 
 /**
  * 
@@ -20,4 +24,8 @@ import org.eclipse.sapphire.ElementType;
 public interface Reducer extends ItemHandlingElement {
 	ElementType TYPE = new ElementType( Reducer.class );
 
+	@Label( standard = "ref" )
+	@XmlBinding( path = "@ref" )
+	@Required
+	ValueProperty PROP_REF = new ValueProperty( TYPE, "Ref" );
 }
