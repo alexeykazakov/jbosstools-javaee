@@ -6,9 +6,11 @@ import org.jboss.tools.batch.ui.editor.internal.model.Reader;
 
 public class ItemReaderRefProposalService extends BatchContentProposalService {
 
+	private static final BatchArtifactType[] TYPES = { BatchArtifactType.ITEM_READER };
+	
 	@Override
-	protected BatchArtifactType batchArtifactType() {
-		return BatchArtifactType.ITEM_READER;
+	protected BatchArtifactType[] batchArtifactType() {
+		return TYPES;
 	}
 
 	@Override

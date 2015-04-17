@@ -78,13 +78,13 @@ public interface Job extends Element {
 
 	ElementHandle<Properties> getProperties();
 
-	@Type( base = Listener.class )
+	@Type( base = JobListener.class )
 	@Label( standard = "listener" )
-	@XmlListBinding( path = "listeners", mappings = @XmlListBinding.Mapping( element = "listener", type = Listener.class ))
+	@XmlListBinding( path = "listeners", mappings = @XmlListBinding.Mapping( element = "listener", type = JobListener.class ))
 
 	ListProperty PROP_LISTENERS = new ListProperty( TYPE, "Listeners" ); //$NON-NLS-1$ 
 
-	ElementList<Listener> getListeners();
+	ElementList<JobListener> getListeners();
 
 	@Type( base = FlowElement.class,
 			possible = {

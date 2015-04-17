@@ -6,9 +6,11 @@ import org.jboss.tools.batch.ui.editor.internal.model.Processor;
 
 public class ItemProcessorRefProposalService extends BatchContentProposalService {
 
+	private static final BatchArtifactType[] TYPES = { BatchArtifactType.ITEM_PROCESSOR };
+	
 	@Override
-	protected BatchArtifactType batchArtifactType() {
-		return BatchArtifactType.ITEM_PROCESSOR;
+	protected BatchArtifactType[] batchArtifactType() {
+		return TYPES;
 	}
 
 	@Override

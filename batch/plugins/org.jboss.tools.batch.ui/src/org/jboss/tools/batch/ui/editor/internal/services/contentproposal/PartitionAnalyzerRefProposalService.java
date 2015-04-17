@@ -2,11 +2,11 @@ package org.jboss.tools.batch.ui.editor.internal.services.contentproposal;
 
 import org.eclipse.sapphire.ImageData;
 import org.jboss.tools.batch.core.BatchArtifactType;
-import org.jboss.tools.batch.ui.editor.internal.model.Writer;
+import org.jboss.tools.batch.ui.editor.internal.model.Partition;
 
-public class ItemWriterRefProposalService extends BatchContentProposalService {
+public class PartitionAnalyzerRefProposalService extends BatchContentProposalService {
 
-	private static final BatchArtifactType[] TYPES = { BatchArtifactType.ITEM_WRITER };
+	private static final BatchArtifactType[] TYPES = { BatchArtifactType.PARTITION_ANALYZER };
 	
 	@Override
 	protected BatchArtifactType[] batchArtifactType() {
@@ -15,6 +15,6 @@ public class ItemWriterRefProposalService extends BatchContentProposalService {
 
 	@Override
 	protected ImageData image() {
-		return Writer.TYPE.image();
+		return Partition.TYPE.image();
 	}
 }

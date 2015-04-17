@@ -84,13 +84,13 @@ public interface Step extends FlowElement {
 
 	ElementHandle<Properties> getProperties();
 
-	@Type( base = Listener.class )
+	@Type( base = StepListener.class )
 	@Label( standard = "listener" )
-	@XmlListBinding( path = "listeners", mappings = @XmlListBinding.Mapping( element = "listener", type = Listener.class ))
+	@XmlListBinding( path = "listeners", mappings = @XmlListBinding.Mapping( element = "listener", type = StepListener.class ))
 
 	ListProperty PROP_LISTENERS = new ListProperty( TYPE, "Listeners" ); //$NON-NLS-1$ 
 
-	ElementList<Listener> getListeners();
+	ElementList<StepListener> getListeners();
 
 	//TODO find a better way to add element [0..1] that has required children.
 	//Question: why Add Chunk is always enabled despite of constraint?

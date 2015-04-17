@@ -14,9 +14,12 @@ import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ElementHandle;
 import org.eclipse.sapphire.ElementProperty;
 import org.eclipse.sapphire.ElementType;
+import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
+import org.eclipse.sapphire.modeling.annotations.Service;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
+import org.jboss.tools.batch.ui.editor.internal.services.contentproposal.PartitionMapperRefProposalService;
 
 /**
  * 
@@ -24,6 +27,7 @@ import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
  *
  */
 @Label( standard = "partition" )
+@Image ( path = "partition.png" )
 public interface Partition extends Element {
 
 	ElementType TYPE = new ElementType( Partition.class );
@@ -31,6 +35,7 @@ public interface Partition extends Element {
 	@Type( base = Mapper.class )
 	@Label( standard = "mapper" )
 	@XmlBinding( path = "mapper" )
+	@Service( impl = PartitionMapperRefProposalService.class )
 
 	ElementProperty PROP_MAPPER = new ElementProperty( TYPE, "Mapper" );
 
@@ -44,13 +49,13 @@ public interface Partition extends Element {
 
 	ElementHandle<Mapper> getPlan();
 
-	@Type( base = ItemHandlingElement.class )
+	@Type( base = Collector.class )
 	@Label( standard = "collector" )
 	@XmlBinding( path = "collector" )
 
 	ElementProperty PROP_COLLECTOR = new ElementProperty( TYPE, "Collector" );
 
-	ElementHandle<ItemHandlingElement> getCollector();
+	ElementHandle<Collector> getCollector();
 
 	@Type( base = Analyzer.class )
 	@Label( standard = "analyzer" )

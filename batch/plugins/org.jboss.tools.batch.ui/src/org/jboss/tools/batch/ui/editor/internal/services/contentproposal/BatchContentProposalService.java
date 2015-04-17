@@ -32,17 +32,21 @@ public abstract class BatchContentProposalService extends ContentProposalService
 
 			@Override
 			protected List<ContentProposal> compute() {
-				Collection<IBatchArtifact> artifacts = batchProject.getArtifacts(batchArtifactType());
-				List<ContentProposal> proposals = new ArrayList<>(artifacts.size());
-				for (IBatchArtifact artifact : artifacts) {
-					proposals.add(new ContentProposal(artifact.getName(), null, null, image()));
+				List<ContentProposal> proposals = new ArrayList<>();
+				for (BatchArtifactType type : batchArtifactType()) {
+					Collection<IBatchArtifact> artifacts = batchProject.getArtifacts(type);
+					for (IBatchArtifact artifact : artifacts) {
+						if (artifact.getName().contains(filter())) {
+							proposals.add(new ContentProposal(artifact.getName(), null, null, image()));
+						}
+					}
 				}
 				return proposals;
 			}
 		};
 	}
 
-	protected abstract BatchArtifactType batchArtifactType();
+	protected abstract BatchArtifactType[] batchArtifactType();
 
 	protected abstract ImageData image();
 

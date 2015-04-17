@@ -6,9 +6,11 @@ import org.jboss.tools.batch.ui.editor.internal.model.Decision;
 
 public class DeciderRefProposalService extends BatchContentProposalService {
 
+	private static final BatchArtifactType[] TYPES = { BatchArtifactType.DECIDER };
+	
 	@Override
-	protected BatchArtifactType batchArtifactType() {
-		return BatchArtifactType.DECIDER;
+	protected BatchArtifactType[] batchArtifactType() {
+		return TYPES;
 	}
 
 	@Override
