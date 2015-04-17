@@ -14,7 +14,6 @@ import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ElementHandle;
 import org.eclipse.sapphire.ElementProperty;
 import org.eclipse.sapphire.ElementType;
-import org.eclipse.sapphire.Value;
 import org.eclipse.sapphire.modeling.annotations.Label;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
@@ -26,11 +25,8 @@ import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
  */
 public interface ItemHandlingElement extends Element {
 
-	ElementType TYPE = new ElementType( ItemHandlingElement.class );
-
-	Value<String> getRef();
-	void setRef( String ref);
-
+	ElementType TYPE = new ElementType( ItemHandlingElement.class );	
+	
 
 	@Type( base = Properties.class )
 	@Label( standard = "properties" )

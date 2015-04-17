@@ -11,6 +11,7 @@
 package org.jboss.tools.batch.ui.editor.internal.model;
 
 import org.eclipse.sapphire.ElementType;
+import org.eclipse.sapphire.Value;
 import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
@@ -33,4 +34,7 @@ public interface Processor extends ItemHandlingElement {
 	@Required	
 	@Service( impl = ItemProcessorRefProposalService.class )
 	ValueProperty PROP_REF = new ValueProperty( TYPE, "Ref" );
+	
+	Value<String> getRef();
+	void setRef( String ref);
 }

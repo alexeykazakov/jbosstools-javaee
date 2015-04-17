@@ -11,6 +11,7 @@
 package org.jboss.tools.batch.ui.editor.internal.model;
 
 import org.eclipse.sapphire.ElementType;
+import org.eclipse.sapphire.Value;
 import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
@@ -30,4 +31,7 @@ public interface CheckpointAlgorithm extends ItemHandlingElement {
 	@XmlBinding( path = "@ref" )
 	@Required
 	ValueProperty PROP_REF = new ValueProperty( TYPE, "Ref" );
+	
+	Value<String> getRef();
+	void setRef( String ref);
 }
