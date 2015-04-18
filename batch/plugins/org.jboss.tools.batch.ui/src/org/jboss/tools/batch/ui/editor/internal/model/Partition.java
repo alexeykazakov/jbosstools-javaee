@@ -47,7 +47,7 @@ public interface Partition extends Element {
 
 	ElementProperty PROP_PLAN = new ElementProperty( TYPE, "Plan" );
 
-	ElementHandle<Mapper> getPlan();
+	ElementHandle<Plan> getPlan();
 
 	@Type( base = Collector.class )
 	@Label( standard = "collector" )
