@@ -1493,9 +1493,10 @@
 			<id>OpenParentAction</id>
 			<label>Go Up</label>
 			<context>Sapphire.Diagram.Header</context>
-			<key-binding>ARROW_UP</key-binding>
+			<key-binding>CONTROL+ARROW_UP</key-binding>
 			<group>OpenParentButtonGroup</group>
 			<location>before:Sapphire.Diagram.Zoom.In</location>
+            <condition>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionCondition</condition>
 		</action>
 		<action-handler>
 			<action>OpenParentAction</action>
