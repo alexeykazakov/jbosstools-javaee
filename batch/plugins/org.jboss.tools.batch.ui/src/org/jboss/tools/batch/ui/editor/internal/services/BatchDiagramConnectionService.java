@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.eclipse.sapphire.Element;
+import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.FilteredListener;
 import org.eclipse.sapphire.PropertyContentEvent;
 import org.eclipse.sapphire.Value;
@@ -38,10 +40,16 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 
 	private void initConnections() {
 		connections = new ArrayList<>();
-		
-		Job job = (Job) (diagramPart.getLocalModelElement());
 
-		for (FlowElement src : job.getFlowElements()) {
+		Element root = diagramPart.getLocalModelElement();
+		ElementList<FlowElement> children;
+		if (root instanceof Job) {
+			children = ((Job) root).getFlowElements();
+		} else {
+			children = ((Flow) root).getFlowElements();
+		}
+
+		for (FlowElement src : children) {
 			Value<String> next = null;
 			if (src instanceof Step) {
 				next = ((Step) src).getNext();
@@ -51,7 +59,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 				next = ((Split) src).getNext();
 			}
 			if (next != null && next.content() != null && !next.content().trim().isEmpty()) {
-				for (FlowElement target : job.getFlowElements()) {
+				for (FlowElement target : children) {
 					String targetId = target.getId().content();
 					if (targetId != null && targetId.equals(next.content())) {
 						connect(diagramPart.getDiagramNodePart(src), diagramPart.getDiagramNodePart(target),
@@ -60,12 +68,12 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 				}
 			}
 
-			src.attach(new FilteredListener<PropertyContentEvent>() {
-				@Override
-				protected void handleTypedEvent(final PropertyContentEvent event) {
-					System.out.println(event.toString());
-				}
-			}, "Next");
+//			src.attach(new FilteredListener<PropertyContentEvent>() { FIXME
+//				@Override
+//				protected void handleTypedEvent(final PropertyContentEvent event) {
+//					System.out.println(event.toString());
+//				}
+//			}, "Next");
 
 		}
 	}
@@ -100,7 +108,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	@Override
 	public List<DiagramConnectionPart> list() {
 		List<DiagramConnectionPart> allConnections = new ArrayList<>();
-		
+
 		if (connections == null) {
 			initConnections();
 		}

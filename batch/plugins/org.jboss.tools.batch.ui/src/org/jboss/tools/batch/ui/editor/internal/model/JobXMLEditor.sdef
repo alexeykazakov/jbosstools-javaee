@@ -1518,16 +1518,14 @@
 			</implementation>
 		</service>
         <properties-view>
-<!--             <page> -->
-<!--                 <label>Job ${id}</label> -->
-<!--                 <image>${Image()}</image> -->
-<!--             </page> -->
             <page>
                 <label>Job ${id}</label>
                 <image>${Image()}</image>
                 <content>
                     <include>JobForm</include>
                 </content>
+<!--                 This condition checks that the current root is a job (not a flow) -->
+                <visible-when>${Parent() == null}</visible-when>as
             </page>
             <page>
                 <label>Flow Elements</label>
@@ -1542,6 +1540,8 @@
                 </content>
                 <label>Properties</label>
                 <image>properties.png</image>
+                                This condition checks that the current root is a job (not a flow)
+                <visible-when>${Parent() == null}</visible-when>
             </page>
         </properties-view>
         <palette>

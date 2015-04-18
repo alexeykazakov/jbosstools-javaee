@@ -60,7 +60,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	protected void init() {
-		initializeListeners();
+//		initializeListeners(); FIXME
 
 		eventHandler.onConnectionAddEvent(new ConnectionAddEvent(this));
 	}
