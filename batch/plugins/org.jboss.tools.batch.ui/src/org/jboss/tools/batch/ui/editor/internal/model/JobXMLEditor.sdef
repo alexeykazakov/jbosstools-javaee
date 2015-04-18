@@ -15,9 +15,9 @@
 				<image>${ Image() }</image>
 				<section>
 					<label>Job</label>
-                    <content>
-                        <include>JobForm</include>
-                    </content>
+					<content>
+						<include>JobForm</include>
+					</content>
 				</section>
 
 				<section>
@@ -41,14 +41,14 @@
 
 		</root-node>
 	</editor-page>
-    <form>
-        <id>JobForm</id>
-        <content>
-            <property-editor>Id</property-editor>
-            <property-editor>Version</property-editor>
-            <property-editor>Restartable</property-editor>
-        </content>
-    </form>
+	<form>
+		<id>JobForm</id>
+		<content>
+			<property-editor>Id</property-editor>
+			<property-editor>Version</property-editor>
+			<property-editor>Restartable</property-editor>
+		</content>
+	</form>
 
 	<node>
 		<id>ListenersNode</id>
@@ -246,7 +246,8 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
-                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Reader</element-type>
+					<element-type>org.jboss.tools.batch.ui.editor.internal.model.Reader
+					</element-type>
 				</case>
 			</with>
 		</content>
@@ -277,56 +278,56 @@
 		<label>Partition</label>
 		<image>partition.png</image>
 		<visible-when>${Partition != null}</visible-when>
-		
+
 		<node-include>PlanNode</node-include>
-        <section-ref>PartitionSection</section-ref>
+		<section-ref>PartitionSection</section-ref>
 	</node>
 
-<section>
-			<content>
-				<with>
-					<path>Partition</path>
-					<case>
-						<content>
-							<section>
-								<visible-when>${Mapper != null || Plan == null}</visible-when>
-								<label>Mapper</label>
-								<content>
-									<include>MapperForm</include>
-								</content>
-							</section>
-							<section>
-								<visible-when>${Mapper == null || Plan != null}</visible-when>
-								<label>Plan</label>
-								<content>
-									<include>PlanForm</include>
-								</content>
-							</section>
-							<section>
-								<label>Collector</label>
-								<content>
-									<include>CollectorForm</include>
-								</content>
-							</section>
-							<section>
-								<label>Analyzer</label>
-								<content>
-									<include>AnalyzerForm</include>
-								</content>
-							</section>
-							<section>
-								<label>Reducer</label>
-								<content>
-									<include>ReducerForm</include>
-								</content>
-							</section>
-						</content>
-					</case>
-				</with>
-			</content>
-        <id>PartitionSection</id>
-        <label>Partition</label>
-		</section>
+	<section>
+		<content>
+			<with>
+				<path>Partition</path>
+				<case>
+					<content>
+						<section>
+							<visible-when>${Mapper != null || Plan == null}</visible-when>
+							<label>Mapper</label>
+							<content>
+								<include>MapperForm</include>
+							</content>
+						</section>
+						<section>
+							<visible-when>${Mapper == null || Plan != null}</visible-when>
+							<label>Plan</label>
+							<content>
+								<include>PlanForm</include>
+							</content>
+						</section>
+						<section>
+							<label>Collector</label>
+							<content>
+								<include>CollectorForm</include>
+							</content>
+						</section>
+						<section>
+							<label>Analyzer</label>
+							<content>
+								<include>AnalyzerForm</include>
+							</content>
+						</section>
+						<section>
+							<label>Reducer</label>
+							<content>
+								<include>ReducerForm</include>
+							</content>
+						</section>
+					</content>
+				</case>
+			</with>
+		</content>
+		<id>PartitionSection</id>
+		<label>Partition</label>
+	</section>
 
 	<node>
 		<id>PlanNode</id>
@@ -596,9 +597,9 @@
 			<label>${Id == null ? "" : Id}</label>
 			<section>
 				<label>Split</label>
-                <content>
-                    <include>SplitForm</include>
-                </content>
+				<content>
+					<include>SplitForm</include>
+				</content>
 			</section>
 
 			<section>
@@ -616,9 +617,9 @@
 			<label>${Id == null ? "" : Id}</label>
 			<section>
 				<label>Decision</label>
-                <content>
-                    <include>DecisionForm</include>
-                </content>
+				<content>
+					<include>DecisionForm</include>
+				</content>
 			</section>
 
 			<section>
@@ -684,9 +685,9 @@
 			<label>${ Id == null ? "" : Id }</label>
 			<section>
 				<label>Flow</label>
-                <content>
-                    <include>FlowForm</include>
-                </content>
+				<content>
+					<include>FlowForm</include>
+				</content>
 			</section>
 
 			<section>
@@ -707,20 +708,20 @@
 			<node-include>OutcomesNode</node-include>
 		</case>
 	</node-factory>
-    <form>
-        <id>DecisionForm</id>
-        <content>
-            <property-editor>Id</property-editor>
-            <property-editor>Ref</property-editor>
-        </content>
-    </form>
-    <form>
-        <content>
-            <property-editor>Id</property-editor>
-            <property-editor>Next</property-editor>
-        </content>
-        <id>FlowForm</id>
-    </form>
+	<form>
+		<id>DecisionForm</id>
+		<content>
+			<property-editor>Id</property-editor>
+			<property-editor>Ref</property-editor>
+		</content>
+	</form>
+	<form>
+		<content>
+			<property-editor>Id</property-editor>
+			<property-editor>Next</property-editor>
+		</content>
+		<id>FlowForm</id>
+	</form>
 
 	<form>
 		<id>StepForm</id>
@@ -736,13 +737,13 @@
 			</property-editor>
 		</content>
 	</form>
-    <form>
-        <id>SplitForm</id>
-        <content>
-            <property-editor>Id</property-editor>
-            <property-editor>Next</property-editor>
-        </content>
-    </form>
+	<form>
+		<id>SplitForm</id>
+		<content>
+			<property-editor>Id</property-editor>
+			<property-editor>Next</property-editor>
+		</content>
+	</form>
 
 	<form>
 		<id>PartitionForm</id>
@@ -769,7 +770,8 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
-                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Mapper</element-type>
+					<element-type>org.jboss.tools.batch.ui.editor.internal.model.Mapper
+					</element-type>
 				</case>
 			</with>
 		</content>
@@ -806,7 +808,8 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
-                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Collector</element-type>
+					<element-type>org.jboss.tools.batch.ui.editor.internal.model.Collector
+					</element-type>
 				</case>
 			</with>
 		</content>
@@ -824,7 +827,8 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
-                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Analyzer</element-type>
+					<element-type>org.jboss.tools.batch.ui.editor.internal.model.Analyzer
+					</element-type>
 				</case>
 			</with>
 		</content>
@@ -842,7 +846,8 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
-                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Reducer</element-type>
+					<element-type>org.jboss.tools.batch.ui.editor.internal.model.Reducer
+					</element-type>
 				</case>
 			</with>
 		</content>
@@ -860,7 +865,8 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
-                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Processor</element-type>
+					<element-type>org.jboss.tools.batch.ui.editor.internal.model.Processor
+					</element-type>
 				</case>
 			</with>
 		</content>
@@ -878,7 +884,8 @@
 						</property-editor>
 						<include>PropertiesSection</include>
 					</content>
-                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.CheckpointAlgorithm</element-type>
+					<element-type>org.jboss.tools.batch.ui.editor.internal.model.CheckpointAlgorithm
+					</element-type>
 				</case>
 			</with>
 		</content>
@@ -944,176 +951,180 @@
 		<id>DiagramPage</id>
 		<element-type>org.jboss.tools.batch.ui.editor.internal.model.Job
 		</element-type>
-        <node>
-            <model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Step</model-element-type>
-            <connection-binding>
-                <connection-id>NextOnConnection</connection-id>
-                <endpoint2>
-                    <property>To</property>
-                    <value>${id}</value>
-                </endpoint2>
-                <instance-id>NextOnConnection.Step${Parent().id}To${To}</instance-id>
-                <label>${empty on ? '&lt;on&gt;' : on}</label>
-                <property>NextElements</property>
-            </connection-binding>
-            <id>StepNode</id>
-            <properties-view>
-                <page>
-                    <content>
-                        <include>StepForm</include>
-                    </content>
-                    <image>step.png</image>
-                    <label>Step ${id}</label>
-                </page>
-                <page>
-                    <label>Partition</label>
-                    <image>partition.png</image>
-                    <content>
-                        <include>PartitionSection</include>
-                    </content>
-                </page>
-            </properties-view>
-            <property>FlowElements</property>
-            <rectangle>
-                <background>
-                    <color></color>
-                </background>
-                <content>
-                    <rectangle>
-                        <content>
-                            <image>
-                                <path>step.png</path>
-                            </image>
-                            <text>
-                                <content>${id == null ? '&lt;id&gt;' : id}</content>
-                                <font>
-                                    <bold></bold>
-                                </font>
-                            </text>
-                            <validation-marker></validation-marker>
-                        </content>
-                        <sequence-layout>
-                            <orientation>horizontal</orientation>
-                        </sequence-layout>
-                    </rectangle>
-                    <rectangle>
-                        <content>
-                            <shape-factory>
-                                <case>
-                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Chunk</element-type>
-                                    <rectangle>
-                                        <sequence-layout>
-                                            <orientation>horizontal</orientation>
-                                        </sequence-layout>
-                                        <content>
-                                            <image>
-                                                <path>${Image()}</path>
-                                            </image>
-                                            <text>
-                                                <truncatable>false</truncatable>
-                                                <content>Chunk</content>
-                                            </text>
-                                            <validation-marker>
-                                                <size>small</size>
-                                            </validation-marker>
-                                        </content>
-                                        <properties-view>
-                                            <page>
-                                                <label>Chunk</label>
-                                                <image>${Image()}</image>
-                                                <content>
-                                                    <include>ChunkForm</include>
-                                                </content>
-                                            </page>
-                                            <page>
-                                                <label>Processor</label>
-                                                <image>processor.png</image>
-                                                <content>
-                                                    <include>ProcessorForm</include>
-                                                </content>
-                                            </page>
-                                            <page>
-                                                <label>Checkpoint Algorithm</label>
-                                                <image>checkpoint-algorithm.png</image>
-                                                <content>
-                                                    <include>CheckpointAlgorithmForm</include>
-                                                </content>
-                                            </page>
-                                            <page>
-                                                <content>
-                                                    <include>SkippableExceptionClassesForm</include>
-                                                </content>
-                                                <label>Skippable Exceptions</label>
-                                                <image>exception.png</image>
-                                            </page>
-                                            <page>
-                                                <label>Retryable Exceptions</label>
-                                                <image>exception.png</image>
-                                                <content>
-                                                    <include>RetryableExceptionClassesForm</include>
-                                                </content>
-                                            </page>
-                                            <page>
-                                                <label>No Rollback Exceptions</label>
-                                                <image>exception.png</image>
-                                                <content>
-                                                    <include>NoRollbackExceptionClassesForm</include>
-                                                </content>
-                                            </page>
-                                        </properties-view>
-                                    </rectangle>
-                                </case>
-                                <property>BatchletOrChunk</property>
-                                <case>
-                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Batchlet</element-type>
-                                    <rectangle>
-                                        <content>
-                                            <image>
-                                                <path>${Image()}</path>
-                                            </image>
-                                            <text>
-                                                <content>Batchlet</content>
-                                                <truncatable>false</truncatable>
-                                            </text>
-                                            <validation-marker>
-                                                <size>small</size>
-                                            </validation-marker>
-                                        </content>
-                                        <properties-view>
-                                            <page>
-                                                <label>Batchlet</label>
-                                                <image>${Image()}</image>
-                                                <content>
-                                                    <property-editor>Ref</property-editor>
-                                                    <separator></separator>
-                                                </content>
-                                            </page>
-                                            <page>
-                                                <content>
-                                                    <include>PropertiesSection</include>
-                                                </content>
-                                                <label>Properties</label>
-                                                <image>properties.png</image>
-                                            </page>
-                                        </properties-view>
-                                    </rectangle>
-                                </case>
-                            </shape-factory>
-                        </content>
-                        <background>
-                            <color>
-                                <Color>#FFFFFF</Color>
-                            </color>
-                        </background>
-                    </rectangle>
-                </content>
-                <sequence-layout>
-                    <orientation>vertical</orientation>
-                </sequence-layout>
-            </rectangle>
-            <tool-palette-image>step.png</tool-palette-image>
-            <tool-palette-label>Step</tool-palette-label>
-        </node>
+		<node>
+			<model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Step
+			</model-element-type>
+			<connection-binding>
+				<connection-id>NextOnConnection</connection-id>
+				<endpoint2>
+					<property>To</property>
+					<value>${id}</value>
+				</endpoint2>
+				<instance-id>NextOnConnection.Step${Parent().id}To${To}
+				</instance-id>
+				<label>${empty on ? '&lt;on&gt;' : on}</label>
+				<property>NextElements</property>
+			</connection-binding>
+			<id>StepNode</id>
+			<properties-view>
+				<page>
+					<content>
+						<include>StepForm</include>
+					</content>
+					<image>step.png</image>
+					<label>Step ${id}</label>
+				</page>
+				<page>
+					<label>Partition</label>
+					<image>partition.png</image>
+					<content>
+						<include>PartitionSection</include>
+					</content>
+				</page>
+			</properties-view>
+			<property>FlowElements</property>
+			<rectangle>
+				<background>
+					<color></color>
+				</background>
+				<content>
+					<rectangle>
+						<content>
+							<image>
+								<path>step.png</path>
+							</image>
+							<text>
+								<content>${id == null ? '&lt;id&gt;' : id}</content>
+								<font>
+									<bold></bold>
+								</font>
+							</text>
+							<validation-marker></validation-marker>
+						</content>
+						<sequence-layout>
+							<orientation>horizontal</orientation>
+						</sequence-layout>
+					</rectangle>
+					<rectangle>
+						<content>
+							<shape-factory>
+								<case>
+									<element-type>org.jboss.tools.batch.ui.editor.internal.model.Chunk
+									</element-type>
+									<rectangle>
+										<sequence-layout>
+											<orientation>horizontal</orientation>
+										</sequence-layout>
+										<content>
+											<image>
+												<path>${Image()}</path>
+											</image>
+											<text>
+												<truncatable>false</truncatable>
+												<content>Chunk</content>
+											</text>
+											<validation-marker>
+												<size>small</size>
+											</validation-marker>
+										</content>
+										<properties-view>
+											<page>
+												<label>Chunk</label>
+												<image>${Image()}</image>
+												<content>
+													<include>ChunkForm</include>
+												</content>
+											</page>
+											<page>
+												<label>Processor</label>
+												<image>processor.png</image>
+												<content>
+													<include>ProcessorForm</include>
+												</content>
+											</page>
+											<page>
+												<label>Checkpoint Algorithm</label>
+												<image>checkpoint-algorithm.png</image>
+												<content>
+													<include>CheckpointAlgorithmForm</include>
+												</content>
+											</page>
+											<page>
+												<content>
+													<include>SkippableExceptionClassesForm</include>
+												</content>
+												<label>Skippable Exceptions</label>
+												<image>exception.png</image>
+											</page>
+											<page>
+												<label>Retryable Exceptions</label>
+												<image>exception.png</image>
+												<content>
+													<include>RetryableExceptionClassesForm</include>
+												</content>
+											</page>
+											<page>
+												<label>No Rollback Exceptions</label>
+												<image>exception.png</image>
+												<content>
+													<include>NoRollbackExceptionClassesForm</include>
+												</content>
+											</page>
+										</properties-view>
+									</rectangle>
+								</case>
+								<property>BatchletOrChunk</property>
+								<case>
+									<element-type>org.jboss.tools.batch.ui.editor.internal.model.Batchlet
+									</element-type>
+									<rectangle>
+										<content>
+											<image>
+												<path>${Image()}</path>
+											</image>
+											<text>
+												<content>Batchlet</content>
+												<truncatable>false</truncatable>
+											</text>
+											<validation-marker>
+												<size>small</size>
+											</validation-marker>
+										</content>
+										<properties-view>
+											<page>
+												<label>Batchlet</label>
+												<image>${Image()}</image>
+												<content>
+													<property-editor>Ref</property-editor>
+													<separator></separator>
+												</content>
+											</page>
+											<page>
+												<content>
+													<include>PropertiesSection</include>
+												</content>
+												<label>Properties</label>
+												<image>properties.png</image>
+											</page>
+										</properties-view>
+									</rectangle>
+								</case>
+							</shape-factory>
+						</content>
+						<background>
+							<color>
+								<Color>#FFFFFF</Color>
+							</color>
+						</background>
+					</rectangle>
+				</content>
+				<sequence-layout>
+					<orientation>vertical</orientation>
+				</sequence-layout>
+			</rectangle>
+			<tool-palette-image>step.png</tool-palette-image>
+			<tool-palette-label>Step</tool-palette-label>
+		</node>
 		<node>
 			<id>FlowNode</id>
 			<property>FlowElements</property>
@@ -1263,29 +1274,29 @@
 				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
 				</impl>
 			</action-handler>
-            <properties-view>
-                <page>
-                    <content>
-                        <include>FlowForm</include>
-                    </content>
-                    <label>Flow ${id}</label>
-                    <image>${Image()}</image>
-                </page>
-                <page>
-                    <content>
-                        <include>FlowElementsForm</include>
-                    </content>
-                    <label>Flow Elements</label>
-                    <image>flow-elements.png</image>
-                </page>
-                <page>
-                    <content>
-                        <include>OutcomesForm</include>
-                    </content>
-                    <label>Transitions</label>
-                    <image>transitions.png</image>
-                </page>
-            </properties-view>
+			<properties-view>
+				<page>
+					<content>
+						<include>FlowForm</include>
+					</content>
+					<label>Flow ${id}</label>
+					<image>${Image()}</image>
+				</page>
+				<page>
+					<content>
+						<include>FlowElementsForm</include>
+					</content>
+					<label>Flow Elements</label>
+					<image>flow-elements.png</image>
+				</page>
+				<page>
+					<content>
+						<include>OutcomesForm</include>
+					</content>
+					<label>Transitions</label>
+					<image>transitions.png</image>
+				</page>
+			</properties-view>
 		</node>
 		<page-header-text>${parent() == null ? '' : concat(parent().id,
 			'/')}${id == null ? &quot;_&quot; : id}</page-header-text>
@@ -1352,29 +1363,29 @@
 					<orientation>horizontal</orientation>
 				</sequence-layout>
 			</rectangle>
-            <properties-view>
-                <page>
-                    <label>Decision ${id}</label>
-                    <image>${Image()}</image>
-                    <content>
-                        <include>DecisionForm</include>
-                    </content>
-                </page>
-                <page>
-                    <label>Transitions</label>
-                    <image>transitions.png</image>
-                    <content>
-                        <include>OutcomesForm</include>
-                    </content>
-                </page>
-                <page>
-                    <label>Properties</label>
-                    <content>
-                        <include>PropertiesSection</include>
-                    </content>
-                    <image>properties.png</image>
-                </page>
-            </properties-view>
+			<properties-view>
+				<page>
+					<label>Decision ${id}</label>
+					<image>${Image()}</image>
+					<content>
+						<include>DecisionForm</include>
+					</content>
+				</page>
+				<page>
+					<label>Transitions</label>
+					<image>transitions.png</image>
+					<content>
+						<include>OutcomesForm</include>
+					</content>
+				</page>
+				<page>
+					<label>Properties</label>
+					<content>
+						<include>PropertiesSection</include>
+					</content>
+					<image>properties.png</image>
+				</page>
+			</properties-view>
 		</node>
 		<node>
 			<id>SplitNode</id>
@@ -1424,11 +1435,12 @@
 												<content>
 													<image>
 														<path>flow.png</path>
-                                                        <action-handler>
-                                                            <action>Sapphire.DoubleTap</action>
-                                                            <id>OpenSplitFlowActionHandler-DoubleClick</id>
-                                                            <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
-                                                        </action-handler>
+														<action-handler>
+															<action>Sapphire.DoubleTap</action>
+															<id>OpenSplitFlowActionHandler-DoubleClick</id>
+															<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler
+															</impl>
+														</action-handler>
 													</image>
 													<text>
 														<content>${id == null ? '&lt;id&gt;' : id}</content>
@@ -1472,31 +1484,36 @@
 					</color>
 				</background>
 			</rectangle>
-            <properties-view>
-                <page>
-                    <label>Split ${id}</label>
-                    <image>${Image()}</image>
-                    <content>
-                        <include>SplitForm</include>
-                    </content>
-                </page>
-                <page>
-                    <label>Flows</label>
-                    <image>flow.png</image>
-                    <content>
-                        <include>FlowsForm</include>
-                    </content>
-                </page>
-            </properties-view>
+			<properties-view>
+				<page>
+					<label>Split ${id}</label>
+					<image>${Image()}</image>
+					<content>
+						<include>SplitForm</include>
+					</content>
+				</page>
+				<page>
+					<label>Flows</label>
+					<image>flow.png</image>
+					<content>
+						<include>FlowsForm</include>
+					</content>
+				</page>
+			</properties-view>
 		</node>
 		<action>
 			<id>OpenParentAction</id>
-			<label>Go Up</label>
+			<label>Go Back To Parent</label>
 			<context>Sapphire.Diagram.Header</context>
 			<key-binding>CONTROL+ARROW_UP</key-binding>
 			<group>OpenParentButtonGroup</group>
 			<location>before:Sapphire.Diagram.Zoom.In</location>
-            <condition>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionCondition</condition>
+			<condition>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionCondition
+			</condition>
+			<hint>
+				<name>style</name>
+				<value>text</value>
+			</hint>
 		</action>
 		<action-handler>
 			<action>OpenParentAction</action>
@@ -1518,43 +1535,44 @@
 			<implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramConnectionService
 			</implementation>
 		</service>
-        <properties-view>
-            <page>
-                <label>Job ${id}</label>
-                <image>${Image()}</image>
-                <content>
-                    <include>JobForm</include>
-                </content>
-<!--                 This condition checks that the current root is a job (not a flow) -->
-                <visible-when>${Parent() == null}</visible-when>as
-            </page>
-            <page>
-                <label>Flow Elements</label>
-                <content>
-                    <include>FlowElementsForm</include>
-                </content>
-                <image>flow-elements.png</image>
-            </page>
-            <page>
-                <content>
-                    <include>PropertiesSection</include>
-                </content>
-                <label>Properties</label>
-                <image>properties.png</image>
-                                This condition checks that the current root is a job (not a flow)
-                <visible-when>${Parent() == null}</visible-when>
-            </page>
-        </properties-view>
-        <palette>
-            <compartment>
-                <id>Sapphire.Diagram.Palette.Connections</id>
-                <label>Transitions</label>
-            </compartment>
-            <compartment>
-                <id>Sapphire.Diagram.Palette.Nodes</id>
-                <label>Flow Elements</label>
-            </compartment>
-        </palette> 
+		<properties-view>
+			<page>
+				<label>Job ${id}</label>
+				<image>${Image()}</image>
+				<content>
+					<include>JobForm</include>
+				</content>
+				<!-- This condition checks that the current root is a job (not a flow) -->
+				<visible-when>${Parent() == null}</visible-when>
+				as
+			</page>
+			<page>
+				<label>Flow Elements</label>
+				<content>
+					<include>FlowElementsForm</include>
+				</content>
+				<image>flow-elements.png</image>
+			</page>
+			<page>
+				<content>
+					<include>PropertiesSection</include>
+				</content>
+				<label>Properties</label>
+				<image>properties.png</image>
+				This condition checks that the current root is a job (not a flow)
+				<visible-when>${Parent() == null}</visible-when>
+			</page>
+		</properties-view>
+		<palette>
+			<compartment>
+				<id>Sapphire.Diagram.Palette.Connections</id>
+				<label>Transitions</label>
+			</compartment>
+			<compartment>
+				<id>Sapphire.Diagram.Palette.Nodes</id>
+				<label>Flow Elements</label>
+			</compartment>
+		</palette>
 	</diagram-page>
 
 
