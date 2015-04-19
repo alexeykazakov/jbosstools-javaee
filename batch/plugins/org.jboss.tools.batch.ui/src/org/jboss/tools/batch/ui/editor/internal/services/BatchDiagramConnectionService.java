@@ -76,7 +76,10 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	@Override
 	public boolean valid(DiagramNodePart node1, DiagramNodePart node2, String connectionType) {
 		if (connectionType.equals(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID)) {
-			return true; // TODO
+			// Connection from node1 to node2 can be created iff no connection
+			// from node1 exists yet and node2 is a FlowElement
+			return !nodesConnectionsMap.containsKey(node1.getLocalModelElement())
+					&& node2.getLocalModelElement() instanceof FlowElement;
 		} else {
 			return super.valid(node1, node2, connectionType);
 		}
@@ -91,7 +94,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 			String nextId = ((FlowElement) node2.getLocalModelElement()).getId().content();
 			NextAttributeElement element = (NextAttributeElement) node1.getLocalModelElement();
 			element.setNext(nextId);
-			
+
 			return addConnectionPart(node1, node2);
 		} else {
 			return super.connect(node1, node2, connectionType);
