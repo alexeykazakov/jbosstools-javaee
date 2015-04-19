@@ -27,7 +27,7 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 	public static final int DESIGN_PAGE_INDEX = 0;
 	public static final int DIAGRAM_PAGE_INDEX = 1;
 	
-	private Job jobModel;
+	private FlowElementsContainer model;
 	private StructuredTextEditor schemaSourceEditor;
 	private SapphireDiagramEditor schemaDiagram;
 	private MasterDetailsEditorPage design;
@@ -42,14 +42,14 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 
 		@Override
 		protected Element createModel() {
-			this.jobModel = Job.TYPE.instantiate(new RootXmlResource(new XmlEditorResourceStore(this, this.schemaSourceEditor)));
-			return this.jobModel;
+			this.model = Job.TYPE.instantiate(new RootXmlResource(new XmlEditorResourceStore(this, this.schemaSourceEditor)));
+			return this.model;
 		}
 
 		@Override
 		protected void createDiagramPages() throws PartInitException {	
 			this.schemaDiagram = new SapphireDiagramEditor(
-					this, this.jobModel,
+					this, this.model,
 					DefinitionLoader.sdef( getClass() ).page( "DiagramPage" )
 			);
 			addEditorPage( DIAGRAM_PAGE_INDEX, this.schemaDiagram );
@@ -59,14 +59,14 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 		@Override
 		protected void createFormPages() throws PartInitException {
 			this.design = new MasterDetailsEditorPage(
-					this, this.jobModel,
+					this, this.model,
 					DefinitionLoader.sdef( getClass() ).page( "design" )
 			);
 			addPage( DESIGN_PAGE_INDEX, this.design );
 		}
 
-		public Job getSchema() {
-			return this.jobModel;
+		public FlowElementsContainer getSchema() {
+			return this.model;
 		}
 
 		@Override
@@ -84,20 +84,18 @@ public class JobXMLEditor extends SapphireEditor implements IMultiPageEditor{
 			return design;
 		}
 
-		public void changeDiagramContent(Element element) {
-			SapphireDiagramEditor diagram = new SapphireDiagramEditor(
-					this, element,
-					DefinitionLoader.sdef( getClass()).page( "DiagramPage" ) // TODO
-			);
-
+		public void changeDiagramContent(FlowElementsContainer newRoot) {
+			this.model = newRoot;
 			try {
-				addEditorPage(JobXMLEditor.DIAGRAM_PAGE_INDEX, diagram);
-			} catch (PartInitException e) {
+				createDiagramPages();
+			} catch (PartInitException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
 
 			removePage(JobXMLEditor.DIAGRAM_PAGE_INDEX + 1);		
-			setActiveEditor(diagram);
+			setActiveEditor(this.schemaDiagram);
+			
+			
 		}
 }

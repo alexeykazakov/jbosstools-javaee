@@ -41,7 +41,7 @@ import org.eclipse.sapphire.modeling.xml.annotations.XmlSchema;
 )
 @Image ( path = "job.png" )
 @XmlBinding( path = "job" )
-public interface Job extends Element {
+public interface Job extends Element, FlowElementsContainer {
 
 	ElementType TYPE = new ElementType( Job.class );
 
@@ -85,18 +85,5 @@ public interface Job extends Element {
 	ListProperty PROP_LISTENERS = new ListProperty( TYPE, "Listeners" ); //$NON-NLS-1$ 
 
 	ElementList<JobListener> getListeners();
-
-	@Type( base = FlowElement.class,
-			possible = {
-				Flow.class,
-				Step.class,
-				Decision.class,
-				Split.class
-			}
-	)
-	@XmlListBinding( path = "" )
-	ListProperty PROP_FLOW_ELEMENTS = new ListProperty(TYPE, "FlowElements");
-
-	ElementList<FlowElement> getFlowElements();
 	
 }

@@ -24,6 +24,7 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.batch.ui.editor.internal.model.BatchletOrChunk;
 import org.jboss.tools.batch.ui.editor.internal.model.Chunk;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
+import org.jboss.tools.batch.ui.editor.internal.model.FlowElementsContainer;
 import org.jboss.tools.batch.ui.editor.internal.model.Job;
 import org.jboss.tools.batch.ui.editor.internal.model.JobXMLEditor;
 import org.jboss.tools.batch.ui.editor.internal.model.Step;
@@ -56,7 +57,7 @@ public class BatchEditorTest extends TestCase {
 		 editor = openEditor("src/META-INF/batch-jobs/job.xml");
 		 JobXMLEditor jobEditor = (JobXMLEditor)editor;
 
-		 Job job = jobEditor.getSchema();
+		 FlowElementsContainer job = jobEditor.getSchema();
 		 assertNotNull(job);
 		 ElementList<FlowElement> es = job.getFlowElements();
 		 assertEquals(1, es.size());

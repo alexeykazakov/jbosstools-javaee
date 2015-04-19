@@ -22,6 +22,7 @@ import org.eclipse.sapphire.ui.diagram.editor.SapphireDiagramEditorPagePart;
 import org.jboss.tools.batch.ui.editor.internal.model.Decision;
 import org.jboss.tools.batch.ui.editor.internal.model.Flow;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
+import org.jboss.tools.batch.ui.editor.internal.model.FlowElementsContainer;
 import org.jboss.tools.batch.ui.editor.internal.model.Job;
 import org.jboss.tools.batch.ui.editor.internal.model.Split;
 import org.jboss.tools.batch.ui.editor.internal.model.Step;
@@ -31,7 +32,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	private static final String NEXT_ATTRIBUTE_CONNECTION_ID = "NextAttributeConnection";
 
 	private List<DiagramConnectionPart> connections;
-	
+
 	private Map<Element, Element> nodesConnectionsMap = new HashMap<>();
 
 	private SapphireDiagramEditorPagePart diagramPart;
@@ -47,13 +48,8 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	private void initConnections() {
 		connections = new ArrayList<>();
 
-		Element root = diagramPart.getLocalModelElement();
-		ElementList<FlowElement> children;
-		if (root instanceof Job) {
-			children = ((Job) root).getFlowElements();
-		} else {
-			children = ((Flow) root).getFlowElements();
-		}
+		ElementList<FlowElement> children = ((FlowElementsContainer) diagramPart.getLocalModelElement())
+				.getFlowElements();
 
 		for (FlowElement src : children) {
 			Value<String> next = null;
@@ -80,7 +76,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 		}
 	}
 
-	private void attachListenerForNewConnection(FlowElement flowElement) {
+	private void attachListenerForNewConnection(final FlowElement flowElement) {
 		flowElement.attach(new FilteredListener<PropertyContentEvent>() {
 			@Override
 			protected void handleTypedEvent(final PropertyContentEvent event) {
@@ -94,14 +90,9 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 					next = ((Split) flowElement).getNext();
 				}
 				if (!nodesConnectionsMap.containsKey(flowElement)) {
-					addConnectionPart(diagramPart.getDiagramNodePart(flowElement), diagramPart.getDiagramNodePart(next.target()));
+					addConnectionPart(diagramPart.getDiagramNodePart(flowElement),
+							diagramPart.getDiagramNodePart(next.target()));
 				}
-				
-//						
-//						if (next.target() != null) {
-//							connect(diagramPart.getDiagramNodePart(src), diagramPart.getDiagramNodePart(next.target()),
-//									NEXT_ATTRIBUTE_CONNECTION_ID);
-//						}
 			}
 		}, "Next");
 	}
@@ -119,20 +110,20 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	public DiagramConnectionPart connect(DiagramNodePart node1, DiagramNodePart node2, String connectionType) {
 
 		if (connectionType.equals(NEXT_ATTRIBUTE_CONNECTION_ID)) {
-			
+
 			// connect the reference in the model
 			String nextId = ((FlowElement) node2.getLocalModelElement()).getId().content();
 			Element element = node1.getLocalModelElement();
 			if (element instanceof Step) {
 				((Step) element).setNext(nextId);
 			} else if (element instanceof Flow) {
-				((Flow) element).setNext(nextId);	
+				((Flow) element).setNext(nextId);
 			} else if (element instanceof Split) {
 				((Split) element).setNext(nextId);
 			} else {
 				throw new IllegalArgumentException(); // TODO
 			}
-			
+
 			return addConnectionPart(node1, node2);
 		} else {
 			return super.connect(node1, node2, connectionType);
@@ -140,11 +131,12 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	}
 
 	private DiagramConnectionPart addConnectionPart(DiagramNodePart node1, DiagramNodePart node2) {
-		BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2, NEXT_ATTRIBUTE_CONNECTION_ID,
-				diagramPart, eventHandler);		
+		BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2,
+				NEXT_ATTRIBUTE_CONNECTION_ID, diagramPart, eventHandler);
 
 		connectionPart.init(diagramPart, node1.getLocalModelElement(),
-				diagramPart.getDiagramConnectionDef(NEXT_ATTRIBUTE_CONNECTION_ID), Collections.<String, String> emptyMap());
+				diagramPart.getDiagramConnectionDef(NEXT_ATTRIBUTE_CONNECTION_ID),
+				Collections.<String, String> emptyMap());
 		connectionPart.initialize();
 
 		nodesConnectionsMap.put(node1.getLocalModelElement(), node2.getLocalModelElement());

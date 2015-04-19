@@ -36,7 +36,7 @@ import org.jboss.tools.batch.ui.editor.internal.services.NextPossibleValuesServi
 @Label( standard = "flow" )
 @Image ( path = "flow.png" )
 @XmlBinding( path = "flow" )
-public interface Flow extends FlowElement {
+public interface Flow extends FlowElement, FlowElementsContainer {
 	
 	ElementType TYPE = new ElementType( Flow.class );
     
@@ -51,19 +51,6 @@ public interface Flow extends FlowElement {
 	ReferenceValue<String, FlowElement> getNext();
 	void setNext( String value);
 
-	
-	@Type( base = FlowElement.class,
-			possible = {
-				Flow.class,
-				Step.class,
-				Decision.class,
-				Split.class
-			}
-	)
-	@XmlListBinding( path = "" )
-	ListProperty PROP_FLOW_ELEMENTS = new ListProperty(TYPE, "FlowElements");
-
-	ElementList<FlowElement> getFlowElements();
 	
 	@Type( base = OutcomeElement.class,
 			possible = {
