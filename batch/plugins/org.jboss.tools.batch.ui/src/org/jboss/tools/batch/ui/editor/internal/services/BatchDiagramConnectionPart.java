@@ -11,6 +11,7 @@ import org.eclipse.sapphire.Event;
 import org.eclipse.sapphire.Listener;
 import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.services.ReferenceService;
+import org.eclipse.sapphire.services.ServiceEvent;
 import org.eclipse.sapphire.ui.Point;
 import org.eclipse.sapphire.ui.SapphireActionSystem;
 import org.eclipse.sapphire.ui.diagram.ConnectionAddEvent;
@@ -36,6 +37,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	private BatchDiagramConnectionEventHandler eventHandler;
 	private SapphireDiagramEditorPagePart diagramPart;
 	private Listener listener;
+	private ReferenceService<?> refService;
 
 	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, String connectionType,
 			SapphireDiagramEditorPagePart diagramPart, BatchDiagramConnectionEventHandler eventHandler) {
@@ -44,33 +46,32 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		this.connectionType = connectionType;
 		this.eventHandler = eventHandler;
 		this.diagramPart = diagramPart;
-
-		String nextId = ((FlowElement) node2.getLocalModelElement()).getId().content();
-		Element element = node1.getLocalModelElement();
-		if (element instanceof Step) {
-			((Step) element).setNext(nextId);
-		} else if (element instanceof Flow) {
-			((Flow) element).setNext(nextId);
-		} else if (element instanceof Split) {
-			((Split) element).setNext(nextId);
-		} else {
-			throw new IllegalArgumentException(); // TODO
-		}
 	}
 
 	@Override
 	protected void init() {
-//		initializeListeners(); FIXME
+		initializeListeners();
 
 		eventHandler.onConnectionAddEvent(new ConnectionAddEvent(this));
 	}
 
 	private void initializeListeners() {
-		ReferenceValue<?, ?> referenceValue = (ReferenceValue<?, ?>) srcElement.property(Step.PROP_NEXT); // FIXME
-		final ReferenceService<?> refService = referenceValue.service(ReferenceService.class);
+		ReferenceValue<String, FlowElement> reference;
+		if (srcElement instanceof Step) {
+			reference = ((Step) srcElement).getNext();
+		} else if (srcElement instanceof Flow) {
+			reference = ((Flow) srcElement).getNext();
+		} else if (srcElement instanceof Split) {
+			reference = ((Split) srcElement).getNext();
+		} else {
+			throw new IllegalArgumentException(); // TODO
+		}
+		reference.target().refresh(); // must be refreshed, otherwise the reference changed event not fired
+		refService = reference.service(ReferenceService.class); 
 		listener = new Listener() {
 			@Override
-			public void handle(Event event) {
+			public void handle(Event event) { 
+				System.out.println(event.toString());
 				FlowElement newTarget = ((Step) srcElement).getNext().target();
 
 				if (newTarget == null) {
@@ -85,10 +86,10 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	}
 
 	private void changeTargetElement(Element newTarget) {
-		targetElement = (FlowElement) newTarget;		
+		targetElement = (FlowElement) newTarget;
 		String id = targetElement.getId().content();
-		
-		if (srcElement instanceof Step) {	
+
+		if (srcElement instanceof Step) {
 			((Step) srcElement).setNext(id);
 		} else if (srcElement instanceof Flow) {
 			((Flow) srcElement).setNext(id);
@@ -97,7 +98,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		} else {
 			throw new IllegalArgumentException(); // TODO
 		}
-		
+
 		eventHandler.onConnectionEndpointsEvent(new ConnectionEndpointsEvent(this));
 	}
 

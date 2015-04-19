@@ -63,9 +63,6 @@ public interface Step extends FlowElement {
 
 	ReferenceValue<String, FlowElement> getNext();
 	void setNext( String value);
-	
-	
-	
 
 
 	@Label( standard = "allow-start-if-complete" )

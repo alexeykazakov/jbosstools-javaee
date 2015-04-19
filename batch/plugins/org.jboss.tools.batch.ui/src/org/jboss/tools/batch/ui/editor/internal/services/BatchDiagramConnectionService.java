@@ -2,12 +2,15 @@ package org.jboss.tools.batch.ui.editor.internal.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.FilteredListener;
 import org.eclipse.sapphire.PropertyContentEvent;
+import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.Value;
 import org.eclipse.sapphire.ui.diagram.ConnectionAddEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionDeleteEvent;
@@ -16,6 +19,7 @@ import org.eclipse.sapphire.ui.diagram.DiagramConnectionPart;
 import org.eclipse.sapphire.ui.diagram.StandardConnectionService;
 import org.eclipse.sapphire.ui.diagram.editor.DiagramNodePart;
 import org.eclipse.sapphire.ui.diagram.editor.SapphireDiagramEditorPagePart;
+import org.jboss.tools.batch.ui.editor.internal.model.Decision;
 import org.jboss.tools.batch.ui.editor.internal.model.Flow;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
 import org.jboss.tools.batch.ui.editor.internal.model.Job;
@@ -27,6 +31,8 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	private static final String NEXT_ATTRIBUTE_CONNECTION_ID = "NextAttributeConnection";
 
 	private List<DiagramConnectionPart> connections;
+	
+	private Map<Element, Element> nodesConnectionsMap = new HashMap<>();
 
 	private SapphireDiagramEditorPagePart diagramPart;
 	private EventHandler eventHandler = new EventHandler();
@@ -62,20 +68,42 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 				for (FlowElement target : children) {
 					String targetId = target.getId().content();
 					if (targetId != null && targetId.equals(next.content())) {
-						connect(diagramPart.getDiagramNodePart(src), diagramPart.getDiagramNodePart(target),
-								NEXT_ATTRIBUTE_CONNECTION_ID);
+						addConnectionPart(diagramPart.getDiagramNodePart(src), diagramPart.getDiagramNodePart(target));
 					}
 				}
 			}
 
-//			src.attach(new FilteredListener<PropertyContentEvent>() { FIXME
-//				@Override
-//				protected void handleTypedEvent(final PropertyContentEvent event) {
-//					System.out.println(event.toString());
-//				}
-//			}, "Next");
+			if (!(src instanceof Decision)) {
+				attachListenerForNewConnection(src);
+			}
 
 		}
+	}
+
+	private void attachListenerForNewConnection(FlowElement flowElement) {
+		flowElement.attach(new FilteredListener<PropertyContentEvent>() {
+			@Override
+			protected void handleTypedEvent(final PropertyContentEvent event) {
+				System.out.println(event.toString());
+				ReferenceValue<String, FlowElement> next = null;
+				if (flowElement instanceof Step) {
+					next = ((Step) flowElement).getNext();
+				} else if (flowElement instanceof Flow) {
+					next = ((Flow) flowElement).getNext();
+				} else if (flowElement instanceof Split) {
+					next = ((Split) flowElement).getNext();
+				}
+				if (!nodesConnectionsMap.containsKey(flowElement)) {
+					addConnectionPart(diagramPart.getDiagramNodePart(flowElement), diagramPart.getDiagramNodePart(next.target()));
+				}
+				
+//						
+//						if (next.target() != null) {
+//							connect(diagramPart.getDiagramNodePart(src), diagramPart.getDiagramNodePart(next.target()),
+//									NEXT_ATTRIBUTE_CONNECTION_ID);
+//						}
+			}
+		}, "Next");
 	}
 
 	@Override
@@ -91,18 +119,37 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	public DiagramConnectionPart connect(DiagramNodePart node1, DiagramNodePart node2, String connectionType) {
 
 		if (connectionType.equals(NEXT_ATTRIBUTE_CONNECTION_ID)) {
-			BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2, connectionType,
-					diagramPart, eventHandler);
-
-			connectionPart.init(diagramPart, node1.getLocalModelElement(),
-					diagramPart.getDiagramConnectionDef(connectionType), Collections.<String, String> emptyMap());
-			connectionPart.initialize();
-
-			connections.add(connectionPart);
-			return connectionPart;
+			
+			// connect the reference in the model
+			String nextId = ((FlowElement) node2.getLocalModelElement()).getId().content();
+			Element element = node1.getLocalModelElement();
+			if (element instanceof Step) {
+				((Step) element).setNext(nextId);
+			} else if (element instanceof Flow) {
+				((Flow) element).setNext(nextId);	
+			} else if (element instanceof Split) {
+				((Split) element).setNext(nextId);
+			} else {
+				throw new IllegalArgumentException(); // TODO
+			}
+			
+			return addConnectionPart(node1, node2);
 		} else {
 			return super.connect(node1, node2, connectionType);
 		}
+	}
+
+	private DiagramConnectionPart addConnectionPart(DiagramNodePart node1, DiagramNodePart node2) {
+		BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2, NEXT_ATTRIBUTE_CONNECTION_ID,
+				diagramPart, eventHandler);		
+
+		connectionPart.init(diagramPart, node1.getLocalModelElement(),
+				diagramPart.getDiagramConnectionDef(NEXT_ATTRIBUTE_CONNECTION_ID), Collections.<String, String> emptyMap());
+		connectionPart.initialize();
+
+		nodesConnectionsMap.put(node1.getLocalModelElement(), node2.getLocalModelElement());
+		connections.add(connectionPart);
+		return connectionPart;
 	}
 
 	@Override
@@ -133,16 +180,9 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 		@Override
 		public void onConnectionDeleteEvent(ConnectionDeleteEvent event) {
 			connections.remove(event.part());
+			nodesConnectionsMap.remove(event.part().getEndpoint1());
 			BatchDiagramConnectionService.this.broadcast(event);
 		}
 
 	}
-
-	// @Override
-	// public List<IDiagramConnectionDef> possibleConnectionDefs(DiagramNodePart
-	// srcNode) {
-	// return
-	// Collections.singletonList(diagramPart.getDiagramConnectionDef("NextConnection"));
-	// // TODO
-	// }
 }
