@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.Event;
@@ -14,6 +13,7 @@ import org.eclipse.sapphire.services.ReferenceService;
 import org.eclipse.sapphire.ui.Point;
 import org.eclipse.sapphire.ui.SapphireActionSystem;
 import org.eclipse.sapphire.ui.diagram.ConnectionAddEvent;
+import org.eclipse.sapphire.ui.diagram.ConnectionBendpointsEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionDeleteEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionEndpointsEvent;
 import org.eclipse.sapphire.ui.diagram.DiagramConnectionPart;
@@ -32,10 +32,12 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	private BatchDiagramConnectionEventHandler eventHandler;
 	private Listener listener;
 	private ReferenceService<?> refService;
+	private BatchDiagramConnectionService service;
 
-	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, BatchDiagramConnectionEventHandler eventHandler) {
+	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, BatchDiagramConnectionService service, BatchDiagramConnectionEventHandler eventHandler) {
 		this.srcElement = (NextAttributeElement) node1.getLocalModelElement();
 		this.targetElement = (FlowElement) node2.getLocalModelElement();
+		this.service = service;
 		this.eventHandler = eventHandler;
 	}
 
@@ -71,6 +73,8 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	private void changeTargetElement(FlowElement newTarget) {
 		targetElement = newTarget;
 		srcElement.setNext(targetElement.getId().content());
+		
+		removeAllBendpoints();
 
 		eventHandler.onConnectionEndpointsEvent(new ConnectionEndpointsEvent(this));
 	}
@@ -85,7 +89,6 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public boolean removable() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -97,8 +100,10 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return UUID.randomUUID().toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID);
+		builder.append(service.list().indexOf(this));
+		return builder.toString();
 	}
 
 	@Override
@@ -124,34 +129,37 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public List<Point> getBendpoints() {
-		return bendpoints;
+		return new ArrayList<>(bendpoints);
 	}
 
 	@Override
 	public void removeAllBendpoints() {
 		bendpoints.clear();
+		broadcast(new ConnectionBendpointsEvent(this));
 	}
 
 	@Override
 	public void resetBendpoints(List<Point> bendpoints) {
 		this.bendpoints = bendpoints;
+		broadcast(new ConnectionBendpointsEvent(this, true));
 	}
 
 	@Override
 	public void addBendpoint(int index, int x, int y) {
 		bendpoints.add(index, new Point(x, y));
+		broadcast(new ConnectionBendpointsEvent(this));
 	}
 
 	@Override
 	public void updateBendpoint(int index, int x, int y) {
-		Point point = bendpoints.get(index);
-		point.setX(x);
-		point.setY(y);
+		bendpoints.set(index, new Point(x, y));
+		broadcast(new ConnectionBendpointsEvent(this));
 	}
 
 	@Override
 	public void removeBendpoint(int index) {
 		bendpoints.remove(index);
+		broadcast(new ConnectionBendpointsEvent(this));
 	}
 
 	@Override

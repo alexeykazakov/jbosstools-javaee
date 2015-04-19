@@ -108,8 +108,8 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	}
 
 	private DiagramConnectionPart addConnectionPart(DiagramNodePart node1, DiagramNodePart node2) {
-		BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2, eventHandler);
-
+		
+		BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2, this, eventHandler);
 		connectionPart.init(diagramPart, node1.getLocalModelElement(),
 				diagramPart.getDiagramConnectionDef(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID),
 				Collections.<String, String> emptyMap());
