@@ -7,7 +7,6 @@ import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.Label;
 import org.eclipse.sapphire.modeling.annotations.Reference;
-import org.eclipse.sapphire.modeling.annotations.Required;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
 
 public interface NextAttributeElement extends Element {
@@ -16,7 +15,6 @@ public interface NextAttributeElement extends Element {
 	
 	@Label( standard = "next" )
 	@XmlBinding( path = "@next" )
-	@Required
 	@Reference(target = FlowElement.class)
 	@ElementReference(list = "../FlowElements" , key = "id")
 
