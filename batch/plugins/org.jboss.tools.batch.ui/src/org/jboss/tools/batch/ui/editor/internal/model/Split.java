@@ -11,23 +11,14 @@
 package org.jboss.tools.batch.ui.editor.internal.model;
 
 import org.eclipse.sapphire.ElementList;
-import org.eclipse.sapphire.ElementReference;
 import org.eclipse.sapphire.ElementType;
 import org.eclipse.sapphire.ListProperty;
-import org.eclipse.sapphire.ReferenceValue;
-import org.eclipse.sapphire.Value;
-import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.Enablement;
 import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
-import org.eclipse.sapphire.modeling.annotations.Reference;
-import org.eclipse.sapphire.modeling.annotations.Required;
-import org.eclipse.sapphire.modeling.annotations.Service;
-import org.eclipse.sapphire.modeling.annotations.Services;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlListBinding;
-import org.jboss.tools.batch.ui.editor.internal.services.NextPossibleValuesService;
 
 /**
  * 
@@ -37,20 +28,9 @@ import org.jboss.tools.batch.ui.editor.internal.services.NextPossibleValuesServi
 @Label( standard = "split" )
 @Image ( path = "split.png" )
 @XmlBinding( path = "split" )
-public interface Split extends FlowElement {
+public interface Split extends FlowElement, NextAttributeElement {
 
 	ElementType TYPE = new ElementType( Split.class );
-
-	@Label( standard = "next" )
-	@XmlBinding( path = "@next" )
-	@Required
-	@Reference(target = FlowElement.class)
-	@ElementReference(list = "../FlowElements" , key = "id")
-
-	ValueProperty PROP_NEXT = new ValueProperty( TYPE, "Next" );
-
-	ReferenceValue<String, FlowElement> getNext();
-	void setNext( String value);
 
 
 	@Type( base = Flow.class )

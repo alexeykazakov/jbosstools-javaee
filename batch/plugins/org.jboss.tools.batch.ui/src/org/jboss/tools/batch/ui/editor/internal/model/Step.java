@@ -38,32 +38,9 @@ import org.eclipse.sapphire.modeling.xml.annotations.XmlListBinding;
 @Label( standard = "step" )
 @Image ( path = "step.png" )
 @XmlBinding( path = "step" )
-public interface Step extends FlowElement {
+public interface Step extends FlowElement, NextAttributeElement {
 
 	ElementType TYPE = new ElementType( Step.class );
-
-//	@Label( standard = "next" )
-//	@XmlBinding( path = "@next" )
-//	@Services ( {
-//		@Service( impl = NextPossibleValuesService.class )
-//	})
-//
-//	ValueProperty PROP_NEXT = new ValueProperty( TYPE, "Next" );
-
-//	Value<String> getNext();
-//	void setNext( String next);
-	
-	@Label( standard = "next" )
-	@XmlBinding( path = "@next" )
-	@Required
-	@Reference(target = FlowElement.class)
-	@ElementReference(list = "../FlowElements" , key = "id")
-
-	ValueProperty PROP_NEXT = new ValueProperty( TYPE, "Next" );
-
-	ReferenceValue<String, FlowElement> getNext();
-	void setNext( String value);
-
 
 	@Label( standard = "allow-start-if-complete" )
 	@XmlBinding( path = "@allow-start-if-complete" )

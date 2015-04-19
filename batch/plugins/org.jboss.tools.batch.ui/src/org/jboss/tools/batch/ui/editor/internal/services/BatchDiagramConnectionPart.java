@@ -11,7 +11,6 @@ import org.eclipse.sapphire.Event;
 import org.eclipse.sapphire.Listener;
 import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.services.ReferenceService;
-import org.eclipse.sapphire.services.ServiceEvent;
 import org.eclipse.sapphire.ui.Point;
 import org.eclipse.sapphire.ui.SapphireActionSystem;
 import org.eclipse.sapphire.ui.diagram.ConnectionAddEvent;
@@ -21,14 +20,12 @@ import org.eclipse.sapphire.ui.diagram.DiagramConnectionPart;
 import org.eclipse.sapphire.ui.diagram.def.IDiagramConnectionDef;
 import org.eclipse.sapphire.ui.diagram.editor.DiagramNodePart;
 import org.eclipse.sapphire.ui.diagram.editor.SapphireDiagramEditorPagePart;
-import org.jboss.tools.batch.ui.editor.internal.model.Flow;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
-import org.jboss.tools.batch.ui.editor.internal.model.Split;
-import org.jboss.tools.batch.ui.editor.internal.model.Step;
+import org.jboss.tools.batch.ui.editor.internal.model.NextAttributeElement;
 
 public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
-	private Element srcElement;
+	private NextAttributeElement srcElement;
 	private FlowElement targetElement;
 	private String connectionType;
 	private List<Point> bendpoints = new ArrayList<>();
@@ -41,7 +38,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, String connectionType,
 			SapphireDiagramEditorPagePart diagramPart, BatchDiagramConnectionEventHandler eventHandler) {
-		this.srcElement = node1.getLocalModelElement();
+		this.srcElement = (NextAttributeElement) node1.getLocalModelElement();
 		this.targetElement = (FlowElement) node2.getLocalModelElement();
 		this.connectionType = connectionType;
 		this.eventHandler = eventHandler;
@@ -56,23 +53,14 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	}
 
 	private void initializeListeners() {
-		ReferenceValue<String, FlowElement> reference;
-		if (srcElement instanceof Step) {
-			reference = ((Step) srcElement).getNext();
-		} else if (srcElement instanceof Flow) {
-			reference = ((Flow) srcElement).getNext();
-		} else if (srcElement instanceof Split) {
-			reference = ((Split) srcElement).getNext();
-		} else {
-			throw new IllegalArgumentException(); // TODO
-		}
+		ReferenceValue<String, FlowElement> reference = srcElement.getNext();
 		reference.target().refresh(); // must be refreshed, otherwise the reference changed event not fired
 		refService = reference.service(ReferenceService.class); 
 		listener = new Listener() {
 			@Override
 			public void handle(Event event) { 
-				System.out.println(event.toString());
-				FlowElement newTarget = ((Step) srcElement).getNext().target();
+				System.out.println(event.toString()); // TODO remove
+				FlowElement newTarget = srcElement.getNext().target();
 
 				if (newTarget == null) {
 					refService.detach(this);
@@ -85,19 +73,9 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		refService.attach(listener);
 	}
 
-	private void changeTargetElement(Element newTarget) {
-		targetElement = (FlowElement) newTarget;
-		String id = targetElement.getId().content();
-
-		if (srcElement instanceof Step) {
-			((Step) srcElement).setNext(id);
-		} else if (srcElement instanceof Flow) {
-			((Flow) srcElement).setNext(id);
-		} else if (srcElement instanceof Split) {
-			((Split) srcElement).setNext(id);
-		} else {
-			throw new IllegalArgumentException(); // TODO
-		}
+	private void changeTargetElement(FlowElement newTarget) {
+		targetElement = newTarget;
+		srcElement.setNext(targetElement.getId().content());
 
 		eventHandler.onConnectionEndpointsEvent(new ConnectionEndpointsEvent(this));
 	}
@@ -118,15 +96,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public void remove() {
-		if (srcElement instanceof Step) {
-			((Step) srcElement).setNext(null);
-		} else if (srcElement instanceof Flow) {
-			((Flow) srcElement).setNext(null);
-		} else if (srcElement instanceof Split) {
-			((Split) srcElement).setNext(null);
-		} else {
-			throw new IllegalArgumentException(); // TODO
-		}
+		srcElement.setNext(null);
 		eventHandler.onConnectionDeleteEvent(new ConnectionDeleteEvent(this));
 	}
 
@@ -148,7 +118,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public DiagramConnectionPart reconnect(DiagramNodePart newSrc, DiagramNodePart newTargetNode) {
-		changeTargetElement(newTargetNode.getLocalModelElement());
+		changeTargetElement((FlowElement) newTargetNode.getLocalModelElement());
 		return this;
 	}
 

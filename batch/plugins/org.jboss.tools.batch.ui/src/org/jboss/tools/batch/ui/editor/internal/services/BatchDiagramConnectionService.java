@@ -24,6 +24,7 @@ import org.jboss.tools.batch.ui.editor.internal.model.Flow;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElementsContainer;
 import org.jboss.tools.batch.ui.editor.internal.model.Job;
+import org.jboss.tools.batch.ui.editor.internal.model.NextAttributeElement;
 import org.jboss.tools.batch.ui.editor.internal.model.Split;
 import org.jboss.tools.batch.ui.editor.internal.model.Step;
 
@@ -52,49 +53,32 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 				.getFlowElements();
 
 		for (FlowElement src : children) {
-			Value<String> next = null;
-			if (src instanceof Step) {
-				next = ((Step) src).getNext();
-			} else if (src instanceof Flow) {
-				next = ((Flow) src).getNext();
-			} else if (src instanceof Split) {
-				next = ((Split) src).getNext();
-			}
-			if (next != null && next.content() != null && !next.content().trim().isEmpty()) {
-				for (FlowElement target : children) {
-					String targetId = target.getId().content();
-					if (targetId != null && targetId.equals(next.content())) {
-						addConnectionPart(diagramPart.getDiagramNodePart(src), diagramPart.getDiagramNodePart(target));
-					}
-				}
-			}
+			if (src instanceof NextAttributeElement) {
+				NextAttributeElement nextElem = (NextAttributeElement) src;
+				ReferenceValue<String, FlowElement> next = nextElem.getNext();
 
-			if (!(src instanceof Decision)) {
-				attachListenerForNewConnection(src);
+				if (next.target() != null) {
+					addConnectionPart(diagramPart.getDiagramNodePart(src),
+							diagramPart.getDiagramNodePart(next.target()));
+				}
+
+				attachListenerForNewConnection(nextElem);
 			}
 
 		}
 	}
 
-	private void attachListenerForNewConnection(final FlowElement flowElement) {
-		flowElement.attach(new FilteredListener<PropertyContentEvent>() {
+	private void attachListenerForNewConnection(final NextAttributeElement element) {
+		element.attach(new FilteredListener<PropertyContentEvent>() {
 			@Override
 			protected void handleTypedEvent(final PropertyContentEvent event) {
 				System.out.println(event.toString());
-				ReferenceValue<String, FlowElement> next = null;
-				if (flowElement instanceof Step) {
-					next = ((Step) flowElement).getNext();
-				} else if (flowElement instanceof Flow) {
-					next = ((Flow) flowElement).getNext();
-				} else if (flowElement instanceof Split) {
-					next = ((Split) flowElement).getNext();
-				}
-				if (!nodesConnectionsMap.containsKey(flowElement)) {
-					addConnectionPart(diagramPart.getDiagramNodePart(flowElement),
-							diagramPart.getDiagramNodePart(next.target()));
+				if (!nodesConnectionsMap.containsKey(element)) {
+					addConnectionPart(diagramPart.getDiagramNodePart(element),
+							diagramPart.getDiagramNodePart(element.getNext().target()));
 				}
 			}
-		}, "Next");
+		}, "Next"); // TODO
 	}
 
 	@Override
@@ -113,17 +97,9 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 
 			// connect the reference in the model
 			String nextId = ((FlowElement) node2.getLocalModelElement()).getId().content();
-			Element element = node1.getLocalModelElement();
-			if (element instanceof Step) {
-				((Step) element).setNext(nextId);
-			} else if (element instanceof Flow) {
-				((Flow) element).setNext(nextId);
-			} else if (element instanceof Split) {
-				((Split) element).setNext(nextId);
-			} else {
-				throw new IllegalArgumentException(); // TODO
-			}
-
+			NextAttributeElement element = (NextAttributeElement) node1.getLocalModelElement();
+			element.setNext(nextId);
+			
 			return addConnectionPart(node1, node2);
 		} else {
 			return super.connect(node1, node2, connectionType);
