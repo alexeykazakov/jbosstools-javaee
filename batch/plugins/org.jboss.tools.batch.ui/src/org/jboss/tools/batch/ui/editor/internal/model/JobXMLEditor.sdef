@@ -1261,6 +1261,7 @@
 				<label>Open Flow</label>
 				<tooltip>Display internal structure of the flow in a diagram.
 				</tooltip>
+                <image>flow.png</image>
 			</action>
 			<action-handler>
 				<action>OpenFlowAction</action>
@@ -1431,6 +1432,7 @@
 												<action>
 													<id>OpenSplitFlowAction</id>
 													<label>Open Flow</label>
+                                                    <image>flow.png</image>
 												</action>
 												<content>
 													<image>
