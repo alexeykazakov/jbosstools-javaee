@@ -1532,7 +1532,7 @@
 		</connection>
 		<connection-service-type>custom</connection-service-type>
 		<service>
-			<implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramConnectionService
+			<implementation>org.jboss.tools.batch.ui.editor.internal.services.connection.BatchDiagramConnectionService
 			</implementation>
 		</service>
 		<properties-view>

@@ -1,4 +1,4 @@
-package org.jboss.tools.batch.ui.editor.internal.services;
+package org.jboss.tools.batch.ui.editor.internal.services.connection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,7 +63,6 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 		element.attach(new FilteredListener<PropertyContentEvent>() {
 			@Override
 			protected void handleTypedEvent(final PropertyContentEvent event) {
-				System.out.println(event.toString());// TODO remove
 				if (!nodesConnectionsMap.containsKey(element)) {
 					addConnectionPart(diagramPart.getDiagramNodePart(element),
 							diagramPart.getDiagramNodePart(element.getNext().target()));
@@ -80,6 +79,8 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 			// return
 			// !nodesConnectionsMap.containsKey(node1.getLocalModelElement())
 			// && node2.getLocalModelElement() instanceof FlowElement;
+			
+			// TODO
 			return true;
 		} else {
 			return super.valid(node1, node2, connectionType);
