@@ -57,7 +57,7 @@ public interface Step extends FlowElement {
 	@XmlBinding( path = "@next" )
 	@Required
 	@Reference(target = FlowElement.class)
-	@ElementReference(list = "/FlowElements" , key = "id")
+	@ElementReference(list = "../FlowElements" , key = "id")
 
 	ValueProperty PROP_NEXT = new ValueProperty( TYPE, "Next" );
 
