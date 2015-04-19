@@ -26,18 +26,20 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	private NextAttributeElement srcElement;
 	private FlowElement targetElement;
+
 	private List<Point> bendpoints = new ArrayList<>();
-	private String label;
-	private Point labelPosition;
+
 	private BatchDiagramConnectionEventHandler eventHandler;
 	private Listener listener;
-	private ReferenceService<?> refService;
-	private BatchDiagramConnectionService service;
 
-	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, BatchDiagramConnectionService service, BatchDiagramConnectionEventHandler eventHandler) {
+	private ReferenceService<?> referenceService;
+	private BatchDiagramConnectionService connectionService;
+
+	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2,
+			BatchDiagramConnectionService service, BatchDiagramConnectionEventHandler eventHandler) {
 		this.srcElement = (NextAttributeElement) node1.getLocalModelElement();
 		this.targetElement = (FlowElement) node2.getLocalModelElement();
-		this.service = service;
+		this.connectionService = service;
 		this.eventHandler = eventHandler;
 	}
 
@@ -52,28 +54,27 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		ReferenceValue<String, FlowElement> reference = srcElement.getNext();
 		reference.target().refresh(); // must be refreshed, otherwise the
 										// reference changed event not fired
-		refService = reference.service(ReferenceService.class);
+		referenceService = reference.service(ReferenceService.class);
 		listener = new Listener() {
 			@Override
 			public void handle(Event event) {
-				System.out.println(event.toString()); // TODO remove
 				FlowElement newTarget = srcElement.getNext().target();
 
 				if (newTarget == null) {
-					refService.detach(this);
+					referenceService.detach(this);
 					eventHandler.onConnectionDeleteEvent(new ConnectionDeleteEvent(BatchDiagramConnectionPart.this));
 				} else if (newTarget != targetElement) {
 					changeTargetElement(newTarget);
 				}
 			}
 		};
-		refService.attach(listener);
+		referenceService.attach(listener);
 	}
 
 	private void changeTargetElement(FlowElement newTarget) {
 		targetElement = newTarget;
 		srcElement.setNext(targetElement.getId().content());
-		
+
 		removeAllBendpoints();
 
 		eventHandler.onConnectionEndpointsEvent(new ConnectionEndpointsEvent(this));
@@ -102,7 +103,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	public String getId() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID);
-		builder.append(service.list().indexOf(this));
+		builder.append(connectionService.list().indexOf(this));
 		return builder.toString();
 	}
 
@@ -164,22 +165,20 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public String getLabel() {
-		return label;
+		return null;
 	}
 
 	@Override
 	public void setLabel(String newValue) {
-		label = newValue;
 	}
 
 	@Override
 	public Point getLabelPosition() {
-		return labelPosition;
+		return null;
 	}
 
 	@Override
 	public void setLabelPosition(Point newPos) {
-		labelPosition = newPos;
 	}
 
 	@Override
