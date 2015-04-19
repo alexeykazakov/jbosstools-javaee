@@ -19,7 +19,6 @@ import org.eclipse.sapphire.ui.diagram.ConnectionEndpointsEvent;
 import org.eclipse.sapphire.ui.diagram.DiagramConnectionPart;
 import org.eclipse.sapphire.ui.diagram.def.IDiagramConnectionDef;
 import org.eclipse.sapphire.ui.diagram.editor.DiagramNodePart;
-import org.eclipse.sapphire.ui.diagram.editor.SapphireDiagramEditorPagePart;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
 import org.jboss.tools.batch.ui.editor.internal.model.NextAttributeElement;
 
@@ -27,22 +26,17 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	private NextAttributeElement srcElement;
 	private FlowElement targetElement;
-	private String connectionType;
 	private List<Point> bendpoints = new ArrayList<>();
 	private String label;
 	private Point labelPosition;
 	private BatchDiagramConnectionEventHandler eventHandler;
-	private SapphireDiagramEditorPagePart diagramPart;
 	private Listener listener;
 	private ReferenceService<?> refService;
 
-	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, String connectionType,
-			SapphireDiagramEditorPagePart diagramPart, BatchDiagramConnectionEventHandler eventHandler) {
+	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2, BatchDiagramConnectionEventHandler eventHandler) {
 		this.srcElement = (NextAttributeElement) node1.getLocalModelElement();
 		this.targetElement = (FlowElement) node2.getLocalModelElement();
-		this.connectionType = connectionType;
 		this.eventHandler = eventHandler;
-		this.diagramPart = diagramPart;
 	}
 
 	@Override
@@ -54,11 +48,12 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	private void initializeListeners() {
 		ReferenceValue<String, FlowElement> reference = srcElement.getNext();
-		reference.target().refresh(); // must be refreshed, otherwise the reference changed event not fired
-		refService = reference.service(ReferenceService.class); 
+		reference.target().refresh(); // must be refreshed, otherwise the
+										// reference changed event not fired
+		refService = reference.service(ReferenceService.class);
 		listener = new Listener() {
 			@Override
-			public void handle(Event event) { 
+			public void handle(Event event) {
 				System.out.println(event.toString()); // TODO remove
 				FlowElement newTarget = srcElement.getNext().target();
 
@@ -108,7 +103,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	@Override
 	public String getConnectionTypeId() {
-		return connectionType;
+		return BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID;
 	}
 
 	@Override

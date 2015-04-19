@@ -11,7 +11,6 @@ import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.FilteredListener;
 import org.eclipse.sapphire.PropertyContentEvent;
 import org.eclipse.sapphire.ReferenceValue;
-import org.eclipse.sapphire.Value;
 import org.eclipse.sapphire.ui.diagram.ConnectionAddEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionDeleteEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionEndpointsEvent;
@@ -19,18 +18,11 @@ import org.eclipse.sapphire.ui.diagram.DiagramConnectionPart;
 import org.eclipse.sapphire.ui.diagram.StandardConnectionService;
 import org.eclipse.sapphire.ui.diagram.editor.DiagramNodePart;
 import org.eclipse.sapphire.ui.diagram.editor.SapphireDiagramEditorPagePart;
-import org.jboss.tools.batch.ui.editor.internal.model.Decision;
-import org.jboss.tools.batch.ui.editor.internal.model.Flow;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElementsContainer;
-import org.jboss.tools.batch.ui.editor.internal.model.Job;
 import org.jboss.tools.batch.ui.editor.internal.model.NextAttributeElement;
-import org.jboss.tools.batch.ui.editor.internal.model.Split;
-import org.jboss.tools.batch.ui.editor.internal.model.Step;
 
 public class BatchDiagramConnectionService extends StandardConnectionService {
-
-	private static final String NEXT_ATTRIBUTE_CONNECTION_ID = "NextAttributeConnection";
 
 	private List<DiagramConnectionPart> connections;
 
@@ -78,12 +70,12 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 							diagramPart.getDiagramNodePart(element.getNext().target()));
 				}
 			}
-		}, "Next"); // TODO
+		}, NextAttributeElement.PROP_NEXT.name());
 	}
 
 	@Override
 	public boolean valid(DiagramNodePart node1, DiagramNodePart node2, String connectionType) {
-		if (connectionType.equals(NEXT_ATTRIBUTE_CONNECTION_ID)) {
+		if (connectionType.equals(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID)) {
 			return true; // TODO
 		} else {
 			return super.valid(node1, node2, connectionType);
@@ -93,7 +85,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	@Override
 	public DiagramConnectionPart connect(DiagramNodePart node1, DiagramNodePart node2, String connectionType) {
 
-		if (connectionType.equals(NEXT_ATTRIBUTE_CONNECTION_ID)) {
+		if (connectionType.equals(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID)) {
 
 			// connect the reference in the model
 			String nextId = ((FlowElement) node2.getLocalModelElement()).getId().content();
@@ -107,11 +99,10 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	}
 
 	private DiagramConnectionPart addConnectionPart(DiagramNodePart node1, DiagramNodePart node2) {
-		BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2,
-				NEXT_ATTRIBUTE_CONNECTION_ID, diagramPart, eventHandler);
+		BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2, eventHandler);
 
 		connectionPart.init(diagramPart, node1.getLocalModelElement(),
-				diagramPart.getDiagramConnectionDef(NEXT_ATTRIBUTE_CONNECTION_ID),
+				diagramPart.getDiagramConnectionDef(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID),
 				Collections.<String, String> emptyMap());
 		connectionPart.initialize();
 
