@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.FilteredListener;
 import org.eclipse.sapphire.PropertyContentEvent;
@@ -26,7 +25,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 
 	private List<DiagramConnectionPart> connections;
 
-	private Map<Element, Element> nodesConnectionsMap = new HashMap<>();
+	private Map<NextAttributeElement, FlowElement> nodesConnectionsMap = new HashMap<>();
 
 	private SapphireDiagramEditorPagePart diagramPart;
 	private EventHandler eventHandler = new EventHandler();
@@ -64,7 +63,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 		element.attach(new FilteredListener<PropertyContentEvent>() {
 			@Override
 			protected void handleTypedEvent(final PropertyContentEvent event) {
-				System.out.println(event.toString());
+				System.out.println(event.toString());// TODO remove
 				if (!nodesConnectionsMap.containsKey(element)) {
 					addConnectionPart(diagramPart.getDiagramNodePart(element),
 							diagramPart.getDiagramNodePart(element.getNext().target()));
@@ -78,8 +77,10 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 		if (connectionType.equals(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID)) {
 			// Connection from node1 to node2 can be created iff no connection
 			// from node1 exists yet and node2 is a FlowElement
-			return !nodesConnectionsMap.containsKey(node1.getLocalModelElement())
-					&& node2.getLocalModelElement() instanceof FlowElement;
+			// return
+			// !nodesConnectionsMap.containsKey(node1.getLocalModelElement())
+			// && node2.getLocalModelElement() instanceof FlowElement;
+			return true;
 		} else {
 			return super.valid(node1, node2, connectionType);
 		}
@@ -95,7 +96,12 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 			NextAttributeElement element = (NextAttributeElement) node1.getLocalModelElement();
 			element.setNext(nextId);
 
-			return addConnectionPart(node1, node2);
+			FlowElement existingEndpoint = nodesConnectionsMap.get(node1.getLocalModelElement());
+			if (existingEndpoint == null) {
+				return addConnectionPart(node1, node2);
+			} else {
+				return null;
+			}
 		} else {
 			return super.connect(node1, node2, connectionType);
 		}
@@ -109,7 +115,8 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 				Collections.<String, String> emptyMap());
 		connectionPart.initialize();
 
-		nodesConnectionsMap.put(node1.getLocalModelElement(), node2.getLocalModelElement());
+		nodesConnectionsMap.put((NextAttributeElement) node1.getLocalModelElement(),
+				(FlowElement) node2.getLocalModelElement());
 		connections.add(connectionPart);
 		return connectionPart;
 	}
@@ -131,6 +138,8 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 
 		@Override
 		public void onConnectionEndpointsEvent(ConnectionEndpointsEvent event) {
+			nodesConnectionsMap.put((NextAttributeElement) event.part().getEndpoint1(),
+					(FlowElement) event.part().getEndpoint2());
 			BatchDiagramConnectionService.this.broadcast(event);
 		}
 
