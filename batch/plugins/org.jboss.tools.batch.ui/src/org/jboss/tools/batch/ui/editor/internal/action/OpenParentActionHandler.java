@@ -1,5 +1,6 @@
 package org.jboss.tools.batch.ui.editor.internal.action;
 
+import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ui.Presentation;
 import org.eclipse.sapphire.ui.SapphireActionHandler;
 import org.eclipse.sapphire.ui.swt.gef.presentation.DiagramPagePresentation;
@@ -13,17 +14,19 @@ public class OpenParentActionHandler extends SapphireActionHandler {
 	@Override
 	protected Object run(Presentation context) {
 		DiagramPagePresentation diagramNodePresentation = (DiagramPagePresentation) context;
-		JobXMLEditor editor = (JobXMLEditor) diagramNodePresentation.getConfigurationManager().getDiagramEditor().getEditor();
+		JobXMLEditor editor = (JobXMLEditor) diagramNodePresentation.getConfigurationManager().getDiagramEditor()
+				.getEditor();
 
-		Flow flow = (Flow) context.part().getModelElement();	
-		
-		FlowElementsContainer parent = (FlowElementsContainer) flow.parent().element();
-		if (parent instanceof Split) { // If the flow belongs to a split, we want to open split's parent.
+		Flow flow = (Flow) context.part().getModelElement();
+
+		Element parent = flow.parent().element();
+		if (parent instanceof Split) {
+			// If the flow belongs to a split, we want to open split's parent.
 			parent = (FlowElementsContainer) parent.parent().element();
 		}
-		editor.changeDiagramContent(parent);
-		
-		return null;		
+		editor.changeDiagramContent((FlowElementsContainer) parent);
+
+		return null;
 	}
 
 }
