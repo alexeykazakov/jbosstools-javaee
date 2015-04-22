@@ -1575,6 +1575,10 @@
 				<label>Flow Elements</label>
 			</compartment>
 		</palette>
+        <layout-persistence>custom</layout-persistence>
+        <service>
+            <implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramLayoutPersistenceService</implementation>
+        </service>
 	</diagram-page>
 
 
