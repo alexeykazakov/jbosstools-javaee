@@ -988,6 +988,18 @@
 					<color></color>
 				</background>
 				<content>
+                    <rectangle>
+                        <content>
+                            <text>
+                                <content>Start</content>
+                                <font>
+                                    <bold></bold>
+                                </font>
+                                <truncatable>false</truncatable>
+                            </text>
+                        </content>
+                        <visible-when>${Index(this) == 0}</visible-when>
+                    </rectangle>
 					<rectangle>
 						<content>
 							<image>
@@ -1124,6 +1136,15 @@
 			</rectangle>
 			<tool-palette-image>step.png</tool-palette-image>
 			<tool-palette-label>Step</tool-palette-label>
+            <action-handler>
+                <impl>org.jboss.tools.batch.ui.editor.internal.action.SetStartActionHandler</impl>
+                <action>SetStartAction</action>
+                <id>SetStartActionHandler</id>
+            </action-handler>
+            <action>
+                <id>SetStartAction</id>
+                <label>Set as start</label>
+            </action>
 		</node>
 		<node>
 			<id>FlowNode</id>
