@@ -110,6 +110,18 @@ public interface Step extends FlowElement, NextAttributeElement {
 
 	ElementList<OutcomeElement> getOutcomeElements();
 	
+	@Type( base = OutcomeElement.class,
+			possible = {
+				End.class,
+				Fail.class,
+				Stop.class
+			}
+	)
+	@XmlListBinding( path = "" )
+	ListProperty PROP_TERMINATING_ELEMENTS = new ListProperty(TYPE, "TerminatingElements");
+
+	ElementList<OutcomeElement> getTerminatingElements();
+	
 	@Type( base = Next.class )
 	@XmlListBinding( path = "" )
 	ListProperty PROP_NEXT_ELEMENTS = new ListProperty(TYPE, "NextElements");
