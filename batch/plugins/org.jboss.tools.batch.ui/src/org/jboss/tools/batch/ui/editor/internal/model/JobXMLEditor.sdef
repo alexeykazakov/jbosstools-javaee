@@ -1037,6 +1037,9 @@
 													<text>
 														<content>Chunk</content>
 														<truncatable>false</truncatable>
+                                                        <sequence-layout-constraint>
+                                                            <expand-horizontally>true</expand-horizontally>
+                                                        </sequence-layout-constraint>
 													</text>
 													<validation-marker>
 														<size>small</size>
@@ -1105,6 +1108,9 @@
 													<text>
 														<content>Batchlet</content>
 														<truncatable>false</truncatable>
+                                                        <sequence-layout-constraint>
+                                                            <expand-horizontally>true</expand-horizontally>
+                                                        </sequence-layout-constraint>
 													</text>
 													<validation-marker>
 														<size>small</size>
@@ -1130,6 +1136,9 @@
                                                 <sequence-layout-constraint>
                                                     <expand-horizontally>true</expand-horizontally>
                                                 </sequence-layout-constraint>
+                                                <sequence-layout>
+                                                    <orientation>horizontal</orientation>
+                                                </sequence-layout>
 											</rectangle>
 										</case>
 										<property>BatchletOrChunk</property>
@@ -1138,6 +1147,7 @@
                                 <sequence-layout-constraint>
                                     <expand-horizontally>true</expand-horizontally>
                                 </sequence-layout-constraint>
+                                <visible-when>${ !Empty(BatchletOrChunk)}</visible-when>
 							</rectangle>
 						</content>
 						<background>
