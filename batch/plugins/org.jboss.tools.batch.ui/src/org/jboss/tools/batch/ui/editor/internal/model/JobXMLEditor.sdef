@@ -1017,13 +1017,11 @@
 								<sequence-layout>
 									<orientation>horizontal</orientation>
 								</sequence-layout>
+                                <sequence-layout-constraint>
+                                    <expand-horizontally>true</expand-horizontally>
+                                </sequence-layout-constraint>
 							</rectangle>
 							<rectangle>
-								<background>
-									<color>
-										<Color>#FFFFFF</Color>
-									</color>
-								</background>
 								<content>
 									<shape-factory>
 										<case>
@@ -1033,6 +1031,9 @@
 												<content>
 													<image>
 														<path>${Image()}</path>
+                                                        <sequence-layout-constraint>
+                                                            <expand-horizontally>true</expand-horizontally>
+                                                        </sequence-layout-constraint>
 													</image>
 													<text>
 														<content>Chunk</content>
@@ -1043,6 +1044,9 @@
 													</text>
 													<validation-marker>
 														<size>small</size>
+                                                        <sequence-layout-constraint>
+                                                            <expand-horizontally>true</expand-horizontally>
+                                                        </sequence-layout-constraint>
 													</validation-marker>
 												</content>
 												<sequence-layout>
@@ -1148,6 +1152,15 @@
                                     <expand-horizontally>true</expand-horizontally>
                                 </sequence-layout-constraint>
                                 <visible-when>${ !Empty(BatchletOrChunk)}</visible-when>
+                                <corner-radius>10</corner-radius>
+                                <border>
+                                    <style>dot</style>
+                                    <weight>1</weight>
+                                </border>
+                                <sequence-layout>
+                                    <spacing>0</spacing>
+                                    <margin>0</margin>
+                                </sequence-layout>
 							</rectangle>
 						</content>
 						<background>
@@ -1780,69 +1793,105 @@
 								<sequence-layout>
 									<orientation>horizontal</orientation>
 								</sequence-layout>
+                                <sequence-layout-constraint>
+                                    <expand-horizontally>true</expand-horizontally>
+                                </sequence-layout-constraint>
 							</rectangle>
-							<rectangle>
-								<content>
-									<rectangle>
-										<content>
-											<shape-factory>
-												<case>
-													<element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow
-													</element-type>
-													<rectangle>
-														<action-handler>
-															<action>OpenSplitFlowAction</action>
-															<id>OpenSplitFlowActionHandler</id>
-															<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler
-															</impl>
-														</action-handler>
-														<action>
-															<id>OpenSplitFlowAction</id>
-															<label>Open Flow</label>
-															<image>flow.png</image>
-														</action>
-														<content>
-															<image>
-																<path>flow.png</path>
-																<action-handler>
-																	<action>Sapphire.DoubleTap</action>
-																	<id>OpenSplitFlowActionHandler-DoubleClick</id>
-																	<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler
-																	</impl>
-																</action-handler>
-															</image>
-															<text>
-																<content>${id == null ? '&lt;id&gt;' : id}</content>
-																<truncatable>false</truncatable>
-															</text>
-															<validation-marker>
-																<size>small</size>
-															</validation-marker>
-														</content>
-														<sequence-layout>
-															<orientation>horizontal</orientation>
-														</sequence-layout>
-													</rectangle>
-												</case>
-												<property>Flows</property>
-											</shape-factory>
-										</content>
-									</rectangle>
-								</content>
-								<sequence-layout>
-									<orientation>horizontal</orientation>
-								</sequence-layout>
-								<sequence-layout-constraint>
-									<expand-vertically>false</expand-vertically>
-									<expand-horizontally>true</expand-horizontally>
-								</sequence-layout-constraint>
-								<visible-when>${!empty Flows}</visible-when>
-								<background>
-									<color>
-										<Color>#FFFFFF</Color>
-									</color>
-								</background>
-							</rectangle>
+                            <rectangle>
+                                <content>
+                                    <text>
+                                        <content>{</content>
+                                        <font>
+                                            <size>32</size>
+                                        </font>
+                                        <sequence-layout-constraint>
+                                            <expand-horizontally>true</expand-horizontally>
+                                            <expand-vertically>true</expand-vertically>
+                                        </sequence-layout-constraint>
+                                        <truncatable>false</truncatable>
+                                    </text>
+                                    <rectangle>
+                                        <sequence-layout>
+                                            <orientation>vertical</orientation>
+                                            <spacing>0</spacing>
+                                            <margin>0</margin>
+                                        </sequence-layout>
+                                        <sequence-layout-constraint>
+                                            <expand-horizontally>true</expand-horizontally>
+                                            <expand-vertically>true</expand-vertically>
+                                        </sequence-layout-constraint>
+                                        <content>
+                                            <shape-factory>
+                                                <case>
+                                                    <element-type>org.jboss.tools.batch.ui.editor.internal.model.Flow</element-type>
+                                                    <rectangle>
+                                                        <action-handler>
+                                                            <action>OpenSplitFlowAction</action>
+                                                            <id>OpenSplitFlowActionHandler</id>
+                                                            <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
+                                                        </action-handler>
+                                                        <action>
+                                                            <id>OpenSplitFlowAction</id>
+                                                            <image>flow.png</image>
+                                                            <label>Open Flow</label>
+                                                        </action>
+                                                        <content>
+                                                            <image>
+                                                                <action-handler>
+                                                                    <action>Sapphire.DoubleTap</action>
+                                                                    <id>OpenSplitFlowActionHandler-DoubleClick</id>
+                                                                    <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
+                                                                </action-handler>
+                                                                <path>flow.png</path>
+                                                            </image>
+                                                            <text>
+                                                                <content>${id == null ? '&lt;id&gt;' : id}</content>
+                                                                <truncatable>false</truncatable>
+                                                                <sequence-layout-constraint>
+                                                                    <expand-horizontally>true</expand-horizontally>
+                                                                    <margin-horizontal>5</margin-horizontal>
+                                                                </sequence-layout-constraint>
+                                                            </text>
+                                                            <validation-marker>
+                                                                <size>small</size>
+                                                            </validation-marker>
+                                                        </content>
+                                                        <sequence-layout>
+                                                            <orientation>horizontal</orientation>
+                                                        </sequence-layout>
+                                                        <sequence-layout-constraint>
+                                                            <expand-horizontally>true</expand-horizontally>
+                                                        </sequence-layout-constraint>
+                                                    </rectangle>
+                                                </case>
+                                                <property>Flows</property>
+                                            </shape-factory>
+                                        </content>
+                                    </rectangle>
+                                    <text>
+                                        <content>}</content>
+                                        <font>
+                                            <size>32</size>
+                                        </font>
+                                        <sequence-layout-constraint>
+                                            <expand-horizontally>true</expand-horizontally>
+                                            <expand-vertically>true</expand-vertically>
+                                            <horizontal-alignment>right</horizontal-alignment>
+                                        </sequence-layout-constraint>
+                                        <truncatable>false</truncatable>
+                                    </text>
+                                </content>
+                                <sequence-layout>
+                                    <orientation>horizontal</orientation>
+                                    <spacing>0</spacing>
+                                    <margin>0</margin>
+                                </sequence-layout>
+                                <visible-when>${!empty Flows}</visible-when>
+                                <sequence-layout-constraint>
+                                    <expand-horizontally>true</expand-horizontally>
+                                    <expand-vertically>true</expand-vertically>
+                                </sequence-layout-constraint>
+                            </rectangle>
 						</content>
 						<sequence-layout>
 							<orientation>vertical</orientation>
