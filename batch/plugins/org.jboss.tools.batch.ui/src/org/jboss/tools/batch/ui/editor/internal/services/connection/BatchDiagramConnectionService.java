@@ -81,7 +81,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 			// && node2.getLocalModelElement() instanceof FlowElement;
 			
 			// TODO
-			return true;
+			return node1.getModelElement() instanceof NextAttributeElement;
 		} else {
 			return super.valid(node1, node2, connectionType);
 		}
