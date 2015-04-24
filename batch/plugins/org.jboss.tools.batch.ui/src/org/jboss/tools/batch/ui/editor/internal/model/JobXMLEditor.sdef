@@ -244,9 +244,38 @@
 						<property-editor>
 							<property>Ref</property>
 						</property-editor>
-						<include>PropertiesSection</include>
+                        <section>
+                            <label>Properties</label>
+                            <content>
+                                <include>PropertiesSection</include>
+                            </content>
+                        </section>
 					</content>
 					<element-type>org.jboss.tools.batch.ui.editor.internal.model.Reader
+					</element-type>
+				</case>
+			</with>
+		</content>
+	</form>
+	
+	<form>
+		<id>WriterForm</id>
+		<content>
+			<with>
+				<path>Writer</path>
+				<case>
+					<content>
+						<property-editor>
+							<property>Ref</property>
+						</property-editor>
+                        <section>
+                            <label>Properties</label>
+                            <content>
+                                <include>PropertiesSection</include>
+                            </content>
+                        </section>
+					</content>
+					<element-type>org.jboss.tools.batch.ui.editor.internal.model.Writer
 					</element-type>
 				</case>
 			</with>
@@ -1060,6 +1089,13 @@
 														<image>${Image()}</image>
 														<label>Chunk</label>
 													</page>
+                                                    <page>
+                                                        <content>
+                                                            <include>ReaderForm</include>
+                                                        </content>
+                                                        <image>reader.png</image>
+                                                        <label>Reader</label>
+                                                    </page>
 													<page>
 														<content>
 															<include>ProcessorForm</include>
@@ -1067,6 +1103,13 @@
 														<image>processor.png</image>
 														<label>Processor</label>
 													</page>
+                                                    <page>
+                                                        <image>writer.png</image>
+                                                        <label>Writer</label>
+                                                        <content>
+                                                            <include>WriterForm</include>
+                                                        </content>
+                                                    </page>
 													<page>
 														<content>
 															<include>CheckpointAlgorithmForm</include>
