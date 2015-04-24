@@ -1144,6 +1144,8 @@
             <action>
                 <id>SetStartAction</id>
                 <label>Set as start</label>
+                <image>start.png</image>
+                <tooltip>Move this element to the 1st position to se it as a start.</tooltip>
             </action>
 		</node>
 		<node>
@@ -1296,6 +1298,17 @@
 				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
 				</impl>
 			</action-handler>
+			 <action-handler>
+                <impl>org.jboss.tools.batch.ui.editor.internal.action.SetStartActionHandler</impl>
+                <action>SetStartAction</action>
+                <id>SetStartActionHandler</id>
+            </action-handler>
+            <action>
+                <id>SetStartAction</id>
+                <label>Set as start</label>
+                <image>start.png</image>
+                <tooltip>Move this element to the 1st position to se it as a start.</tooltip>
+            </action>
 			<properties-view>
 				<page>
 					<content>
@@ -1329,7 +1342,7 @@
 			<endpoint2>
 				<type>arrow</type>
 			</endpoint2>
-			<tool-palette-image>next.png</tool-palette-image>
+			<tool-palette-image>next-on.png</tool-palette-image>
 			<endpoint1>
 				<type>none</type>
 			</endpoint1>
@@ -1507,6 +1520,17 @@
 					</color>
 				</background>
 			</rectangle>
+			 <action-handler>
+                <impl>org.jboss.tools.batch.ui.editor.internal.action.SetStartActionHandler</impl>
+                <action>SetStartAction</action>
+                <id>SetStartActionHandler</id>
+            </action-handler>
+            <action>
+                <id>SetStartAction</id>
+                <label>Set as start</label>
+                <image>start.png</image>
+                <tooltip>Move this element to the 1st position to se it as a start.</tooltip>
+            </action>
 			<properties-view>
 				<page>
 					<label>Split ${id}</label>
@@ -1552,6 +1576,9 @@
 			<line-style>solid</line-style>
 			<tool-palette-label>Next</tool-palette-label>
 			<line-width>2</line-width>
+            <tool-palette-image>next.png</tool-palette-image>
+            <tool-palette-desc>Transition to another Step, Flow,
+				Split or Decision.</tool-palette-desc>
 		</connection>
 		<connection-service-type>custom</connection-service-type>
 		<service>

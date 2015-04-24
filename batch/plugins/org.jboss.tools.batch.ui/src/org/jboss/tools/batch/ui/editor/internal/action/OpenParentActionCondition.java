@@ -5,6 +5,7 @@ import org.jboss.tools.batch.ui.editor.internal.model.Flow;
 
 /**
  * Ensures the "Go Up" action is shown only when the root element is a nested flow.
+ * 
  * @author Tomas Milata
  *
  */
