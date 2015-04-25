@@ -32,13 +32,7 @@ public class BatchPathFunction extends Function {
 				try {
 					Element element = cast(operand(0), Element.class);
 					do {
-						if (element instanceof Job) {
-							path.insert(0, ((Job) element).getId().content());
-						} else if (element instanceof Flow) {
-							path.insert(0, ((Flow) element).getId().content());
-						} else if (element instanceof Split) {
-							path.insert(0, ((Split) element).getId().content());
-						}
+						path.insert(0, label(element));
 						path.insert(0, SEPARATOR);
 
 						if (element.parent() != null) {
@@ -56,6 +50,26 @@ public class BatchPathFunction extends Function {
 				return path.toString();
 			}
 		};
+	}
+
+	private static String label(Element element) {
+		String id = null;
+		if (element instanceof Job) {
+			id = ((Job) element).getId().content();
+		} else if (element instanceof Flow) {
+			id = ((Flow) element).getId().content();
+		} else if (element instanceof Split) {
+			id = ((Split) element).getId().content();
+		}
+
+		if (id != null) {
+			return id;
+		}
+
+		StringBuilder label = new StringBuilder("<");
+		label.append(element.type().getSimpleName().toLowerCase());
+		label.append(">");
+		return label.toString();
 	}
 
 }
