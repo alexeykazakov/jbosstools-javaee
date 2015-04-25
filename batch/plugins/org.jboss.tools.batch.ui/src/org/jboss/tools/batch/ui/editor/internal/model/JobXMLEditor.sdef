@@ -1000,8 +1000,8 @@
 					<content>
 						<include>StepForm</include>
 					</content>
-					<image>step.png</image>
-					<label>Step ${id}</label>
+					<image>${Image()}</image>
+					<label>Step</label>
 				</page>
 				<page>
 					<label>Partition</label>
@@ -1548,7 +1548,7 @@
 					<content>
 						<include>FlowForm</include>
 					</content>
-					<label>Flow ${id}</label>
+					<label>Flow</label>
 					<image>${Image()}</image>
 				</page>
 				<page>
@@ -1613,7 +1613,7 @@
 
 			<properties-view>
 				<page>
-					<label>Decision ${id}</label>
+					<label>Decision</label>
 					<image>${Image()}</image>
 					<content>
 						<include>DecisionForm</include>
@@ -1788,7 +1788,7 @@
 			</action>
 			<properties-view>
 				<page>
-					<label>Split ${id}</label>
+					<label>Split</label>
 					<image>${Image()}</image>
 					<content>
 						<include>SplitForm</include>
