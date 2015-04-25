@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension xmlns="http://www.eclipse.org/sapphire/xmlns/extension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <function>
+        <name>BatchPath</name>
+        <impl>org.jboss.tools.batch.ui.editor.internal.extensions.BatchPathFunction</impl>
+        <signature>
+            <parameter>org.jboss.tools.batch.ui.editor.internal.model.FlowElementsContainer</parameter>
+        </signature>
+        <description>Returns a String representation of a path from root to a Flow in a valid Batch model. The path consist of Job/Flow/Split ids separated by '/'.</description>
+    </function>
+</extension>

@@ -1566,8 +1566,9 @@
 				</page>
 			</properties-view>
 		</node>
-		<page-header-text>${parent() == null ? '' : concat(parent().id,
-			'/')}${id == null ? &quot;_&quot; : id}</page-header-text>
+<!-- 		<page-header-text>${parent() == null ? '' : concat(parent().id, -->
+<!-- 			'/')}${id == null ? &quot;_&quot; : id}</page-header-text> -->
+<page-header-text>${Tail(BatchPath(this), 80)}</page-header-text>
 		<page-name>Diagram</page-name>
 		<connection>
 			<id>NextOnConnection</id>
@@ -2049,6 +2050,7 @@
 			<implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramLayoutPersistenceService
 			</implementation>
 		</service>
+        <page-header-image>${Image()}</page-header-image>
 	</diagram-page>
 
 
