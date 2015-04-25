@@ -2001,7 +2001,7 @@
 		</service>
 		<properties-view>
 			<page>
-				<label>Job</label>
+				<label>${InstanceOf(this, 'org.jboss.tools.batch.ui.editor.internal.model.Job') ? 'Job' : 'Flow'}</label>
 				<image>${Image()}</image>
 				<content>
                     <section>
@@ -2010,6 +2010,13 @@
                             <include>JobForm</include>
                         </content>
                         <visible-when>${InstanceOf(this, 'org.jboss.tools.batch.ui.editor.internal.model.Job')}</visible-when>
+                    </section>
+                     <section>
+                        <label>Flow</label>
+                        <visible-when>${InstanceOf(this, 'org.jboss.tools.batch.ui.editor.internal.model.Flow')}</visible-when>
+                        <content>
+                            <include>FlowForm</include>
+                        </content>
                     </section>
 				</content>
 			</page>
