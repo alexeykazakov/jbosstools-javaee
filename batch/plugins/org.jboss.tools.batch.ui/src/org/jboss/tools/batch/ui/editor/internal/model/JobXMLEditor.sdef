@@ -995,7 +995,12 @@
 			<properties-view>
 				<page>
 					<content>
-						<include>StepForm</include>
+                        <section>
+                            <label>Step</label>
+                            <content>
+                                <include>StepForm</include>
+                            </content>
+                        </section>
 					</content>
 					<image>${Image()}</image>
 					<label>Step</label>
@@ -1163,15 +1168,25 @@
 												<properties-view>
 													<page>
 														<content>
-															<property-editor>Ref</property-editor>
 															<separator></separator>
+                                                            <section>
+                                                                <content>
+                                                                    <property-editor>Ref</property-editor>
+                                                                </content>
+                                                                <label>Batchlet</label>
+                                                            </section>
 														</content>
 														<image>${Image()}</image>
 														<label>Batchlet</label>
 													</page>
 													<page>
 														<content>
-															<include>PropertiesSection</include>
+                                                            <section>
+                                                                <label>Properties</label>
+                                                                <content>
+                                                                    <include>PropertiesSection</include>
+                                                                </content>
+                                                            </section>
 														</content>
 														<image>properties.png</image>
 														<label>Properties</label>
