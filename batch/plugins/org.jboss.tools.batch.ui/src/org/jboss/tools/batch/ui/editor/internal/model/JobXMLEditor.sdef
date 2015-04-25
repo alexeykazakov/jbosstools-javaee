@@ -978,8 +978,7 @@
 	</form>
 	<diagram-page>
 		<id>DiagramPage</id>
-		<element-type>org.jboss.tools.batch.ui.editor.internal.model.Job
-		</element-type>
+		<element-type>org.jboss.tools.batch.ui.editor.internal.model.FlowElementsContainer</element-type>
 		<node>
 			<model-element-type>org.jboss.tools.batch.ui.editor.internal.model.Step
 			</model-element-type>
@@ -2001,14 +2000,17 @@
 		</service>
 		<properties-view>
 			<page>
-				<label>Job ${id}</label>
+				<label>Job</label>
 				<image>${Image()}</image>
 				<content>
-					<include>JobForm</include>
+                    <section>
+                        <label>Job</label>
+                        <content>
+                            <include>JobForm</include>
+                        </content>
+                        <visible-when>${InstanceOf(this, 'org.jboss.tools.batch.ui.editor.internal.model.Job')}</visible-when>
+                    </section>
 				</content>
-				<!-- This condition checks that the current root is a job (not a flow) -->
-				<visible-when>${Parent() == null}</visible-when>
-				as
 			</page>
 			<page>
 				<label>Flow Elements</label>
@@ -2018,13 +2020,18 @@
 				<image>flow-elements.png</image>
 			</page>
 			<page>
-				<content>
-					<include>PropertiesSection</include>
-				</content>
+				
 				<label>Properties</label>
-				<image>properties.png</image>
-				This condition checks that the current root is a job (not a flow)
-				<visible-when>${Parent() == null}</visible-when>
+				<image>properties.png</image>				
+                <content>
+                    <section>
+                        <content>
+                            <include>PropertiesSection</include>
+                        </content>
+                        <label>Properties</label>
+                        <visible-when>${InstanceOf(this, 'org.jboss.tools.batch.ui.editor.internal.model.Job')}</visible-when>
+                    </section>
+                </content>
 			</page>
 		</properties-view>
 		<palette>
