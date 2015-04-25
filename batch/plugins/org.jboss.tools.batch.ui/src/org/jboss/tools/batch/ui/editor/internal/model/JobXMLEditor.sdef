@@ -988,8 +988,6 @@
 					<property>To</property>
 					<value>${id}</value>
 				</endpoint2>
-				<instance-id>NextOnConnection.Step${Parent().id}To${To}
-				</instance-id>
 				<label>${empty on ? '&lt;on&gt;' : on}</label>
 				<property>NextElements</property>
 			</connection-binding>
@@ -1502,8 +1500,6 @@
 			<connection-binding>
 				<connection-id>NextOnConnection</connection-id>
 				<property>NextElements</property>
-				<instance-id>NextOnConnection.Flow${Parent().id}To${To}
-				</instance-id>
 				<endpoint2>
 					<property>To</property>
 					<value>${id}</value>
@@ -1602,8 +1598,6 @@
 			<connection-binding>
 				<connection-id>NextOnConnection</connection-id>
 				<property>NextElements</property>
-				<instance-id>NextOnConnection.Decision${Parent().id}To${To}
-				</instance-id>
 				<endpoint2>
 					<property>To</property>
 					<value>${id}</value>
