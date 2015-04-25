@@ -1086,21 +1086,36 @@
 												<properties-view>
 													<page>
 														<content>
-															<include>ChunkForm</include>
+                                                            <section>
+                                                                <content>
+                                                                    <include>ChunkForm</include>
+                                                                </content>
+                                                                <label>Chunk</label>
+                                                            </section>
 														</content>
 														<image>${Image()}</image>
 														<label>Chunk</label>
 													</page>
                                                     <page>
                                                         <content>
-                                                            <include>ReaderForm</include>
+                                                            <section>
+                                                                <label>Reader</label>
+                                                                <content>
+                                                                    <include>ReaderForm</include>
+                                                                </content>
+                                                            </section>
                                                         </content>
                                                         <image>reader.png</image>
                                                         <label>Reader</label>
                                                     </page>
 													<page>
 														<content>
-															<include>ProcessorForm</include>
+                                                            <section>
+                                                                <label>Processor</label>
+                                                                <content>
+                                                                    <include>ProcessorForm</include>
+                                                                </content>
+                                                            </section>
 														</content>
 														<image>processor.png</image>
 														<label>Processor</label>
@@ -1109,33 +1124,58 @@
                                                         <image>writer.png</image>
                                                         <label>Writer</label>
                                                         <content>
-                                                            <include>WriterForm</include>
+                                                            <section>
+                                                                <label>Writer</label>
+                                                                <content>
+                                                                    <include>WriterForm</include>
+                                                                </content>
+                                                            </section>
                                                         </content>
                                                     </page>
 													<page>
 														<content>
-															<include>CheckpointAlgorithmForm</include>
+                                                            <section>
+                                                                <label>Checkpoint Algorithm</label>
+                                                                <content>
+                                                                    <include>CheckpointAlgorithmForm</include>
+                                                                </content>
+                                                            </section>
 														</content>
 														<image>checkpoint-algorithm.png</image>
 														<label>Checkpoint Algorithm</label>
 													</page>
 													<page>
 														<content>
-															<include>SkippableExceptionClassesForm</include>
+                                                            <section>
+                                                                <label>Skippable Exceptions</label>
+                                                                <content>
+                                                                    <include>SkippableExceptionClassesForm</include>
+                                                                </content>
+                                                            </section>
 														</content>
 														<image>exception.png</image>
 														<label>Skippable Exceptions</label>
 													</page>
 													<page>
 														<content>
-															<include>RetryableExceptionClassesForm</include>
+                                                            <section>
+                                                                <label>Retryable Exceptions</label>
+                                                                <content>
+                                                                    <include>RetryableExceptionClassesForm</include>
+                                                                </content>
+                                                            </section>
 														</content>
 														<image>exception.png</image>
 														<label>Retryable Exceptions</label>
 													</page>
 													<page>
 														<content>
-															<include>NoRollbackExceptionClassesForm</include>
+                                                            <section>
+                                                                <label>No Rollback Exceptions</label>
+                                                                <content>
+                                                                    <include>NoRollbackExceptionClassesForm</include>
+                                                                </content>
+                                                            </section>
 														</content>
 														<image>exception.png</image>
 														<label>No Rollback Exceptions</label>
@@ -1556,21 +1596,36 @@
 			<properties-view>
 				<page>
 					<content>
-						<include>FlowForm</include>
+                        <section>
+                            <label>Flow</label>
+                            <content>
+                                <include>FlowForm</include>
+                            </content>
+                        </section>
 					</content>
 					<label>Flow</label>
 					<image>${Image()}</image>
 				</page>
 				<page>
 					<content>
-						<include>FlowElementsForm</include>
+                        <section>
+                            <label>Flow Elements</label>
+                            <content>
+                                <include>FlowElementsForm</include>
+                            </content>
+                        </section>
 					</content>
 					<label>Flow Elements</label>
 					<image>flow-elements.png</image>
 				</page>
 				<page>
 					<content>
-						<include>OutcomesForm</include>
+                        <section>
+                            <label>Transitions</label>
+                            <content>
+                                <include>OutcomesForm</include>
+                            </content>
+                        </section>
 					</content>
 					<label>Transitions</label>
 					<image>transitions.png</image>
@@ -1625,20 +1680,35 @@
 					<label>Decision</label>
 					<image>${Image()}</image>
 					<content>
-						<include>DecisionForm</include>
+                        <section>
+                            <label>Decision</label>
+                            <content>
+                                <include>DecisionForm</include>
+                            </content>
+                        </section>
 					</content>
 				</page>
 				<page>
 					<label>Transitions</label>
 					<image>transitions.png</image>
 					<content>
-						<include>OutcomesForm</include>
+                        <section>
+                            <label>Transitions</label>
+                            <content>
+                                <include>OutcomesForm</include>
+                            </content>
+                        </section>
 					</content>
 				</page>
 				<page>
 					<label>Properties</label>
 					<content>
-						<include>PropertiesSection</include>
+                        <section>
+                            <label>Properties</label>
+                            <content>
+                                <include>PropertiesSection</include>
+                            </content>
+                        </section>
 					</content>
 					<image>properties.png</image>
 				</page>
@@ -1800,14 +1870,24 @@
 					<label>Split</label>
 					<image>${Image()}</image>
 					<content>
-						<include>SplitForm</include>
+                        <section>
+                            <label>Split</label>
+                            <content>
+                                <include>SplitForm</include>
+                            </content>
+                        </section>
 					</content>
 				</page>
 				<page>
 					<label>Flows</label>
 					<image>flow.png</image>
 					<content>
-						<include>FlowsForm</include>
+                        <section>
+                            <label>Flows</label>
+                            <content>
+                                <include>FlowsForm</include>
+                            </content>
+                        </section>
 					</content>
 				</page>
 			</properties-view>
@@ -2032,7 +2112,12 @@
 			<page>
 				<label>Flow Elements</label>
 				<content>
-					<include>FlowElementsForm</include>
+                    <section>
+                        <label>Flow Elements</label>
+                        <content>
+                            <include>FlowElementsForm</include>
+                        </content>
+                    </section>
 				</content>
 				<image>flow-elements.png</image>
 			</page>
