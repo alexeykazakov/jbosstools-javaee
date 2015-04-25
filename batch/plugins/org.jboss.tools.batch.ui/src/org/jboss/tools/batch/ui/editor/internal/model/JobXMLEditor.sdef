@@ -1030,7 +1030,7 @@
 							<rectangle>
 								<content>
 									<image>
-										<path>step.png</path>
+										<path>${Image()}</path>
 									</image>
 									<text>
 										<content>${id == null ? '&lt;id&gt;' : id}</content>
@@ -1223,7 +1223,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>end.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1248,7 +1248,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>stop.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1273,7 +1273,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>fail.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1353,7 +1353,7 @@
 					<rectangle>
 						<content>
 							<image>
-								<path>flow.png</path>
+								<path>${Image()}</path>
 							</image>
 							<text>
 								<content>${id == null ? '&lt;id&gt;' : id}</content>
@@ -1402,7 +1402,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>end.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1427,7 +1427,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>stop.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1452,7 +1452,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>fail.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1511,7 +1511,7 @@
 				<label>Open Flow</label>
 				<tooltip>Display internal structure of the flow in a diagram.
 				</tooltip>
-				<image>flow.png</image>
+				<image>${Image()}</image>
 			</action>
 			<action-handler>
 				<action>OpenFlowAction</action>
@@ -1633,7 +1633,7 @@
 					<rectangle>
 						<content>
 							<image>
-								<path>decision.png</path>
+								<path>${Image()}</path>
 							</image>
 							<text>
 								<content>${id == null ? '&lt;id&gt;' : id}</content>
@@ -1670,7 +1670,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>end.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1695,7 +1695,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>stop.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1720,7 +1720,7 @@
 									<rectangle>
 										<content>
 											<image>
-												<path>fail.png</path>
+												<path>${Image()}</path>
 											</image>
 											<text>
 												<content>${on == null ? '&lt;status code&gt;' : on}
@@ -1817,7 +1817,7 @@
 							<rectangle>
 								<content>
 									<image>
-										<path>split.png</path>
+										<path>${Image()}</path>
 									</image>
 									<text>
 										<content>${id == null ? '&lt;id&gt;' : id}</content>
