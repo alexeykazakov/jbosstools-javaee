@@ -13,17 +13,13 @@ package org.jboss.tools.batch.ui.editor.internal.model;
 import org.eclipse.sapphire.ElementHandle;
 import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.ElementProperty;
-import org.eclipse.sapphire.ElementReference;
 import org.eclipse.sapphire.ElementType;
 import org.eclipse.sapphire.ListProperty;
-import org.eclipse.sapphire.ReferenceValue;
 import org.eclipse.sapphire.Value;
 import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.CountConstraint;
 import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
-import org.eclipse.sapphire.modeling.annotations.Reference;
-import org.eclipse.sapphire.modeling.annotations.Required;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlElementBinding;
@@ -66,8 +62,6 @@ public interface Step extends FlowElement, NextAttributeElement {
 
 	ElementList<StepListener> getListeners();
 
-	//TODO find a better way to add element [0..1] that has required children.
-	//Question: why Add Chunk is always enabled despite of constraint?
 	@Label( standard = "batchlet or chunk" )
 	@Type( base = BatchletOrChunk.class, 
 			possible = {
@@ -81,12 +75,9 @@ public interface Step extends FlowElement, NextAttributeElement {
 			@Mapping(type=Chunk.class, element = "chunk"),
 	})
 	@CountConstraint(max = 1)
-//	@Length(max = 1)
 	ListProperty PROP_BATCHLET_OR_CHUNK = new ListProperty( TYPE, "BatchletOrChunk" );
-//	ElementProperty PROP_BATCHLET_OR_CHUNK = new ElementProperty( TYPE, "BatchletOrChunk" );
 
 	ElementList<BatchletOrChunk> getBatchletOrChunk();
-//	ElementHandle<BatchletOrChunk> getBatchletOrChunk();
 
 	@Type( base = Partition.class )
 	@Label( standard = "partition" )

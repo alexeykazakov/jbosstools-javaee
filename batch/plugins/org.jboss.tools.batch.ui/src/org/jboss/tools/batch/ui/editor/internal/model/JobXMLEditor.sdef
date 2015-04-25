@@ -703,6 +703,9 @@
 			<node-include>BatchletAndChunkFactory</node-include>
 			<node-include>PartitionNode</node-include>
 			<node-include>OutcomesNode</node-include>
+            <action-handler-filter>
+                <impl>org.jboss.tools.batch.ui.editor.internal.action.AddBatchletOrChunkActionFilter</impl>
+            </action-handler-filter>
 		</case>
 	</node-factory>
 
@@ -1382,6 +1385,9 @@
 				<tooltip>Move this element to the 1st position to se it as a start.
 				</tooltip>
 			</action>
+            <action-handler-filter>
+                <impl>org.jboss.tools.batch.ui.editor.internal.action.AddBatchletOrChunkActionFilter</impl>
+            </action-handler-filter>
 		</node>
 		<node>
 			<id>FlowNode</id>
