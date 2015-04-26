@@ -22,7 +22,13 @@ import org.eclipse.sapphire.ui.diagram.editor.DiagramNodePart;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
 import org.jboss.tools.batch.ui.editor.internal.model.NextAttributeElement;
 
-public class BatchDiagramConnectionPart extends DiagramConnectionPart {
+/**
+ * A custom implementation of Sapphire connection part to be used for connection
+ * using {@code next} attribute in the {@link BatchDiagramConnectionService}.
+ * 
+ * @author Tomas Milata
+ */
+public class NextAttributeConnectionPart extends DiagramConnectionPart {
 
 	private NextAttributeElement srcElement;
 	private FlowElement targetElement;
@@ -35,7 +41,20 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 	private ReferenceService<?> referenceService;
 	private BatchDiagramConnectionService connectionService;
 
-	public BatchDiagramConnectionPart(DiagramNodePart node1, DiagramNodePart node2,
+	/**
+	 * 
+	 * @param node1
+	 *            its part must be a {@code <step>}, {@code <split>} or
+	 *            {@code <flow>}
+	 * @param node2
+	 *            its part must be a {@code <step>}, {@code <split>},
+	 *            {@code <flow>} or a {@code <decision>}
+	 * @param service
+	 *            a connection service that uses this part
+	 * @param eventHandler
+	 *            for notification about changes
+	 */
+	public NextAttributeConnectionPart(DiagramNodePart node1, DiagramNodePart node2,
 			BatchDiagramConnectionService service, BatchDiagramConnectionEventHandler eventHandler) {
 		this.srcElement = (NextAttributeElement) node1.getLocalModelElement();
 		this.targetElement = (FlowElement) node2.getLocalModelElement();
@@ -50,6 +69,9 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		eventHandler.onConnectionAddEvent(new ConnectionAddEvent(this));
 	}
 
+	/**
+	 * Initializes listeners for changes of the target element.
+	 */
 	private void initializeListeners() {
 		ReferenceValue<String, FlowElement> reference = srcElement.getNext();
 
@@ -66,7 +88,7 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 				if (newTarget == null) {
 					referenceService.detach(this);
-					eventHandler.onConnectionDeleteEvent(new ConnectionDeleteEvent(BatchDiagramConnectionPart.this));
+					eventHandler.onConnectionDeleteEvent(new ConnectionDeleteEvent(NextAttributeConnectionPart.this));
 				} else if (newTarget != targetElement) {
 					changeTargetElement(newTarget);
 				}
@@ -84,6 +106,10 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		eventHandler.onConnectionEndpointsEvent(new ConnectionEndpointsEvent(this));
 	}
 
+	/**
+	 * Declares action context so contexts so that actions are allowed for this
+	 * part.
+	 */
 	@Override
 	public Set<String> getActionContexts() {
 		Set<String> contextSet = new HashSet<String>();
@@ -103,17 +129,24 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		eventHandler.onConnectionDeleteEvent(new ConnectionDeleteEvent(this));
 	}
 
+	/**
+	 * Creates a unique id using this part's id in the list of connections
+	 * maintained by the connection service.
+	 */
 	@Override
 	public String getId() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID);
+		builder.append(BachtConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID);
 		builder.append(connectionService.list().indexOf(this));
 		return builder.toString();
 	}
 
+	/**
+	 * @return {@link BachtConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID}
+	 */
 	@Override
 	public String getConnectionTypeId() {
-		return BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID;
+		return BachtConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID;
 	}
 
 	@Override
@@ -127,6 +160,11 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		return this;
 	}
 
+	/**
+	 * Returns {@code false} as we do not need labels for this connection type.
+	 * 
+	 * @return {@code false}
+	 */
 	@Override
 	public boolean canEditLabel() {
 		return false;
@@ -167,20 +205,36 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 		broadcast(new ConnectionBendpointsEvent(this));
 	}
 
+	/**
+	 * Returns {@code null} as we do not need labels for this connection type.
+	 * 
+	 * @return {@code null}
+	 */
 	@Override
 	public String getLabel() {
 		return null;
 	}
 
+	/**
+	 * Does nothing as we do not need labels for this connection type.
+	 */
 	@Override
 	public void setLabel(String newValue) {
 	}
 
+	/**
+	 * Returns {@code null} as we do not need labels for this connection type.
+	 * 
+	 * @return {@code null}
+	 */
 	@Override
 	public Point getLabelPosition() {
 		return null;
 	}
 
+	/**
+	 * Does nothing as we do not need labels for this connection type.
+	 */
 	@Override
 	public void setLabelPosition(Point newPos) {
 	}

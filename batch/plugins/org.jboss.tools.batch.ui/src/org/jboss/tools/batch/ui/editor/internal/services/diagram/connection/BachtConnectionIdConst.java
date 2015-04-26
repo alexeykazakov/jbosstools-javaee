@@ -5,7 +5,7 @@ package org.jboss.tools.batch.ui.editor.internal.services.diagram.connection;
  * 
  * @author Tomas Milata
  */
-public interface BachConnectionIdConst {
+public interface BachtConnectionIdConst {
 
 	/**
 	 * Connection using the {@code next} atribute on a {@code <step>}, {@code 
