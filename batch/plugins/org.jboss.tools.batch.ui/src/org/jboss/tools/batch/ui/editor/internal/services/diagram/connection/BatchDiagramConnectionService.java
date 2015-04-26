@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.FilteredListener;
 import org.eclipse.sapphire.PropertyContentEvent;
@@ -74,14 +75,26 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	@Override
 	public boolean valid(DiagramNodePart node1, DiagramNodePart node2, String connectionType) {
 		if (connectionType.equals(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID)) {
-			// Connection from node1 to node2 can be created iff no connection
-			// from node1 exists yet and node2 is a FlowElement
-			// return
-			// !nodesConnectionsMap.containsKey(node1.getLocalModelElement())
-			// && node2.getLocalModelElement() instanceof FlowElement;
+	
+			Element src = node1.getLocalModelElement();
+			if (!(src instanceof NextAttributeElement)) {
+				return false;
+			}
+
+			FlowElement target = (FlowElement) node2.getLocalModelElement();
+			if (target.getId().empty()) {
+				// target must have id, otherwise there is nothing to write to
+				// xml
+				return false;
+			}
 			
-			// TODO
-			return node1.getModelElement() instanceof NextAttributeElement;
+			if (src.equals(target)) {
+				return false; // no self-loop
+			}
+			
+			FlowElement existingConnectionTarget = nodesConnectionsMap.get(src);
+			// true if connection does not exist yet
+			return existingConnectionTarget == null || !existingConnectionTarget.equals(target);
 		} else {
 			return super.valid(node1, node2, connectionType);
 		}
@@ -109,7 +122,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	}
 
 	private DiagramConnectionPart addConnectionPart(DiagramNodePart node1, DiagramNodePart node2) {
-		
+
 		BatchDiagramConnectionPart connectionPart = new BatchDiagramConnectionPart(node1, node2, this, eventHandler);
 		connectionPart.init(diagramPart, node1.getLocalModelElement(),
 				diagramPart.getDiagramConnectionDef(BachConnectionIdConst.NEXT_ATTRIBUTE_CONNECTION_ID),

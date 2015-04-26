@@ -52,8 +52,12 @@ public class BatchDiagramConnectionPart extends DiagramConnectionPart {
 
 	private void initializeListeners() {
 		ReferenceValue<String, FlowElement> reference = srcElement.getNext();
-		reference.target().refresh(); // must be refreshed, otherwise the
-										// reference changed event not fired
+
+		// may be null if id was not entered yet
+		if (reference.target() != null) {
+			// refresh, otherwise the reference changed event not fired
+			reference.target().refresh();
+		}
 		referenceService = reference.service(ReferenceService.class);
 		listener = new Listener() {
 			@Override
