@@ -47,6 +47,8 @@ public interface Flow extends FlowElement, FlowElementsContainer, NextAttributeE
 		
 	@Type( base = Next.class )
 	@XmlListBinding( path = "" )
+	// Next vs terminating elements have to be in separate list becase the need
+	// to be handled differently in diagram. (Next via connections).
 	ListProperty PROP_NEXT_ELEMENTS = new ListProperty(TYPE, "NextElements");
 
 	ElementList<Next> getNextElements();
@@ -59,6 +61,8 @@ public interface Flow extends FlowElement, FlowElementsContainer, NextAttributeE
 			}
 	)
 	@XmlListBinding( path = "" )
+	// Next vs terminating elements have to be in separate list becase the need
+	// to be handled differently in diagram. (Next via connections).
 	ListProperty PROP_TERMINATING_ELEMENTS = new ListProperty(TYPE, "TerminatingElements");
 
 	ElementList<OutcomeElement> getTerminatingElements();

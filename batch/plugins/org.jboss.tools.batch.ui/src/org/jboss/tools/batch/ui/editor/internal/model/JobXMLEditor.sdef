@@ -1373,7 +1373,7 @@
 			<tool-palette-image>step.png</tool-palette-image>
 			<tool-palette-label>Step</tool-palette-label>
 			<action-handler>
-				<impl>org.jboss.tools.batch.ui.editor.internal.action.SetStartActionHandler
+				<impl>org.jboss.tools.batch.ui.editor.internal.action.diagram.SetStartActionHandler
 				</impl>
 				<action>SetStartAction</action>
 				<id>SetStartActionHandler</id>
@@ -1577,17 +1577,17 @@
 			<action-handler>
 				<action>OpenFlowAction</action>
 				<id>OpenFlowActionHandler</id>
-				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
+				<impl>org.jboss.tools.batch.ui.editor.internal.action.diagram.OpenFlowActionHandler
 				</impl>
 			</action-handler>
 			<action-handler>
 				<action>Sapphire.Diagram.Node.Default</action>
 				<id>OpenFlowActionHandler-DoubleClick</id>
-				<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenFlowActionHandler
+				<impl>org.jboss.tools.batch.ui.editor.internal.action.diagram.OpenFlowActionHandler
 				</impl>
 			</action-handler>
 			<action-handler>
-				<impl>org.jboss.tools.batch.ui.editor.internal.action.SetStartActionHandler
+				<impl>org.jboss.tools.batch.ui.editor.internal.action.diagram.SetStartActionHandler
 				</impl>
 				<action>SetStartAction</action>
 				<id>SetStartActionHandler</id>
@@ -1859,7 +1859,7 @@
 			<tool-palette-image>split.png</tool-palette-image>
 
 			<action-handler>
-				<impl>org.jboss.tools.batch.ui.editor.internal.action.SetStartActionHandler
+				<impl>org.jboss.tools.batch.ui.editor.internal.action.diagram.SetStartActionHandler
 				</impl>
 				<action>SetStartAction</action>
 				<id>SetStartActionHandler</id>
@@ -1966,7 +1966,7 @@
                                                         <action-handler>
                                                             <action>OpenSplitFlowAction</action>
                                                             <id>OpenSplitFlowActionHandler</id>
-                                                            <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
+                                                            <impl>org.jboss.tools.batch.ui.editor.internal.action.diagram.OpenSplitFlowActionHandler</impl>
                                                         </action-handler>
                                                         <action>
                                                             <id>OpenSplitFlowAction</id>
@@ -1978,7 +1978,7 @@
                                                                 <action-handler>
                                                                     <action>Sapphire.DoubleTap</action>
                                                                     <id>OpenSplitFlowActionHandler-DoubleClick</id>
-                                                                    <impl>org.jboss.tools.batch.ui.editor.internal.action.OpenSplitFlowActionHandler</impl>
+                                                                    <impl>org.jboss.tools.batch.ui.editor.internal.action.diagram.OpenSplitFlowActionHandler</impl>
                                                                 </action-handler>
                                                                 <path>flow.png</path>
                                                             </image>
@@ -2062,7 +2062,7 @@
 			<key-binding>CONTROL+ARROW_UP</key-binding>
 			<group>OpenParentButtonGroup</group>
 			<location>before:Sapphire.Diagram.Zoom.In</location>
-			<condition>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionCondition
+			<condition>org.jboss.tools.batch.ui.editor.internal.action.diagram.OpenParentActionCondition
 			</condition>
 			<hint>
 				<name>style</name>
@@ -2072,7 +2072,7 @@
 		<action-handler>
 			<action>OpenParentAction</action>
 			<id>OpenParentActionHandler</id>
-			<impl>org.jboss.tools.batch.ui.editor.internal.action.OpenParentActionHandler
+			<impl>org.jboss.tools.batch.ui.editor.internal.action.diagram.OpenParentActionHandler
 			</impl>
 		</action-handler>
 		<connection>
@@ -2091,7 +2091,7 @@
 		</connection>
 		<connection-service-type>custom</connection-service-type>
 		<service>
-			<implementation>org.jboss.tools.batch.ui.editor.internal.services.connection.BatchDiagramConnectionService
+			<implementation>org.jboss.tools.batch.ui.editor.internal.services.diagram.connection.BatchDiagramConnectionService
 			</implementation>
 		</service>
 		<properties-view>
@@ -2154,7 +2154,7 @@
 		</palette>
 		<layout-persistence>custom</layout-persistence>
 		<service>
-			<implementation>org.jboss.tools.batch.ui.editor.internal.services.BatchDiagramLayoutPersistenceService
+			<implementation>org.jboss.tools.batch.ui.editor.internal.services.diagram.layout.persistence.BatchDiagramLayoutPersistenceService
 			</implementation>
 		</service>
         <page-header-image>${Image()}</page-header-image>

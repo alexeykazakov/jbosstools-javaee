@@ -43,8 +43,8 @@ public interface Split extends FlowElement, NextAttributeElement {
 	
 	@Type( base = Next.class )
 	@XmlListBinding( path = "" )
-	@Enablement(expr = "false")
-	ListProperty PROP_NEXT_ELEMENTS = new ListProperty(TYPE, "NextElements");
+	@Enablement( expr = "false" ) //TODO
+	ListProperty PROP_NEXT_ELEMENTS = new ListProperty( TYPE, "NextElements" );
 
 	ElementList<Next> getNextElements();
 

@@ -6,7 +6,12 @@ import org.eclipse.sapphire.ImageData;
 import org.jboss.tools.batch.core.BatchArtifactType;
 import org.jboss.tools.batch.ui.editor.internal.model.Listener;
 
-public class StepListenerRefProposalService extends BatchContentProposalService {
+/**
+ * Content proposal applicable to step {@code <listener>}'s {@code ref} attribute.
+ * 
+ * @author Tomas Milata
+ */
+public class StepListenerRefProposalService extends AbstractBatchContentProposalService {
 
 	private static final BatchArtifactType[] TYPES = { STEP_LISTENER, CHUNK_LISTENER, ITEM_READ_LISTENER,
 			ITEM_PROCESS_LISTENER, ITEM_WRITE_LISTENER, SKIP_READ_LISTENER, SKIP_PROCESS_LISTENER, SKIP_WRITE_LISTENER,

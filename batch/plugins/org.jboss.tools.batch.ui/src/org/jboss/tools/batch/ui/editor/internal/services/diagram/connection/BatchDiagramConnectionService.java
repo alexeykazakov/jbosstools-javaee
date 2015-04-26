@@ -1,4 +1,4 @@
-package org.jboss.tools.batch.ui.editor.internal.services.connection;
+package org.jboss.tools.batch.ui.editor.internal.services.diagram.connection;
 
 import java.util.ArrayList;
 import java.util.Collections;

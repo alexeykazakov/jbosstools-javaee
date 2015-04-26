@@ -1,10 +1,10 @@
-package org.jboss.tools.batch.ui.editor.internal.services.connection;
+package org.jboss.tools.batch.ui.editor.internal.services.diagram.connection;
 
 import org.eclipse.sapphire.ui.diagram.ConnectionAddEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionDeleteEvent;
 import org.eclipse.sapphire.ui.diagram.ConnectionEndpointsEvent;
 
-public interface BatchDiagramConnectionEventHandler {
+interface BatchDiagramConnectionEventHandler {
 	
 	void onConnectionEndpointsEvent(ConnectionEndpointsEvent event);
 	void onConnectionAddEvent(ConnectionAddEvent event);

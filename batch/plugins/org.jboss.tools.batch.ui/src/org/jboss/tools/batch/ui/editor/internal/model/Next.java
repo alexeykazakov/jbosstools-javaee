@@ -25,35 +25,30 @@ import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
  * @author Viacheslav Kabanovich
  *
  */
-@Label( standard = "next" )
-@Image ( path = "next.png" )
-@XmlBinding( path = "next" )
+@Label(standard = "next")
+@Image(path = "next.png")
+@XmlBinding(path = "next")
 
 public interface Next extends OutcomeElement {
 
-	ElementType TYPE = new ElementType( Next.class );
+	ElementType TYPE = new ElementType(Next.class);
 
-//	@Label( standard = "to" )
-//	@XmlBinding( path = "@to" )
-//	@Required
-//	@Services ( {
-//		@Service( impl = NextPossibleValuesService.class )
-//	})
-//
-//	ValueProperty PROP_TO = new ValueProperty( TYPE, "To" );
-//
-//	Value<String> getTo();
-//	void setTo( String value);
-	
-	@Label( standard = "to" )
-	@XmlBinding( path = "@to" )
+	@Label(standard = "to")
+	@XmlBinding(path = "@to")
 	@Required
 	@Reference(target = FlowElement.class)
-	@ElementReference(list = "../../FlowElements" , key = "id")
+	// The referenced element is one of parent's parent's flow elements.
+	@ElementReference(list = "../../FlowElements", key = "id")
 
-	ValueProperty PROP_TO = new ValueProperty( TYPE, "To" );
+	ValueProperty PROP_TO = new ValueProperty(TYPE, "To");
 
+	/**
+	 * @return The referenced flow element. The target may be also the parent
+	 *         element of this next element itself (Loops are not forbidden
+	 *         here).
+	 */
 	ReferenceValue<String, FlowElement> getTo();
-	void setTo( String value);
+
+	void setTo(String value);
 
 }

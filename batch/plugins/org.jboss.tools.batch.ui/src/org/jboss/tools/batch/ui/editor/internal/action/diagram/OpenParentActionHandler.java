@@ -1,4 +1,4 @@
-package org.jboss.tools.batch.ui.editor.internal.action;
+package org.jboss.tools.batch.ui.editor.internal.action.diagram;
 
 import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ui.Presentation;
@@ -9,6 +9,15 @@ import org.jboss.tools.batch.ui.editor.internal.model.FlowElementsContainer;
 import org.jboss.tools.batch.ui.editor.internal.model.JobXMLEditor;
 import org.jboss.tools.batch.ui.editor.internal.model.Split;
 
+/**
+ * Returns current content of the Batch diagram editor back to the parent
+ * {@link FlowElementsContainer} of the current model element (a {@link Flow}).
+ * If the flow is contained in a {@link Split}, the content is set directly to
+ * to parent of the split.
+ * 
+ * @author Tomas Milata
+ *
+ */
 public class OpenParentActionHandler extends SapphireActionHandler {
 
 	@Override

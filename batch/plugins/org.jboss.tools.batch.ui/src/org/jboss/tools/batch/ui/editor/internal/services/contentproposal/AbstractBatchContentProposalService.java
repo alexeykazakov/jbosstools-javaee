@@ -14,10 +14,21 @@ import org.jboss.tools.batch.core.IBatchArtifact;
 import org.jboss.tools.batch.core.IBatchProject;
 import org.jboss.tools.batch.ui.editor.internal.model.Job;
 
-public abstract class BatchContentProposalService extends ContentProposalService {
+/**
+ * Abstract parent for all Sapphire content proposal services for the Batch
+ * editor. Handlers the technical stuff so that implementations can just declare
+ * desired type of content and its presentation.
+ * 
+ * @author Tomas Milata
+ */
+public abstract class AbstractBatchContentProposalService extends ContentProposalService {
 
 	private IBatchProject batchProject;
 
+	/**
+	 * Prepares the instance of the project with batch nature to be used for
+	 * queries and calls parent.
+	 */
 	@Override
 	protected void init() {
 		super.init();
@@ -26,6 +37,14 @@ public abstract class BatchContentProposalService extends ContentProposalService
 		batchProject = BatchCorePlugin.getBatchProject(project, true);
 	}
 
+	/**
+	 * The list of content proposals returned by the session object is a list of
+	 * artifacts specified by the
+	 * {@link AbstractBatchContentProposalService#batchArtifactType()} method
+	 * that contain a value of the current filter in their name as a substring.
+	 * 
+	 * @return a new session object
+	 */
 	@Override
 	public Session session() {
 		return new Session() {
@@ -46,8 +65,21 @@ public abstract class BatchContentProposalService extends ContentProposalService
 		};
 	}
 
+	/**
+	 * Implementation should return an array of artifact types from which the
+	 * content proposal should be selected. The returned value should not be
+	 * {@code null}.
+	 * 
+	 * @return desired artifact types
+	 */
 	protected abstract BatchArtifactType[] batchArtifactType();
 
+	/**
+	 * Implementation should return an image to be used in the content proposal
+	 * visual presentation alongside the label.
+	 * 
+	 * @return image to use in the content proposal
+	 */
 	protected abstract ImageData image();
 
 }

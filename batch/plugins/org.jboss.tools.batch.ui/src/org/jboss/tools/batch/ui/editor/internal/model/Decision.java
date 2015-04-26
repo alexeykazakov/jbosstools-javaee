@@ -64,13 +64,15 @@ public interface Decision extends FlowElement {
 			}
 	)
 	@XmlListBinding( path = "" )
-	ListProperty PROP_OUTCOME_ELEMENTS = new ListProperty(TYPE, "OutcomeElements");
+	ListProperty PROP_OUTCOME_ELEMENTS = new ListProperty( TYPE, "OutcomeElements" );
 
 	ElementList<OutcomeElement> getOutcomeElements();
 	
 	@Type( base = Next.class )
 	@XmlListBinding( path = "" )
-	ListProperty PROP_NEXT_ELEMENTS = new ListProperty(TYPE, "NextElements");
+	// Next vs terminating elements have to be in separate list becase the need
+	// to be handled differently in diagram. (Next via connections).
+	ListProperty PROP_NEXT_ELEMENTS = new ListProperty( TYPE, "NextElements" );
 
 	ElementList<Next> getNextElements();
 	
@@ -82,7 +84,9 @@ public interface Decision extends FlowElement {
 			}
 	)
 	@XmlListBinding( path = "" )
-	ListProperty PROP_TERMINATING_ELEMENTS = new ListProperty(TYPE, "TerminatingElements");
+	// Next vs terminating elements have to be in separate list becase the need
+	// to be handled differently in diagram. (Next via connections).
+	ListProperty PROP_TERMINATING_ELEMENTS = new ListProperty( TYPE, "TerminatingElements" );
 
 	ElementList<OutcomeElement> getTerminatingElements();
 	

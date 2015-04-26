@@ -97,7 +97,7 @@ public interface Step extends FlowElement, NextAttributeElement {
 			}
 	)
 	@XmlListBinding( path = "" )
-	ListProperty PROP_OUTCOME_ELEMENTS = new ListProperty(TYPE, "OutcomeElements");
+	ListProperty PROP_OUTCOME_ELEMENTS = new ListProperty( TYPE, "OutcomeElements" );
 
 	ElementList<OutcomeElement> getOutcomeElements();
 	
@@ -108,14 +108,18 @@ public interface Step extends FlowElement, NextAttributeElement {
 				Stop.class
 			}
 	)
-	@XmlListBinding( path = "" )
-	ListProperty PROP_TERMINATING_ELEMENTS = new ListProperty(TYPE, "TerminatingElements");
+	@XmlListBinding(path = "")
+	// Next vs terminating elements have to be in separate list becase the need
+	// to be handled differently in diagram. (Next via connections).
+	ListProperty PROP_TERMINATING_ELEMENTS = new ListProperty( TYPE, "TerminatingElements" );
 
 	ElementList<OutcomeElement> getTerminatingElements();
 	
 	@Type( base = Next.class )
 	@XmlListBinding( path = "" )
-	ListProperty PROP_NEXT_ELEMENTS = new ListProperty(TYPE, "NextElements");
+	// Next vs terminating elements have to be in separate list becase the need
+	// to be handled differently in diagram. (Next via connections).
+	ListProperty PROP_NEXT_ELEMENTS = new ListProperty( TYPE, "NextElements" );
 
 	ElementList<Next> getNextElements();
 	

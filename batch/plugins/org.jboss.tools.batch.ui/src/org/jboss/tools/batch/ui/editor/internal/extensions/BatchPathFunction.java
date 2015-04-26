@@ -11,6 +11,14 @@ import org.jboss.tools.batch.ui.editor.internal.model.Flow;
 import org.jboss.tools.batch.ui.editor.internal.model.Job;
 import org.jboss.tools.batch.ui.editor.internal.model.Split;
 
+/**
+ * This EL extension function returns a String representation of a path from
+ * root to a Flow in a valid Batch model. The path consist of Job/Flow/Split ids
+ * separated by '/'. If an element on the path does not have an id, its path
+ * segment is a &lt;classname&gt; instead.
+ * 
+ * @author Tomas Milata
+ */
 public class BatchPathFunction extends Function {
 
 	private static final char SEPARATOR = '/';
@@ -52,6 +60,13 @@ public class BatchPathFunction extends Function {
 		};
 	}
 
+	/**
+	 * @param element
+	 *            Its type should be {@link Job}, a {@link Flow} or a
+	 *            {@link Split}.
+	 * @return its id or &lt;classname&gt; if id is null or element is of an
+	 *         incorrect type.
+	 */
 	private static String label(Element element) {
 		String id = null;
 		if (element instanceof Job) {
