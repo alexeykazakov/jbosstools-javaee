@@ -16,7 +16,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 //import org.jboss.tools.jst.jsp.test.ca.ContentAssistantTestCase;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.sapphire.ElementHandle;
 import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.ui.forms.swt.MasterDetailsEditorPage;
 import org.eclipse.ui.IEditorPart;
@@ -24,7 +23,6 @@ import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.batch.ui.editor.internal.model.BatchletOrChunk;
 import org.jboss.tools.batch.ui.editor.internal.model.Chunk;
 import org.jboss.tools.batch.ui.editor.internal.model.FlowElement;
-import org.jboss.tools.batch.ui.editor.internal.model.FlowElementsContainer;
 import org.jboss.tools.batch.ui.editor.internal.model.Job;
 import org.jboss.tools.batch.ui.editor.internal.model.JobXMLEditor;
 import org.jboss.tools.batch.ui.editor.internal.model.Step;
@@ -57,7 +55,7 @@ public class BatchEditorTest extends TestCase {
 		 editor = openEditor("src/META-INF/batch-jobs/job.xml");
 		 JobXMLEditor jobEditor = (JobXMLEditor)editor;
 
-		 FlowElementsContainer job = jobEditor.getSchema();
+		 Job job = jobEditor.getSchema();
 		 assertNotNull(job);
 		 ElementList<FlowElement> es = job.getFlowElements();
 		 assertEquals(1, es.size());

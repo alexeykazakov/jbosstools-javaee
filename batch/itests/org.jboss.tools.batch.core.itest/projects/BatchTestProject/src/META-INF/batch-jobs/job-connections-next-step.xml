@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd">
+    <step id="stepToStep" next="targetStep"></step>
+    <step id="targetStep"></step>
+    <flow id="targetFlow"></flow>
+    <split id="targetSplit"></split>
+    <decision id="targetDecision"></decision>
+    <step next="targetFlow" id="stepToFlow"></step>
+    <step next="targetSplit" id="stepToSplit"></step>
+    <step next="targetDecision" id="stepToDecision"></step>
+</job>
