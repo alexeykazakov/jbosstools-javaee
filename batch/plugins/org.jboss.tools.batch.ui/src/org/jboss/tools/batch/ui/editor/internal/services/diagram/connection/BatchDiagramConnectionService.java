@@ -5,8 +5,10 @@ import static org.jboss.tools.batch.ui.editor.internal.services.diagram.connecti
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.sapphire.Element;
 import org.eclipse.sapphire.ElementList;
@@ -27,14 +29,16 @@ import org.jboss.tools.batch.ui.editor.internal.model.NextAttributeElement;
 /**
  * A custom implementation of Sapphire connection service. It provides adapted
  * methods for the connection using {@code next} attribute, i.e. @
- * {@link BachtConnectionIdConst#NEXT_ATTRIBUTE_CONNECTION_ID} and delegates call
- * to the standard service for other connection types.
+ * {@link BachtConnectionIdConst#NEXT_ATTRIBUTE_CONNECTION_ID} and delegates
+ * call to the standard service for other connection types.
  * 
  * @author Tomas Milata
  */
 public class BatchDiagramConnectionService extends StandardConnectionService {
 
 	private List<DiagramConnectionPart> connections;
+	private Set<NextAttributeElement> nextAttributeElements = new HashSet<>();
+
 	private Map<NextAttributeElement, FlowElement> nodesConnectionsMap = new HashMap<>();
 	private SapphireDiagramEditorPagePart diagramPart;
 	private EventHandler eventHandler = new EventHandler();
@@ -47,8 +51,8 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 
 	/**
 	 * Exposes the custom implementation when connectionType is
-	 * {@link BachtConnectionIdConst#NEXT_ATTRIBUTE_CONNECTION_ID}, uses standard
-	 * implementation otherwise.
+	 * {@link BachtConnectionIdConst#NEXT_ATTRIBUTE_CONNECTION_ID}, uses
+	 * standard implementation otherwise.
 	 * 
 	 * @param connectionType
 	 *            id as specified in the .sdef file
@@ -64,8 +68,8 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 
 	/**
 	 * Exposes the custom implementation when connectionType is
-	 * {@link BachtConnectionIdConst#NEXT_ATTRIBUTE_CONNECTION_ID}, uses standard
-	 * implementation otherwise.
+	 * {@link BachtConnectionIdConst#NEXT_ATTRIBUTE_CONNECTION_ID}, uses
+	 * standard implementation otherwise.
 	 * 
 	 * @param connectionType
 	 *            id as specified in the .sdef file
@@ -129,13 +133,14 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	 */
 	private DiagramConnectionPart connect(DiagramNodePart node1, DiagramNodePart node2) {
 		// connect the reference in the model
-		String nextId = ((FlowElement) node2.getLocalModelElement()).getId().content();
-		NextAttributeElement element = (NextAttributeElement) node1.getLocalModelElement();
-		element.setNext(nextId);
+		FlowElement target = (FlowElement) node2.getLocalModelElement();
+		String nextId = target.getId().content();
+		NextAttributeElement src = (NextAttributeElement) node1.getLocalModelElement();
+		src.setNext(nextId);
 
 		FlowElement existingEndpoint = nodesConnectionsMap.get(node1.getLocalModelElement());
 		if (existingEndpoint == null) {
-			return addConnectionPart(node1, node2);
+			return addConnectionPart(src, target);
 		} else {
 			return null;
 		}
@@ -147,23 +152,54 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	private void initConnections() {
 		connections = new ArrayList<>();
 
-		ElementList<FlowElement> children = ((FlowElementsContainer) diagramPart.getLocalModelElement())
-				.getFlowElements();
+		FlowElementsContainer currentModelRoot = (FlowElementsContainer) diagramPart.getLocalModelElement();
+		attachListenerForNewNodes(currentModelRoot.getFlowElements());
 
-		for (FlowElement src : children) {
+		for (FlowElement src : currentModelRoot.getFlowElements()) {
 			if (src instanceof NextAttributeElement) {
-				NextAttributeElement nextElem = (NextAttributeElement) src;
-				ReferenceValue<String, FlowElement> next = nextElem.getNext();
-
-				if (next.target() != null) {
-					addConnectionPart(diagramPart.getDiagramNodePart(src),
-							diagramPart.getDiagramNodePart(next.target()));
-				}
-
-				attachListenerForNewConnection(nextElem);
+				initializeNextAttributeElement(src);
 			}
 
 		}
+	}
+
+	/**
+	 * Creates a connection if src already has target, stores the node among
+	 * current nodes and attaches listener for target changes.
+	 * 
+	 * @param src
+	 *            the source node
+	 */
+	private void initializeNextAttributeElement(FlowElement src) {
+		NextAttributeElement nextElem = (NextAttributeElement) src;
+		ReferenceValue<String, FlowElement> next = nextElem.getNext();
+
+		if (next.target() != null) {
+			addConnectionPart(nextElem, next.target());
+		}
+
+		nextAttributeElements.add(nextElem);
+		attachListenerForNewConnection(nextElem);
+	}
+
+	/**
+	 * Watches the list of flow elements and when a new element is added, a
+	 * listener for changes is added to it.
+	 * 
+	 * @param flowElements
+	 *            the list of elements to watch
+	 */
+	private void attachListenerForNewNodes(final ElementList<FlowElement> flowElements) {
+		flowElements.attach(new FilteredListener<PropertyContentEvent>() {
+			@Override
+			protected void handleTypedEvent(PropertyContentEvent event) {
+				for (FlowElement element : flowElements) {
+					if (element instanceof NextAttributeElement && !nextAttributeElements.contains(element)) {
+						initializeNextAttributeElement(element);
+					}
+				}
+			}
+		});
 	}
 
 	/**
@@ -175,8 +211,7 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 			@Override
 			protected void handleTypedEvent(final PropertyContentEvent event) {
 				if (!nodesConnectionsMap.containsKey(element)) {
-					addConnectionPart(diagramPart.getDiagramNodePart(element),
-							diagramPart.getDiagramNodePart(element.getNext().target()));
+					addConnectionPart(element, element.getNext().target());
 				}
 			}
 		}, NextAttributeElement.PROP_NEXT.name());
@@ -190,16 +225,14 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	 * @param target
 	 * @return the new connection part
 	 */
-	private DiagramConnectionPart addConnectionPart(DiagramNodePart src, DiagramNodePart target) {
+	private DiagramConnectionPart addConnectionPart(NextAttributeElement src, FlowElement target) {
 
 		NextAttributeConnectionPart connectionPart = new NextAttributeConnectionPart(src, target, this, eventHandler);
-		connectionPart.init(diagramPart, src.getLocalModelElement(),
-				diagramPart.getDiagramConnectionDef(NEXT_ATTRIBUTE_CONNECTION_ID),
+		connectionPart.init(diagramPart, src, diagramPart.getDiagramConnectionDef(NEXT_ATTRIBUTE_CONNECTION_ID),
 				Collections.<String, String> emptyMap());
 		connectionPart.initialize();
 
-		nodesConnectionsMap.put((NextAttributeElement) src.getLocalModelElement(),
-				(FlowElement) target.getLocalModelElement());
+		nodesConnectionsMap.put(src, target);
 		connections.add(connectionPart);
 		return connectionPart;
 	}

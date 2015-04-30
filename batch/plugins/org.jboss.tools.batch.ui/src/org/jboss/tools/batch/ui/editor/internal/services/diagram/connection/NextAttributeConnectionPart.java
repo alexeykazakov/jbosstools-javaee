@@ -44,20 +44,21 @@ public class NextAttributeConnectionPart extends DiagramConnectionPart {
 	/**
 	 * 
 	 * @param node1
-	 *            its part must be a {@code <step>}, {@code <split>} or
-	 *            {@code <flow>}
+	 *            a {@code <step>}, {@code <split>} or {@code <flow>}
 	 * @param node2
-	 *            its part must be a {@code <step>}, {@code <split>},
-	 *            {@code <flow>} or a {@code <decision>}
+	 *            a {@code <step>}, {@code <split>}, {@code <flow>} or a
+	 *            {@code <decision>}
 	 * @param service
 	 *            a connection service that uses this part
 	 * @param eventHandler
 	 *            for notification about changes
+	 * @param srcElement
+	 * @param targetElement
 	 */
-	public NextAttributeConnectionPart(DiagramNodePart node1, DiagramNodePart node2,
+	public NextAttributeConnectionPart(NextAttributeElement srcElement, FlowElement targetElement,
 			BatchDiagramConnectionService service, BatchDiagramConnectionEventHandler eventHandler) {
-		this.srcElement = (NextAttributeElement) node1.getLocalModelElement();
-		this.targetElement = (FlowElement) node2.getLocalModelElement();
+		this.srcElement = srcElement;
+		this.targetElement = targetElement;
 		this.connectionService = service;
 		this.eventHandler = eventHandler;
 	}
