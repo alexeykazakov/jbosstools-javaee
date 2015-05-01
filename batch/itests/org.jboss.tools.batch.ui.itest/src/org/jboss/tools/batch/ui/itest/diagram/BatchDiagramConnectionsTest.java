@@ -23,17 +23,40 @@ public class BatchDiagramConnectionsTest extends AbstractBatchSapphireEditorTest
 		BatchDiagramConnectionService cs = getConnectionService();
 		List<DiagramConnectionPart> connections = cs.list();
 		assertEquals(0, connections.size());
-		
+
 		ElementList<FlowElement> elements = editor.getSchema().getFlowElements();
 		Step step1 = (Step) elements.get(0);
 		Step step2 = (Step) elements.get(1);
 		step1.setNext(step2.getId().content());
-				
+
 		connections = cs.list();
 		assertEquals(1, connections.size());
 
 		step1.setNext(null);
-		
+
+		connections = cs.list();
+		assertEquals(0, connections.size());
+	}
+
+	public void testConnectionsOnNewNodes() {
+		editor = openEditor("src/META-INF/batch-jobs/job-connections-empty.xml");
+
+		BatchDiagramConnectionService cs = getConnectionService();
+		List<DiagramConnectionPart> connections = cs.list();
+		assertEquals(0, connections.size());
+
+		ElementList<FlowElement> elements = editor.getSchema().getFlowElements();
+		Step step1 = elements.insert(Step.class);
+		Step step2 = elements.insert(Step.class);
+		step1.setId("step1");
+		step2.setId("step2");
+		step1.setNext("step2");
+
+		connections = cs.list();
+		assertEquals(1, connections.size());
+
+		step1.setNext(null);
+
 		connections = cs.list();
 		assertEquals(0, connections.size());
 	}

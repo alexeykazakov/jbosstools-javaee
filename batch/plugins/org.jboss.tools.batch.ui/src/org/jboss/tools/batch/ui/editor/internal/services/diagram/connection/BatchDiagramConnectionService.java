@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -157,9 +158,34 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 
 		for (FlowElement src : currentModelRoot.getFlowElements()) {
 			if (src instanceof NextAttributeElement) {
-				initializeNextAttributeElement(src);
+				initializeNextAttributeElement((NextAttributeElement) src);
 			}
+			initializeTargetElement(src);
+		}
+	}
 
+	/**
+	 * Attaches listener that watches if Id of element has changed. (The element
+	 * may become a new target of another element then).
+	 */
+	private void initializeTargetElement(final FlowElement target) {
+		target.getId().attach(new FilteredListener<PropertyContentEvent>() {
+			@Override
+			protected void handleTypedEvent(PropertyContentEvent event) {
+				connectIfIsTarget(target);
+			}
+		});
+	}
+
+	/**
+	 * If there exists a source for the target, connection is created.
+	 */
+	private void connectIfIsTarget(FlowElement target) {
+		for (NextAttributeElement src : nextAttributeElements) {
+			String next = src.getNext().content();
+			if (next != null && next.equals(target.getId().content()) && !nodesConnectionsMap.containsKey(src)) {
+				addConnectionPart(src, target);
+			}
 		}
 	}
 
@@ -170,16 +196,15 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	 * @param src
 	 *            the source node
 	 */
-	private void initializeNextAttributeElement(FlowElement src) {
-		NextAttributeElement nextElem = (NextAttributeElement) src;
-		ReferenceValue<String, FlowElement> next = nextElem.getNext();
+	private void initializeNextAttributeElement(NextAttributeElement src) {
+		ReferenceValue<String, FlowElement> next = src.getNext();
 
 		if (next.target() != null) {
-			addConnectionPart(nextElem, next.target());
+			addConnectionPart(src, next.target());
 		}
 
-		nextAttributeElements.add(nextElem);
-		attachListenerForNewConnection(nextElem);
+		nextAttributeElements.add(src);
+		attachListenerForNewConnection(src);
 	}
 
 	/**
@@ -193,10 +218,32 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 		flowElements.attach(new FilteredListener<PropertyContentEvent>() {
 			@Override
 			protected void handleTypedEvent(PropertyContentEvent event) {
+
+				Iterator<NextAttributeElement> nextIt = nextAttributeElements.iterator();
+				while (nextIt.hasNext()) {
+					NextAttributeElement next = nextIt.next();
+					if (!flowElements.contains(next)) {
+						nextIt.remove();
+
+						Iterator<DiagramConnectionPart> connIt = connections.iterator();
+						while (connIt.hasNext()) {
+							DiagramConnectionPart c = connIt.next();
+							if (c.getEndpoint1().equals(next)) {
+								connIt.remove();
+								nodesConnectionsMap.remove(c.getEndpoint1());
+								broadcast(new ConnectionDeleteEvent(c));
+							}
+						}
+					}
+				}
+
 				for (FlowElement element : flowElements) {
 					if (element instanceof NextAttributeElement && !nextAttributeElements.contains(element)) {
-						initializeNextAttributeElement(element);
+						initializeNextAttributeElement((NextAttributeElement) element);
 					}
+					initializeTargetElement(element);
+					// The new node might have been added with a target already
+					connectIfIsTarget(element);
 				}
 			}
 		});
@@ -227,12 +274,13 @@ public class BatchDiagramConnectionService extends StandardConnectionService {
 	 */
 	private DiagramConnectionPart addConnectionPart(NextAttributeElement src, FlowElement target) {
 
+		nodesConnectionsMap.put(src, target);
+
 		NextAttributeConnectionPart connectionPart = new NextAttributeConnectionPart(src, target, this, eventHandler);
 		connectionPart.init(diagramPart, src, diagramPart.getDiagramConnectionDef(NEXT_ATTRIBUTE_CONNECTION_ID),
 				Collections.<String, String> emptyMap());
 		connectionPart.initialize();
 
-		nodesConnectionsMap.put(src, target);
 		connections.add(connectionPart);
 		return connectionPart;
 	}
