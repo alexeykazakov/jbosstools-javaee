@@ -15,16 +15,11 @@ import org.eclipse.sapphire.ElementList;
 import org.eclipse.sapphire.ElementProperty;
 import org.eclipse.sapphire.ElementType;
 import org.eclipse.sapphire.ListProperty;
-import org.eclipse.sapphire.Value;
-import org.eclipse.sapphire.ValueProperty;
 import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
-import org.eclipse.sapphire.modeling.annotations.Required;
-import org.eclipse.sapphire.modeling.annotations.Service;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlListBinding;
-import org.jboss.tools.batch.ui.editor.internal.services.contentproposal.DeciderRefProposalService;
 
 /**
  * 
@@ -34,18 +29,9 @@ import org.jboss.tools.batch.ui.editor.internal.services.contentproposal.Decider
 @Label( standard = "decision" )
 @Image ( path = "decision.png" )
 @XmlBinding( path = "decision" )
-public interface Decision extends FlowElement {
+public interface Decision extends FlowElement, RefAttributeElement {
 
 	ElementType TYPE = new ElementType( Decision.class );
-
-	@Label( standard = "ref" )
-	@XmlBinding( path = "@ref" )
-	@Required
-	@Service(impl = DeciderRefProposalService.class)
-	ValueProperty PROP_REF = new ValueProperty( TYPE, "Ref" );
-
-	Value<String> getRef();
-	void setRef( String ref);
 
 	@Type( base = Properties.class )
 	@Label( standard = "properties" )

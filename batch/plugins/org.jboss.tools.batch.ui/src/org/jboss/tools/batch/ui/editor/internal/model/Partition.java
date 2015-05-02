@@ -16,10 +16,8 @@ import org.eclipse.sapphire.ElementProperty;
 import org.eclipse.sapphire.ElementType;
 import org.eclipse.sapphire.modeling.annotations.Image;
 import org.eclipse.sapphire.modeling.annotations.Label;
-import org.eclipse.sapphire.modeling.annotations.Service;
 import org.eclipse.sapphire.modeling.annotations.Type;
 import org.eclipse.sapphire.modeling.xml.annotations.XmlBinding;
-import org.jboss.tools.batch.ui.editor.internal.services.contentproposal.PartitionMapperRefProposalService;
 
 /**
  * 
@@ -35,7 +33,6 @@ public interface Partition extends Element {
 	@Type( base = Mapper.class )
 	@Label( standard = "mapper" )
 	@XmlBinding( path = "mapper" )
-	@Service( impl = PartitionMapperRefProposalService.class )
 
 	ElementProperty PROP_MAPPER = new ElementProperty( TYPE, "Mapper" );
 
