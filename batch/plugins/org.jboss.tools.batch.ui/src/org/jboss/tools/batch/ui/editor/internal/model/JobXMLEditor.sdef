@@ -2057,7 +2057,7 @@
 		</node>
 		<action>
 			<id>OpenParentAction</id>
-			<label>Go Back To Parent</label>
+			<label>Parent</label>
 			<context>Sapphire.Diagram.Header</context>
 			<key-binding>CONTROL+ARROW_UP</key-binding>
 			<group>OpenParentButtonGroup</group>
@@ -2066,8 +2066,11 @@
 			</condition>
 			<hint>
 				<name>style</name>
-				<value>text</value>
+				<value>image+text</value>
 			</hint>
+            <image>parent.png</image>
+            <key-binding-behavior>local</key-binding-behavior>
+            <tooltip>Go Back To Parent</tooltip>
 		</action>
 		<action-handler>
 			<action>OpenParentAction</action>
